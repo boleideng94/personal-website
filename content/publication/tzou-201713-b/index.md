@@ -1,17 +1,20 @@
 ---
-title: 'Flexoelectric Actuation and Vibration Control of Ring Shells'
-# subtitle: ''
-# summary: ''
+# Documentation: https://wowchemy.com/docs/managing-content/
+
+title: Flexoelectric Actuation and Vibration Control of Ring Shells
+subtitle: ''
+summary: ''
 authors:
-  - Hornsen Tzou
-  - Bolei Deng
-  - Huiyu Li
-tags: []
-# categories: []
-# date: '2017-01-01'
-# lastmod: 2022-07-30T00:11:00-04:00
-# featured: false
-# draft: false
+- Hornsen Tzou
+- Bolei Deng
+- Huiyu Li
+tags:
+- ''
+categories: []
+date: '2017-01-01'
+lastmod: 2022-07-31T22:32:05-04:00
+featured: false
+draft: false
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -21,16 +24,15 @@ image:
   focal_point: ''
   preview_only: false
 
-featured: true
 # Projects (optional).
 #   Associate this post with one or more of your projects.
 #   Simply enter your project's folder or file name without extension.
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
-projects: 
-# publishDate: '2022-07-30T04:11:00.161426Z'
-# publication_types:
-# - '2'
+projects: []
+publishDate: '2022-08-01T02:32:05.132349Z'
+publication_types:
+- '2'
 abstract: The converse flexoelectric effect, i.e., the polarization (or electric field)
   gradient-induced internal stress (or strain), can be utilized to actuate and control
   flexible structures. This study focuses on the microscopic actuation behavior and

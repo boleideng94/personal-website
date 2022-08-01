@@ -12,7 +12,7 @@ tags:
 - ''
 categories: []
 date: '2020-01-01'
-lastmod: 2022-07-30T00:10:59-04:00
+lastmod: 2022-07-31T22:32:03-04:00
 featured: false
 draft: false
 
@@ -30,7 +30,7 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2022-07-30T04:10:58.881103Z'
+publishDate: '2022-08-01T02:32:03.345646Z'
 publication_types:
 - '2'
 abstract: Transition waves that sequentially switch bistable elements from one stable

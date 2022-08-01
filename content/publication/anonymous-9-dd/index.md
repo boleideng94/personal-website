@@ -13,7 +13,7 @@ tags:
 - ''
 categories: []
 date: '2019-01-01'
-lastmod: 2022-07-30T00:11:00-04:00
+lastmod: 2022-07-31T22:32:05-04:00
 featured: false
 draft: false
 
@@ -31,7 +31,7 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2022-07-30T04:10:59.987653Z'
+publishDate: '2022-08-01T02:32:04.872273Z'
 publication_types:
 - '2'
 abstract: Kirigami-inspired metamaterials are attracting increasing interest because

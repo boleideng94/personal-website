@@ -13,7 +13,7 @@ tags:
 - ''
 categories: []
 date: '2018-01-01'
-lastmod: 2022-07-30T00:11:01-04:00
+lastmod: 2022-07-31T22:32:06-04:00
 featured: false
 draft: false
 
@@ -31,7 +31,7 @@ image:
 #   E.g. `projects = ["internal-project"]` references `content/project/deep-learning/index.md`.
 #   Otherwise, set `projects = []`.
 projects: []
-publishDate: '2022-07-30T04:11:00.895147Z'
+publishDate: '2022-08-01T02:32:06.170828Z'
 publication_types:
 - '2'
 abstract: We investigate the effects of large predeformation on the propagation of
