@@ -19,7 +19,7 @@ design:
     # color: navy
     # gradient_start: DarkGreen
     # gradient_end: ForestGreen
-    image: li-yang-5h_dMuX_7RE-unsplash.webp  # Name of image in `static/media/`.
+    image:  colored_LCE_hex_tilted83.tif # Name of image in `static/media/`.  hex82.jpg
     image_darken: 0.6
     image_size: cover
     image_position: center
