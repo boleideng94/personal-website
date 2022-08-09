@@ -1,6 +1,8 @@
 ---
-title: Welcome to Wowchemy, the website builder for Hugo
+title: Optimization and inverse design algorithms
 subtitle: Welcome 👋 We know that first impressions are important, so we've populated your new site with some initial content to help you get familiar with everything in no time.
+
+weight: 30
 
 # Summary for listings and search engines
 summary: Welcome 👋 We know that first impressions are important, so we've populated your new site with some initial content to help you get familiar with everything in no time.
@@ -9,10 +11,10 @@ summary: Welcome 👋 We know that first impressions are important, so we've pop
 projects: []
 
 # Date published
-date: "2020-12-13T00:00:00Z"
+date: "2022-08-04T00:00:01Z"
 
 # Date updated
-lastmod: "2020-12-13T00:00:00Z"
+lastmod: "2022-08-06T00:00:00Z"
 
 # Is this an unpublished draft?
 draft: false
@@ -28,16 +30,15 @@ image:
   placement: 1
   preview_only: false
 
-authors:
-- admin
+# authors:
+# - admin
 
 tags:
 - Academic
 - 开源
 
 categories:
-- Demo
-- 教程
+- Inverse algorithms
 ---
 
 ## Overview

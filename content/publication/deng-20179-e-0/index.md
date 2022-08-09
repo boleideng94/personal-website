@@ -5,10 +5,10 @@ title: Elastic Vector Solitons in Soft Architected Materials
 subtitle: ''
 summary: ''
 authors:
-- B. Deng
-- J. R. Raney
-- V. Tournat
-- K. Bertoldi
+- Bolei Deng
+- Jordan R. Raney
+- Vincent Tournat
+- Katia Bertoldi
 tags:
 - ''
 categories: []

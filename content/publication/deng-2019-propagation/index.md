@@ -36,7 +36,7 @@ projects: []
 publishDate: '2022-08-01T02:32:04.370510Z'
 publication_types:
 - '2'
-abstract: ''
+abstract: 'We use a combination of experiments, numerical analysis and theory to investigate the nonlinear dynamic response of a chain of precompressed elastic beams. Our results show that this simple system offers a rich platform to study the propagation of large amplitude waves. Compression waves are strongly dispersive, whereas rarefaction pulses propagate in the form of solitons. Further, we find that the model describing our structure closely resembles those introduced to characterize the dynamics of several molecular chains and macromolecular crystals, suggesting that our macroscopic system can provide insights into the effect of nonlinear vibrations on molecular mechanisms.'
 publication: '*New Journal of Physics*'
 doi: 10.1088/1367-2630/ab2810
 ---

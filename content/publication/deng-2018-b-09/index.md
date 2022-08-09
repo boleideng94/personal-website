@@ -6,9 +6,9 @@ title: Effect of predeformation on the propagation of vector solitons in flexibl
 subtitle: ''
 summary: ''
 authors:
-- B. Deng
-- V. Tournat
-- K. Bertoldi
+- Bolei Deng
+- Vincent Tournat
+- Katia Bertoldi
 tags:
 - ''
 categories: []

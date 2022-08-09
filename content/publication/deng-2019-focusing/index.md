@@ -6,8 +6,8 @@ title: Focusing and Mode Separation of Elastic Vector Solitons in a 2D Soft Mech
 subtitle: ''
 summary: ''
 authors:
-- Bolei Deng
-- Chengyang Mo
+- Bolei Deng#
+- Chengyang Mo#
 - Vincent Tournat
 - Katia Bertoldi
 - Jordan R. Raney

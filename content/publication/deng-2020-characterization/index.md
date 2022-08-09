@@ -6,8 +6,8 @@ title: Characterization, stability, and application of domain walls in flexible 
 subtitle: ''
 summary: ''
 authors:
-- Bolei Deng
-- Siqin Yu
+- Bolei Deng#
+- Siqin Yu#
 - Antonio E. Forte
 - Vincent Tournat
 - Katia Bertoldi

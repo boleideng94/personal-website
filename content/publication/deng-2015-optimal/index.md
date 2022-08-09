@@ -5,9 +5,9 @@ title: Optimal Positions for Multiple Flexoelectric Actuations on Beams
 subtitle: ''
 summary: ''
 authors:
-- B. L. Deng
-- H. Li
-- H. S. Tzou
+- Bolei Deng
+- Hua Li
+- Hornsen Tzou
 tags:
 - ''
 categories: []
@@ -59,6 +59,6 @@ abstract: Inhomogeneous electric field induces internal stress in flexoelectric 
   curves under different frequencies. This study serves as the foundation of flexoelectric
   vibration control with multiple AFM/flexoelectric actuators on flexible structures.Copyright
   © 2015 by ASME
-publication: ''
+publication: '*ASME*'
 doi: 10.1115/imece2015-53321
 ---

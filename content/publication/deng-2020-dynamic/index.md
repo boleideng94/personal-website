@@ -6,8 +6,8 @@ title: 'Dynamics of mechanical metamaterials: A framework to connect phonons, no
 subtitle: ''
 summary: ''
 authors:
-- Bolei Deng
-- Jian Li
+- Bolei Deng#
+- Jian Li#
 - Vincent Tournat
 - Prashant K. Purohit
 - Katia Bertoldi
