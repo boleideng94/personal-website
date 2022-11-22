@@ -12,6 +12,6 @@ design:
   columns: '1'
 ---
 
-Use this area to speak to your mission. I'm a research scientist in the Moonshot team at DeepMind. I blog about machine learning, deep learning, and moonshots.
+My research focuses on designing and fabricating architected materials—leveraging high performance simulations, artificial intelligence, optimization design pipelines, responsive materials, and muti-physics interactions—to realize materials with **physical intelligence** for real-world challenges.
 
-**Specialties:** Analytics & Data, Leadership, Programming, Strategic Planning, Writing & Editing
+**Specialties:** Architected Materials, Design Algorithms, Responsive Materials
