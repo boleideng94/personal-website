@@ -5,7 +5,7 @@ subtitle:
 weight: 80
 
 # Summary for listings and search engines
-summary: Welcome 👋 We know that first impressions are important, so we've populated your new site with some initial content to help you get familiar with everything in no time.
+summary: <br/><br/> **Selected publications:**<br/> 1. <span style="color:darkgray">**Bolei Deng***, Ahmad Zareei, Xiaoxiao Ding, James C Weaver, Chris H Rycroft, Katia Bertoldi*</span> (2022). [**Inverse Design of Mechanical Metamaterials with Target Nonlinear Response via a Neural Accelerated Evolution Strategy**](../../publication/deng-AM2022/). *Advanced Materials*. 
 
 # Link this post with a project
 projects: []
