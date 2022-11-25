@@ -7,10 +7,11 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 30
+weight: 20
 
-title: Physics of Metamaterials
+title: Research
 subtitle:
+
 
 content:
   # Page type to display. E.g. post, talk, publication...

@@ -1,5 +1,5 @@
 ---
-title: Phase Transitions
+title: Phase Transitions in Architected Materials
 subtitle:
 weight: 20
 

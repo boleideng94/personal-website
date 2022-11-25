@@ -1,5 +1,5 @@
 ---
-title: Solitons
+title: Nonlinear Waves in Architected Materials
 subtitle:
 weight: 10
 

@@ -11,7 +11,10 @@ subtitle: ""
 design:
   columns: '1'
 ---
+My research focuses on designing and fabricating architected materials—leveraging high performance simulations, artificial intelligence, optimization design pipelines, responsive materials, and muti-physics interactions—to realize materials with ***physical intelligence*** for real-world challenges.
+![](RS.png)
+I received my Ph.D. from Harvard University in 2021, under the guidance of *Prof. Katia Bertoldi* and *Prof. Joanna Aizenberg*. Currently, I am a postdoc at MIT co-advised by *Prof. Wojciech Matusik* and *Prof. Xuanhe Zhao*.
 
-My research focuses on designing and fabricating architected materials—leveraging high performance simulations, artificial intelligence, optimization design pipelines, responsive materials, and muti-physics interactions—to realize materials with **physical intelligence** for real-world challenges.
+**Specialties:** Architected Materials (Metamaterials), Design Algorithms, Responsive Materials
 
-**Specialties:** Architected Materials, Design Algorithms, Responsive Materials
+---
