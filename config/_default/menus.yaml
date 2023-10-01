@@ -10,6 +10,9 @@ main:
   - name: Home
     url: '/'
     weight: 10
+  - name: People
+    url: '/people'
+    weight: 12
   - name: Projects
     url: '/projects'
     weight: 15 

@@ -14,7 +14,7 @@ subtitle:
 
 content:
   # Contact (add or remove contact options as necessary)
-  email: boleiden@mit.edu
+  email: bolei.deng@gatech.edu
   # phone: 888 888 88 88
   # appointment_url: 'https://calendly.com'
   address:

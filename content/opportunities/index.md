@@ -11,7 +11,7 @@ subtitle: ""
 design:
   columns: '1'
 ---
-### **Multiple Open Ph.D. Positions at Georgia Tech**
+## **Multiple Ph.D. Positions at Georgia Tech**
 
 Our lab **Computational Design & Metamaterial Lab** warmly invites applications from students with backgrounds in mechanics, aerospace engineering, computer science, materials, polymers, and related fields. Please see my vision for the lab on [home page](/). We are currently on the lookout for **3-4 Ph.D. students** to join our team in the fall of 2024. 
 
@@ -28,5 +28,10 @@ The ideal candidates should possess:
 2. Contact information for **1-3 references**.
 3. **Transcripts** from undergraduate or graduate studies.
 
-**Where to apply?** <br/>
-Applicants can apply for the doctoral program in the School of Aerospace Engineering or opt for the Robotics direction within the AE Interdisciplinary Doctoral Degrees. In principle, you can also apply through other engineering disciplines at Georgia Tech (for instance, Mechanical Engineering or Materials Science). If you have such intentions, please specify in the application email. We need to figure out a potential co-advisor from these departments. Furthermore, our lab is always open to visiting scholars, research assistants, and exchange students. If interested, please send your resume and your research interests to bolei.deng@gatech.edu.
+Furthermore, our lab is always open to visiting scholars, research assistants, and exchange students. If interested, please send your resume and your research interests to bolei.deng@gatech.edu.
+
+### About Georgia Tech
+The Georgia Institute of Technology, located in the southeastern United States, is a top-tier public research university. The Institute holds an outstanding reputation in the fields of engineering, science, and business. It is recognized for its cutting-edge research initiatives, exceptional educational quality, and strong ties with the industry. Georgia Tech's engineering programs are ranked [<ins>**5th**<ins>](https://www.usnews.com/best-graduate-schools/top-engineering-schools/eng-rankings) nationally by US News, with the Daniel Guggenheim School of Aerospace Engineering ranked [<ins>**4th**<ins>](https://www.usnews.com/best-graduate-schools/top-engineering-schools/aerospace-rankings) for graduate programs and [<ins>**2nd**<ins>](https://www.usnews.com/best-colleges/rankings/engineering-doctorate-aerospace-aeronautical-astronautical?_sort=rank&_sortDirection=asc) for undergraduate programs in the U.S.
+
+### Doctoral Programs
+Applicants can apply for the [<ins>doctoral program in the School of Aerospace Engineering<ins>](https://ae.gatech.edu/doctoral-curriculum) or opt for the Robotics direction within the [<ins>AE Interdisciplinary Doctoral Degrees<ins>](https://ae.gatech.edu/ae-interdisciplinary-doctoral-degrees). In principle, you can also apply through other engineering disciplines at Georgia Tech (for instance, Mechanical Engineering or Materials Science). If you have such intentions, please specify in the application email. We need to figure out a potential co-advisor from these departments.
