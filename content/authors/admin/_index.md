@@ -31,7 +31,7 @@ social:
   link: https://twitter.com/Bolei_Deng
 - icon: google-scholar
   icon_pack: ai
-  link: https://scholar.google.com/citations?user=97o3t5cAAAAJ&hl=en&oi=ao
+  link: https://scholar.google.com/citations?user=F4YFjy8AAAAJ&hl=en
 - icon: github
   icon_pack: fab
   link: https://github.com/boleideng94
