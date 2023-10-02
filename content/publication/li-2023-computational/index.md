@@ -36,7 +36,7 @@ image:
 projects: []
 publishDate: '2023'
 publication_types:
-- '2'
+- '3'
 abstract: 'The conflict between strength and toughness is a fundamental problem in engineering materials design.
 However, systematic discovery of microstructured composites with optimal strength-toughness trade-offs
 has never been demonstrated due to the discrepancies between simulation and reality and the lack

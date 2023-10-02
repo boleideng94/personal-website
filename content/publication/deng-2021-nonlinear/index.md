@@ -33,6 +33,7 @@ projects: []
 publishDate: '2022-08-01T11:58:31.530957Z'
 publication_types:
 - '2'
-abstract: ''
+abstract: 'Flexible mechanical metamaterials are compliant structures engineered to achieve unique properties via the large deformation of their components. While their static character has been studied extensively, the study of their dynamic properties is still at an early stage, especially in the nonlinear regime induced by their high deformability. Nevertheless, recent studies show that these systems provide new opportunities for the control of large amplitude elastic waves. Here, we summarize the recent results on the propagation of nonlinear waves in flexible elastic metamaterials and highlight possible new research directions.'
 publication: '*Journal of Applied Physics*'
+doi: https://doi.org/10.1063/5.0050271
 ---
