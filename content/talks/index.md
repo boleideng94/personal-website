@@ -1,10 +1,22 @@
+### **Computational Discovery of Microstructured Compositeswith Optimal Strength-Toughness Trade-Offs**
+
+Presented at [APS March Meeting 2023](https://www.aps.org/meetings/meeting.cfm?name=MAR23)<br/>
+<span style="color:darkgray">Mar 6, 2023</span>
+{{< youtube YpMQMYRUNTE >}}
+
+<span style="color:darkgray">Beichen Li, Bolei Deng, Wan Shou, Tae-Hyun Oh, Yuanmin Hu, Yiyue Luo, Liang Shi, Wojciech Matusik</span> (2023). [**Computational Discovery of Microstructured Compositeswith Optimal Strength-Toughness Trade-Offs**](../../publication/li-2023-computational/). *ArXiv*.
+
+<br/>
+
+---
+
 ### **Topological Solitons Make Metamaterials Crawl**
 
 Presented at [*Physical Review* Journal Club](https://journals.aps.org/journal-club)<br/>
 <span style="color:darkgray">Aug 8, 2022</span>
 {{< youtube VN0_gsIrEIY >}}
 
-<span style="color:darkgray">Bolei Deng, Liyuan Chen, Donglai Wei, Vincent Tournat, Katia Bertoldi</span> (2020). [**Pulse-driven robot, Motion via solitary waves**](../../publication/deng-2020-pulse/). *Science Advances*.
+<span style="color:darkgray">**Bolei Deng**#, Mohamed Zanaty#, Antonio E Forte, Katia Bertoldi</span> (2022). [**Topological solitons make metamaterials crawl**](../../publication/deng-2022-topological/). *Physical Review Applied*.
 
 <br/>
 
