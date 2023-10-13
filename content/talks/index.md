@@ -1,4 +1,34 @@
-### **Computational Discovery of Microstructured Compositeswith Optimal Strength-Toughness Trade-Offs**
+### **Learning Neural Constitutive Laws from Motion Observations for Generalizable PDE Dynamics**
+Presented at [SES 2023](https://2023ses.com/)<br/>
+<span style="color:darkgray">Oct 11, 2023</span>
+{{< youtube HyQyWpZFHk4 >}}
+<span style="color:darkgray">Pingchuan Ma, Peter Yichen Chen, Bolei Deng, Joshua B. Tenenbaum, Tao Du, Chuang Gan, Wojciech Matusik</span> (2023). [**Learning Neural Constitutive Laws from Motion Observations for Generalizable PDE Dynamics**](../../publication/ma-2023-learning/). *ICML*.
+<br/>
+
+---
+
+### **Geometrically Programed, Contact Based Particle Robots**
+
+Presented at [SES 2023](https://2023ses.com/)<br/>
+<span style="color:darkgray">Oct 10, 2023</span>
+{{< youtube S8rR6clXtUw >}}
+<!-- <span style="color:darkgray">Beichen Li, Bolei Deng, Wan Shou, Tae-Hyun Oh, Yuanmin Hu, Yiyue Luo, Liang Shi, Wojciech Matusik</span> (2023). [**Computational Discovery of Microstructured Compositeswith Optimal Strength-Toughness Trade-Offs**](../../publication/li-2023-computational/). *ArXiv*. -->
+
+<br/>
+
+---
+
+### **Computational Discovery of Microstructured Compositeswith Optimal Strength-Toughness Trade-Offs (20 min version)**
+Presented at [SES 2023](https://2023ses.com/)<br/>
+<span style="color:darkgray">Oct 9, 2023</span>
+{{< youtube Fy-4PQYcWUk >}}
+
+<span style="color:darkgray">Beichen Li, Bolei Deng, Wan Shou, Tae-Hyun Oh, Yuanmin Hu, Yiyue Luo, Liang Shi, Wojciech Matusik</span> (2023). [**Computational Discovery of Microstructured Compositeswith Optimal Strength-Toughness Trade-Offs**](../../publication/li-2023-computational/). *ArXiv*.
+
+<br/>
+
+---
+### **Computational Discovery of Microstructured Compositeswith Optimal Strength-Toughness Trade-Offs (10 min version)**
 
 Presented at [APS March Meeting 2023](https://www.aps.org/meetings/meeting.cfm?name=MAR23)<br/>
 <span style="color:darkgray">Mar 6, 2023</span>
