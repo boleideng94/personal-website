@@ -22,9 +22,9 @@ main:
   - name: Publications
     url: '/publication'
     weight: 50
-  - name: Opportunities
-    url: '/opportunities'
-    weight: 55
+  # - name: Opportunities
+  #   url: '/opportunities'
+  #   weight: 55
   - name: Contact
     url: '/contact'
     weight: 60

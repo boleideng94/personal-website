@@ -1,3 +1,36 @@
+### **Contact-based Mechanical Metamaterials**
+Presented at [SMASIS ASME](https://event.asme.org/SMASIS)<br/>
+<span style="color:darkgray">Sept 10, 2024</span>
+
+{{< youtube NItgQOc2vMk >}}
+<br/>
+---
+
+### **A Universal Law for Intrinsic Fracture Energy of Stretchable Networks**
+Presented at [Fracture of Soft Materials - An Ameritech Symposium](https://sites.google.com/usacm.org/softfracture/home)<br/>
+<span style="color:darkgray">May 16, 2024</span>
+
+{{< youtube S9Dqbe0FGmg >}}
+<br/>
+---
+
+
+### **How to Inverse Designing Mechanical Metamaterials?**
+Presented at [University of Utah](https://www.mech.utah.edu/)<br/>
+<span style="color:darkgray">Mar 19, 2024</span>
+
+{{< youtube _TWHBZOqBiM >}}
+<br/>
+---
+
+### **Inverse Design and Optimization of Mechanical Metamaterials**
+Presented at [Georgia Tech Workshop on Foundation of Scientific AI for Optimization of Complex Systems](https://cse.gatech.edu/events/2024/01/16/georgia-tech-workshop-foundation-scientific-ai-optimization-complex-systems)<br/>
+<span style="color:darkgray">Jan 16, 2024</span>
+
+{{< youtube hXcNFiAOIbo >}}
+<span style="color:darkgray"><br/>
+---
+
 ### **Learning Neural Constitutive Laws from Motion Observations for Generalizable PDE Dynamics**
 Presented at [SES 2023](https://2023ses.com/)<br/>
 <span style="color:darkgray">Oct 11, 2023</span>
