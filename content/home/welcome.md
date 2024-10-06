@@ -12,7 +12,8 @@ design:
   columns: '1'
 ---
 
-I am joining Georgia Tech as an Assistant Professor on Dec 1, 2023 leading the **Computational Design & Metamaterials Lab (CDM Lab)**. I am looking for multiple Ph.D. students 🎓🎓🎓 (checkout [<span style="color:CornflowerBlue">**opportunities**<span>](../opportunities) page for more information).
+I joined Georgia Tech as an Assistant Professor on Dec 1, 2023 leading the **Computational Design & Metamaterials Lab (CDM Lab)**. 
+<!-- I am looking for multiple Ph.D. students 🎓🎓🎓 (checkout [<span style="color:CornflowerBlue">**opportunities**<span>](../opportunities) page for more information). -->
 
 <!-- **My goal is to develop next-geneartion materials, device, and robots with [<span style="color:Teal">**<ins>Physical Intelligence</ins>**<span>](../../publication/PI_Sitti.pdf) by combining my expertise in [<span style="color:deepskyblue">**Architected Materials**<span> (<ins>nonlinear waves</ins>](../project/nonlinear-waves/), [<span style="color:deepskyblue"><ins>phase transitions</ins><span>](../project/phase-transitions/), [<span style="color:deepskyblue"><ins>soft robotics</ins><span>](../project/soft-robots/)), [<span style="color:salmon">**<ins>Responsive Materials</ins>**<span>](../project/micro-structures/), and [<span style="color:orange">**<ins>Design Algorithms</ins>**<span>](../project/inverse-design/).**
 ![](RS.png)
