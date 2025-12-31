@@ -15,8 +15,8 @@ design:
 **Metamaterials** are a class of structural materials with exotic properties, where their macroscopic physical characteristics arise from the <u>precise geometric design of their microstructures</u>.
 
 ![](metamaterials_gallery.png)
-### My role in this
-My lab will leverage *artificial intelligence* and *machine learning* for multi-scale design and optimization of metamaterial meso-structures.
+### Our role in this
+Our lab will leverage *artificial intelligence* and *machine learning* for multi-scale design and optimization of metamaterial meso-structures.
 ![](algorithm.png)
 We will primarily focus on their **nonlinear mechanical properties**, including *nonlinear dynamics*, *multi-stability*, and *fracture*. Additionally, we will explore how to leverage these characteristics to develop *ultra-strong/tough while lightwseight metamaterials*, design *robot systems* based on metamaterials, and even develop materials with **physical intelligence** capable of *memory*, *computation*, and *decision-making*.
 
@@ -26,8 +26,8 @@ Over billions of years, to survive in unstructured real-world environments, biol
 ![](what_is_PI.png)
 Although recent developments of **computational intelligence** (e.g., artificial intelligence, high performance processors) have matched or even surpassed their biological counterpart neural intelligence, research in **physical intelligence** is still in its infancy. 
 
-**My approach to Physical Intelligence**<br/>
-I will combine my expertise in <span style="color:deepskyblue">**Metamaterials**</span> ([<span style="color:deepskyblue"><ins>nonlinear waves</ins>](../projects/project/nonlinear-waves/), [<span style="color:deepskyblue"><ins>phase transitions</ins><span>](../projects/project/phase-transitions/), [<span style="color:deepskyblue"><ins>soft robotics</ins><span>](../projects/project/soft-robots/)), [<span style="color:salmon">**<ins>Responsive Materials</ins>**<span>](../projects/project/micro-structures/), and [<span style="color:orange">**<ins>Design Algorithms</ins>**</span>](../projects/project/inverse-design/) to develop next-geneartion materials, device, and robots with Physical Intelligence. 
+**Our approach to Physical Intelligence**<br/>
+We will combine our expertise in <span style="color:deepskyblue">**Metamaterials**</span> ([<span style="color:deepskyblue"><ins>nonlinear waves</ins>](../projects/project/nonlinear-waves/), [<span style="color:deepskyblue"><ins>phase transitions</ins><span>](../projects/project/phase-transitions/), [<span style="color:deepskyblue"><ins>soft robotics</ins><span>](../projects/project/soft-robots/)), [<span style="color:salmon">**<ins>Responsive Materials</ins>**<span>](../projects/project/micro-structures/), and [<span style="color:orange">**<ins>Design Algorithms</ins>**</span>](../projects/project/inverse-design/) to develop next-geneartion materials, device, and robots with Physical Intelligence. 
 ![](my_tasks_PI.png)
 
 **A road map**<br/>

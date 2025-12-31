@@ -1,22 +1,25 @@
 ---
 # Display name
-title: Bolei Deng (邓博磊)
+title: Computational Design & Metamaterial Lab
 
 # Is this the primary user of the site?
 superuser: true
 
+# Show profile image (true/false)
+avatar: false
+
 # Role/position
-role: Postdoc in Mechanical Engineering and Computer Science
+role: ""
 
 # Organizations/Affiliations
 organizations:
-- name: CDFG, CSAIL, MIT
-  url: "https://cdfg.mit.edu/"
-- name: ZhaoLab, MECHE, MIT
-  url: "http://zhao.mit.edu/"
+- name: Aerospace Engineering
+  url: "https://ae.gatech.edu/"
+- name: Georgia Institute of Technology
+  url: "https://www.gatech.edu/"
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: Our research interests include architected materials, physical intelligence, and computational design.
 
 # Social/Academic Networking
 # For available icons, see: https://sourcethemes.com/academic/docs/page-builder/#icons
