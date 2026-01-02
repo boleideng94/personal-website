@@ -36,5 +36,5 @@ publication_types:
 - '2'
 abstract: 'Networks of interconnected materials permeate throughout nature, biology, and technology due to exceptional mechanical performance. Despite the importance of failure resistance in network design and utility, no existing physical model effectively links strand mechanics and connectivity to predict bulk fracture. Here, we reveal a scaling law that bridges these levels to predict the intrinsic fracture energy of diverse stretchable networks. Simulations and experiments demonstrate its remarkable applicability to a breadth of strand constitutive behaviors, topologies, dimensionalities, and length scales. We show that local strand rupture and nonlocal energy release contribute synergistically to the measured intrinsic fracture energy in networks. These effects coordinate such that the intrinsic fracture energy scales independent of the energy to rupture a strand; it instead depends on the strand rupture force, breaking length …'
 publication: '*Physical Review X*'
-doi: 
+doi: https://doi.org/10.1103/PhysRevX.15.011002
 ---

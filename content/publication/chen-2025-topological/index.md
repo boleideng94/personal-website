@@ -33,5 +33,5 @@ publication_types:
 - '2'
 abstract: 'We propose a realization of the one-dimensional Kitaev topological superconductor in classical mechanical metamaterials. By designing appropriate braiding protocols, we demonstrate that the system''s midgap vibrational modes, termed classical Majorana zero modes (MZMs), accurately reproduce the braiding statistics predicted by quantum theory. Encoding four MZMs as a classical analog of a qubit, we implement all single-qubit Clifford gates through braiding, enabling the simulation of topological quantum computation in a classical system. Furthermore, we establish the system''s topological protection by demonstrating its robustness against mechanical defects. This work provides a different framework for exploring topological quantum computation using classical metamaterials and offers a pathway to realizing stable vibrational systems protected by topology.'
 publication: '*Physical Review Research*'
-doi: 
+doi: https://doi.org/10.1103/PhysRevResearch.7.023143
 ---

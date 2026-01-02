@@ -48,5 +48,5 @@ publication_types:
 - '2'
 abstract: 'Generative AI models provide foundational knowledge and sufficient reasoning to aid in individual aspects of a computational design and modeling workflow (see Part 1  ). In this work, we analyze the ability of state-of-the-art LLMs (in particular GPT-4) to reason about the entire end-to-end workflow, from conceptualizing to realization, for two target domains:  static physical objects (here, furniture), and dynamical cyberphysical systems (here, quadcopters). Our investigation serves as an exemplar of how to use LLMs to build out such workflows, as well as a means of identifying which steps are most brittle and especially warrant future study. We conclude with an analysis of the capabilities and limitations of LLMs in the context of design and manufacturing as a whole, as well as a brief discussion of the grander opportunities and ethical risks put forth by such systems.“How Can Large Language Models Help Humans in Design And Manufacturing?” is a two-part article. Part 1, “Elements of The LLM-Enabled Computational Design and Manufacturing Pipeline,” can be read here  .'
 publication: '*Harvard Data Science Review*'
-doi: 
+doi: 10.1162/99608f92.0705d8bd
 ---

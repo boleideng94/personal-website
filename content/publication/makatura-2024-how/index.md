@@ -48,5 +48,5 @@ publication_types:
 - '2'
 abstract: 'The advancement of large language models (LLMs), including GPT-4, provides exciting new opportunities for generative design. We investigate the application of this tool across the entire design and manufacturing workflow. Specifically, we scrutinize the utility of LLMs in tasks such as: converting a text-based prompt into a design specification, transforming a design into manufacturing instructions, producing a design space and design variations, computing the performance of a design, and searching for designs predicated on performance. Through a series of examples, we highlight both the benefits and the limitations of the current LLMs. By exposing these limitations, we aspire to catalyze the continued improvement and progression of these models.“How Can Large Language Models Help Humans in Design and Manufacturing?” is a two-part article. Part 2, “Synthesizing an End-To-End LLM-Enabled Design and Manufacturing Workflow” can be read here  .'
 publication: '*Harvard Data Science Review*'
-doi: 
+doi: doi.org/10.1162/99608f92.0705d8bd
 ---
