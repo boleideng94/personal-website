@@ -63,21 +63,19 @@ advanced:
     </div>
   </div>
 
-  <div style="flex:1 1 320px; max-width:calc(50% - 20px); border:1px dashed #eee; border-radius:12px; padding:16px;">
-    <img src="student-photo.jpg" alt="Student Name" style="width:100%; max-width:260px; border-radius:12px; display:block; margin:0 auto 12px;">
-    <div style="font-size:0.9rem; font-weight:600; text-align:center;">Student Name</div>
-    <div style="text-align:center; color:#666; margin-bottom:8px; font-size:0.8rem;">PhD Student</div>
+  <div style="flex:1 1 320px; max-width:calc(50% - 20px); border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+    <img src="kyungmi-na.jpg" alt="Kyungmi Na" style="width:100%; max-width:260px; border-radius:12px; display:block; margin:0 auto 12px;">
+    <div style="font-size:0.9rem; font-weight:600; text-align:center;">Kyungmi Na (羅憼美)</div>
+    <div style="text-align:center; color:#666; margin-bottom:8px; font-size:0.8rem;">PhD in Machine Learning</div>
     <div style="font-size:0.8rem; line-height:1.3;">
-      Short intro goes here.
+      My work is related to the intersection of artificial intelligence and physical intelligence. Currently, I'm focused on bringing physical intelligence to life through metamaterials, specifically by developing new design methodologies that leverage differentiable simulation. I am trying to find ways to make materials “smarter” through computational design.
     </div>
     <div style="margin-top:8px; font-size:0.8rem; color:#555;">
-      Office: Room ###<br>
-      Email: <a href="mailto:student@gatech.edu">student@gatech.edu</a><br>
-      Website: <a href="https://example.com">example.com</a>
+      Email: <a href="mailto:kna35@gatech.edu">kna35@gatech.edu</a>
     </div>
     <div style="margin-top:8px; font-size:0.75rem; color:#777; text-align:center;">
-      MS, Harvard University<br>
-      BS, ...
+      BS, Mechanical engineering, POSTECH<br>
+      MS, Aerospace engineering, KAIST
     </div>
   </div>
 </div>
