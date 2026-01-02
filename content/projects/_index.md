@@ -1,23 +1,34 @@
 ---
-# A Demo section created with the Blank widget.
-# Any elements can be added in the body: https://wowchemy.com/docs/writing-markdown-latex/
-widget: blank  # See https://wowchemy.com/docs/page-builder/
-headless: false  # This file represents a page section.
+# Project landing page (custom content only).
+type: page
+layout: page
 title: Projects
 subtitle:
-design:
-  columns: '1'
 ---
 
-<a href="project/nonlinear-waves/" style="text-decoration:none; color:inherit; display:inline-block;">
-<div style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); max-width:860px; margin-bottom:18px;">
-  <div style="font-size:1.15rem; font-weight:700; margin-bottom:10px;">Nonlinear Waves in Architected Materials</div>
-  <img src="project/nonlinear-waves/featured.jpg" alt="Nonlinear waves in architected materials" style="width:100%; border-radius:10px; display:block; margin:0 0 12px;">
+<a href="project/inverse-design/" style="text-decoration:none; color:inherit; display:block;">
+<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
+  <div class="project-card-title" style="margin-bottom:10px;">Optimization and inverse design of metamaterials</div>
+  <img src="project/inverse-design/featured.jpg" alt="Optimization and inverse design of metamaterials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
+  <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
+    We develop optimization and inverse design algorithms that connect target mechanical responses to metamaterial geometry, enabling fast discovery of high‑performance architectures.
+  </div>
+  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
+  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
+    1. <span style="color:darkgray">Bolei Deng*, Ahmad Zareei, Xiaoxiao Ding, James C. Weaver, Chris H. Rycroft, Katia Bertoldi*</span> (2022).&nbsp;<a href="../publication/deng-2022-inverse/"><strong>Inverse Design of Mechanical Metamaterials with Target Nonlinear Response via a Neural Accelerated Evolution Strategy</strong></a>. <em>Advanced Materials</em>.
+  </div>
+</div>
+</a>
+
+<a href="project/nonlinear-waves/" style="text-decoration:none; color:inherit; display:block;">
+<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
+  <div class="project-card-title" style="margin-bottom:10px;">Nonlinear Waves in Architected Materials</div>
+  <img src="project/nonlinear-waves/featured.jpg" alt="Nonlinear waves in architected materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We study how nonlinear waves travel through architected materials and how geometry and nonlinear dynamics enable new mechanisms for control, focusing, and robust wave manipulation.
   </div>
-  <div style="font-size:0.9rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
-  <div style="font-size:0.85rem; line-height:1.45; color:#555;">
+  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
+  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
     1. <span style="color:darkgray">Bolei Deng, Hang Shu, Jian Li, Chengyang Mo, Jordan R. Raney, Vincent Tournat, Katia Bertoldi</span> (2023). <a href="../publication/deng-2023-nonlinear/"><strong>Nonlinear waves at the free surface of flexible mechanical metamaterials</strong></a>. <em>Applied Physics Letters</em>.<br>
     2. <span style="color:darkgray">Bolei Deng#, Jian Li#, Vincent Tournat, Prashant K. Purohit, Katia Bertoldi</span> (2021). <a href="../publication/deng-2020-dynamic/"><strong>Dynamics of mechanical metamaterials, A framework to connect phonons, nonlinear periodic waves and solitons</strong></a>. <em>Journal of the Mechanics and Physics of Solids</em>.<br>
     3. <span style="color:darkgray">Bolei Deng, JR Raney, K Bertoldi, Vincent Tournat</span> (2021). <a href="../publication/deng-2021-nonlinear/"><strong>Nonlinear waves in flexible mechanical metamaterials</strong></a>. <em>Journal of Applied Physics</em>.<br>
@@ -31,15 +42,15 @@ design:
 </div>
 </a>
 
-<a href="project/phase-transitions/" style="text-decoration:none; color:inherit; display:inline-block;">
-<div style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); max-width:860px; margin-bottom:18px;">
-  <div style="font-size:1.15rem; font-weight:700; margin-bottom:10px;">Phase Transitions in Architected Materials</div>
-  <img src="project/phase-transitions/featured.jpg" alt="Phase transitions in architected materials" style="width:100%; border-radius:10px; display:block; margin:0 0 12px;">
+<a href="project/phase-transitions/" style="text-decoration:none; color:inherit; display:block;">
+<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
+  <div class="project-card-title" style="margin-bottom:10px;">Phase Transitions in Architected Materials</div>
+  <img src="project/phase-transitions/featured.jpg" alt="Phase transitions in architected materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We explore phase transitions and multistability in architected materials, uncovering how geometry and instabilities enable reversible switching and programmable behavior.
   </div>
-  <div style="font-size:0.9rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
-  <div style="font-size:0.85rem; line-height:1.45; color:#555;">
+  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
+  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
     1. <span style="color:darkgray">Nikolaos Vasios, Bolei Deng, Benjamin Gorissen, Katia Bertoldi</span> (2021).&nbsp;<a href="../publication/vasios-2020/"><strong>Universally bistable shells with nonzero Gaussian curvature for two-way transition waves</strong></a>. <em>Nature Communications</em>.<br>
     2. <span style="color:darkgray">Ahmad Zareei, Bolei Deng, Katia Bertoldi</span> (2021).&nbsp;<a href="../publication/zareei-2020/"><strong>Harnessing transition waves to realize deployable structures</strong></a>. <em>Proceedings of the National Academy of Sciences</em>.<br>
     3. <span style="color:darkgray">Bolei Deng#, Siqin Yu#, Antonio E. Forte, Vincent Tournat, Katia Bertoldi</span> (2020).&nbsp;<a href="../publication/deng-2020-characterization/"><strong>Characterization, stability, and application of domain walls in flexible mechanical metamaterials</strong></a>. <em>Proceedings of the National Academy of Sciences</em>.<br>
@@ -49,15 +60,15 @@ design:
 </div>
 </a>
 
-<a href="project/soft-robots/" style="text-decoration:none; color:inherit; display:inline-block;">
-<div style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); max-width:860px; margin-bottom:18px;">
-  <div style="font-size:1.15rem; font-weight:700; margin-bottom:10px;">Soft robots via Architected Materials</div>
-  <img src="project/soft-robots/featured.jpg" alt="Soft robots via architected materials" style="width:100%; border-radius:10px; display:block; margin:0 0 12px;">
+<a href="project/soft-robots/" style="text-decoration:none; color:inherit; display:block;">
+<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
+  <div class="project-card-title" style="margin-bottom:10px;">Soft robots via Architected Materials</div>
+  <img src="project/soft-robots/featured.jpg" alt="Soft robots via architected materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We create soft robotic functions using architected materials, leveraging nonlinear responses to achieve motion, crawling, and programmable shape change.
   </div>
-  <div style="font-size:0.9rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
-  <div style="font-size:0.85rem; line-height:1.45; color:#555;">
+  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
+  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
     1. <span style="color:darkgray">Bolei Deng#, Mohamed Zanaty#, Antonio E. Forte, Katia Bertoldi</span> (2022).&nbsp;<a href="../publication/deng-2022-topological/"><strong>Topological solitons make metamaterials crawl</strong></a>. <em>Physical Review Applied</em>.<br>
     2. <span style="color:darkgray">Bolei Deng, Liyuan Chen, Donglai Wei, Vincent Tournat, Katia Bertoldi</span> (2020).&nbsp;<a href="../publication/deng-2020-pulse/"><strong>Pulse-driven robot, Motion via solitary waves</strong></a>. <em>Science Advances</em>.<br>
     3. <span style="color:darkgray">Lishuai Jin, Antonio Elia Forte, Bolei Deng, Ahmad Rafsanjani, Katia Bertoldi</span> (2020).&nbsp;<a href="../publication/jin-2020/"><strong>Kirigami‑Inspired Inflatables with Programmable Shapes</strong></a>. <em>Advanced Materials</em>.<br>
@@ -66,15 +77,15 @@ design:
 </div>
 </a>
 
-<a href="project/micro-structures/" style="text-decoration:none; color:inherit; display:inline-block;">
-<div style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); max-width:860px;">
-  <div style="font-size:1.15rem; font-weight:700; margin-bottom:10px;">Micro-structures with Responsive Materials</div>
-  <img src="project/micro-structures/featured.jpg" alt="Micro-structures with responsive materials" style="width:100%; border-radius:10px; display:block; margin:0 0 12px;">
+<a href="project/micro-structures/" style="text-decoration:none; color:inherit; display:block;">
+<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%;">
+  <div class="project-card-title" style="margin-bottom:10px;">Micro-structures with Responsive Materials</div>
+  <img src="project/micro-structures/featured.jpg" alt="Micro-structures with responsive materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We develop responsive micro-structures that can transform and self-regulate, creating adaptive material systems with rich mechanical and functional behaviors.
   </div>
-  <div style="font-size:0.9rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
-  <div style="font-size:0.85rem; line-height:1.45; color:#555;">
+  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
+  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
     1. <span style="color:darkgray">Shucong Li, Michael M. Lerch, James T. Waters, Bolei Deng, Reese S. Martens, Yuxing Yao, Do Yoon Kim, Katia Bertoldi, Alison Grinthal, Anna C. Balazs, Joanna Aizenberg</span> (2022).&nbsp;<a href="../publication/li-2022-self/"><strong>Self-regulated non-reciprocal motions in single-material microstructures</strong></a>. <em>Nature</em>.<br>
     2. <span style="color:darkgray">Shucong Li#, Bolei Deng#, Alison Grinthal, Alyssha Schneider-Yamamura, Jinliang Kang, Reese S. Martens, Cathy T. Zhang, Jian Li, Siqin Yu, Katia Bertoldi, Joanna Aizenberg</span> (2021).&nbsp;<a href="../publication/li-2021-liquid/"><strong>Liquid-induced topological transformations of cellular microstructures</strong></a>. <em>Nature</em>.
   </div>
