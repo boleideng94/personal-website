@@ -74,8 +74,25 @@ advanced:
       Email: <a href="mailto:kna35@gatech.edu">kna35@gatech.edu</a>
     </div>
     <div style="margin-top:8px; font-size:0.75rem; color:#777; text-align:center;">
-      BS, Mechanical engineering, POSTECH<br>
-      MS, Aerospace engineering, KAIST
+      MS, Aerospace engineering, KAIST<br>
+      BS, Mechanical engineering, POSTECH
+    </div>
+  </div>
+
+  <div style="flex:1 1 320px; max-width:calc(50% - 20px); border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+    <img src="miaomiao-dai.jpg" alt="Miaomiao Dai" style="width:100%; max-width:260px; border-radius:12px; display:block; margin:0 auto 12px;">
+    <div style="font-size:0.9rem; font-weight:600; text-align:center;">Miaomiao Dai</div>
+    <div style="text-align:center; color:#666; margin-bottom:8px; font-size:0.8rem;">PhD in machine learning</div>
+    <div style="font-size:0.8rem; line-height:1.3;">
+      My research focuses on combining machine learning with physics-based modeling to uncover governing principles and enable inverse design of metamaterial systems. Beyond research, I enjoy hiking, photography, cooking, and discovering new restaurants.
+    </div>
+    <div style="margin-top:8px; font-size:0.8rem; color:#555;">
+      Office: Weber 201<br>
+      Email: <a href="mailto:mdai49@gatech.edu">mdai49@gatech.edu</a>
+    </div>
+    <div style="margin-top:8px; font-size:0.75rem; color:#777; text-align:center;">
+      MS, Mechanical Engineering, Georgia Tech<br>
+      BS, Biosystem Engineering, Zhejiang University
     </div>
   </div>
 </div>
