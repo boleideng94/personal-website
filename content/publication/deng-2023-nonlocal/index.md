@@ -34,5 +34,5 @@ publication_types:
 - '2'
 abstract: 'Connecting polymer network fracture to molecular-level chain scission remains a quandary. While the Lake-Thomas model predicts the intrinsic fracture energy of a polymer network is the energy to rupture a layer of chains, it underestimates recent experiments by orders of magnitude. Here we show that the intrinsic fracture energy of polymerlike networks stems from nonlocal energy dissipation by relaxing chains far from the crack tip using experiments and simulations of 2D and 3D networks with varying defects, dispersity, topologies, and length scales. Our findings not only provide physical insights into polymer network fracture but offer design principles for tough architected materials.'
 publication: '*Physical Review Letters*'
-doi: 
+doi: https://doi.org/10.1103/PhysRevLett.131.228102
 ---

@@ -37,5 +37,5 @@ publication_types:
 - '2'
 abstract: 'Dispersion relations govern wave behaviors, and tailoring them is a grand challenge in wave manipulation. We demonstrate the inverse design of phononic dispersion using nonlocal interactions on one-dimensional spring-mass chains. For both single-band and double-band cases, we can achieve any valid dispersion curves with analytical precision. We further employ our method to design phononic crystals with multiple ordinary (roton or maxon) and higher-order (undulation) critical points and investigate their wave packet dynamics.'
 publication: '*Physical Review Letters*'
-doi: 
+doi: https://doi.org/10.1103/PhysRevLett.131.176101
 ---

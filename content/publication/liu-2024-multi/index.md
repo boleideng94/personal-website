@@ -34,5 +34,5 @@ publication_types:
 - '1'
 abstract: 'We report a comprehensive design guide for crystalline metamaterials with cubic elasticity - the simplest anisotropic case specified by three elastic constants only. To clarify some popular misconceptions, we first present a discussion about the symmetry requirements. Next, we demonstrate a complete design protocol for periodic structures that are guaranteed to exhibit cubic elastic behaviors, with an emphasis on designs without any four-fold (i.e., 90 degrees) rotational symmetry or mirror symmetry. Further, we show some examples with different extreme anisotropic cases as well as functionalities for wave manipulation.'
 publication: '*Behavior and Mechanics of Multifunctional Materials XVIII*'
-doi: 
+doi: doi.org/10.1117/12.3010079
 ---
