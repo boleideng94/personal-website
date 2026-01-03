@@ -8,7 +8,7 @@ subtitle:
 
 <a href="project/inverse-design/" style="text-decoration:none; color:inherit; display:block;">
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
-  <div class="project-card-title" style="margin-bottom:10px;">Optimization and inverse design of metamaterials</div>
+  <div class="project-card-title" style="margin-bottom:10px;">Optimization and Inverse Design of Metamaterials</div>
   <img src="project/inverse-design/featured.jpg" alt="Optimization and inverse design of metamaterials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We develop optimization and inverse design algorithms that connect target mechanical responses to metamaterial geometry, enabling fast discovery of high‑performance architectures.
@@ -22,10 +22,10 @@ subtitle:
 
 <a href="project/nonlinear-waves/" style="text-decoration:none; color:inherit; display:block;">
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
-  <div class="project-card-title" style="margin-bottom:10px;">Nonlinear Waves in Architected Materials</div>
+  <div class="project-card-title" style="margin-bottom:10px;">Nonlinear Waves in Metamaterials</div>
   <img src="project/nonlinear-waves/featured.jpg" alt="Nonlinear waves in architected materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
-    We study how nonlinear waves travel through architected materials and how geometry and nonlinear dynamics enable new mechanisms for control, focusing, and robust wave manipulation.
+    We study how nonlinear waves travel through metamaterials and how geometry and nonlinear dynamics enable new mechanisms for control, focusing, and robust wave manipulation.
   </div>
   <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
   <div style="font-size:0.78rem; line-height:1.4; color:#555;">
@@ -44,10 +44,10 @@ subtitle:
 
 <a href="project/phase-transitions/" style="text-decoration:none; color:inherit; display:block;">
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
-  <div class="project-card-title" style="margin-bottom:10px;">Phase Transitions in Architected Materials</div>
+  <div class="project-card-title" style="margin-bottom:10px;">Phase Transitions in Metamaterials</div>
   <img src="project/phase-transitions/featured.jpg" alt="Phase transitions in architected materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
-    We explore phase transitions and multistability in architected materials, uncovering how geometry and instabilities enable reversible switching and programmable behavior.
+    We explore phase transitions and multistability in metamaterials, uncovering how geometry and instabilities enable reversible switching and programmable behavior.
   </div>
   <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
   <div style="font-size:0.78rem; line-height:1.4; color:#555;">
@@ -62,10 +62,10 @@ subtitle:
 
 <a href="project/soft-robots/" style="text-decoration:none; color:inherit; display:block;">
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
-  <div class="project-card-title" style="margin-bottom:10px;">Soft robots via Architected Materials</div>
+  <div class="project-card-title" style="margin-bottom:10px;">Soft Robots via Metamaterials</div>
   <img src="project/soft-robots/featured.jpg" alt="Soft robots via architected materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
-    We create soft robotic functions using architected materials, leveraging nonlinear responses to achieve motion, crawling, and programmable shape change.
+    We create soft robotic functions using metamaterials, leveraging nonlinear responses to achieve motion, crawling, and programmable shape change.
   </div>
   <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
   <div style="font-size:0.78rem; line-height:1.4; color:#555;">
