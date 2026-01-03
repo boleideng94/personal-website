@@ -153,4 +153,22 @@ advanced:
       <a href="mailto:sgaonkar8@gatech.edu">sgaonkar8@gatech.edu</a>
     </div>
   </div>
+
+  <div style="flex:1 1 240px; max-width:calc(33.333% - 20px); border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); text-align:center;">
+    <img src="ethan-koh.jpg" alt="Ethan Ting-Wei Koh" style="width:100%; max-width:220px; border-radius:12px; display:block; margin:0 auto 10px;">
+    <div style="font-size:0.9rem; font-weight:600;">Ethan Ting-Wei Koh</div>
+    <div style="font-size:0.8rem; color:#666; margin-top:4px;">Aerospace Engineering</div>
+    <div style="font-size:0.8rem; color:#555; margin-top:6px;">
+      <a href="mailto:ekoh31@gatech.edu">ekoh31@gatech.edu</a>
+    </div>
+  </div>
+
+  <div style="flex:1 1 240px; max-width:calc(33.333% - 20px); border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); text-align:center;">
+    <img src="weiting-qian.jpg" alt="Weiting Qian" style="width:100%; max-width:220px; border-radius:12px; display:block; margin:0 auto 10px;">
+    <div style="font-size:0.9rem; font-weight:600;">Weiting Qian</div>
+    <div style="font-size:0.8rem; color:#666; margin-top:4px;">Aerospace Engineering</div>
+    <div style="font-size:0.8rem; color:#555; margin-top:6px;">
+      <a href="mailto:wqian46@gatech.edu">wqian46@gatech.edu</a>
+    </div>
+  </div>
 </div>
