@@ -31,7 +31,7 @@ subtitle:
     <video src="project/fracture/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block;"></video>
   </div>
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
-    We study how network architecture and bond heterogeneity govern fracture in polymer-like systems and metamaterials. These insights guide scalable design rules for tougher, more resilient mechanical networks.
+    We study how mechanical metamaterials with complex geometry fracture, especially for these askin to polymer ntworks. These insights guide scalable design rules for tougher, more resilient materials.
   </div>
   <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
   <div style="font-size:0.78rem; line-height:1.4; color:#555;">
@@ -48,7 +48,7 @@ subtitle:
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
   <div class="project-card-title" style="margin-bottom:10px;">Nonlinear Waves in Metamaterials</div>
   <div style="width:90%; border-radius:10px; overflow:hidden; margin:0 auto 12px;">
-    <video src="project/nonlinear-waves/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block; border-radius:10px;"></video>
+    <video src="project/nonlinear-waves/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block;"></video>
   </div>
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We study how nonlinear waves travel through metamaterials and how geometry and nonlinear dynamics enable new mechanisms for control, focusing, and robust wave manipulation.
@@ -72,7 +72,7 @@ subtitle:
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
   <div class="project-card-title" style="margin-bottom:10px;">Phase Transitions in Metamaterials</div>
   <div style="width:90%; border-radius:10px; overflow:hidden; margin:0 auto 12px;">
-    <video src="project/phase-transitions/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block; border-radius:10px;"></video>
+    <video src="project/phase-transitions/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block;"></video>
   </div>
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We explore phase transitions and multistability in metamaterials, uncovering how geometry and instabilities enable reversible switching and programmable behavior.
