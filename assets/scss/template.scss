@@ -64,6 +64,11 @@
   font-weight: 700;
   font-size: 1.3rem;
 }
+.project-card video {
+  border-radius: 10px;
+  display: block;
+  width: 100%;
+}
 .dark .project-card {
   color: #f1f1f1;
   border-color: #3a3a3a;
