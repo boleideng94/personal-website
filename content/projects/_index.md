@@ -44,6 +44,24 @@ subtitle:
 </div>
 </a>
 
+<a href="project/electronic-free/" style="text-decoration:none; color:inherit; display:block;">
+<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
+  <div class="project-card-title" style="margin-bottom:10px;">Electronic-Free Systems</div>
+  <div style="width:90%; border-radius:10px; overflow:hidden; margin:0 auto 12px;">
+    <video src="project/electronic-free/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block; border-radius:10px;"></video>
+  </div>
+  <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
+    Electronic systems often add fabrication cost, power requirements, and vulnerability—especially in harsh environments such as deep sea or space. We build mechanically encoded systems that enable communication, deployment, actuation, and sensing with minimal or no electronics through carefully designed architectures and geometry.
+  </div>
+  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
+  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
+    1. <span style="color:darkgray">Xinyi Yang, Bohan Wang, Víctor Riera Naranjo, Minghao Guo, Olivia Rivera, Leonid Sopizhenko, Shucong Li, William Freeman, Wojciech Matusik, Bolei Deng</span> (2025). <a href="../publication/yang-2025-electronic/"><strong>Electronic-Free Particle Robots Communicate through Architected Tentacles</strong></a>. <em>Advanced Intelligent Systems</em>.<br><span style="display:block; height:4px;"></span>
+    2. <span style="color:darkgray">Yibo Fu, Vivian Shen, Víctor Riera Naranjo, Bolei Deng, Alex Adams, Josiah Hester</span> (2025). <a href="../publication/fu-2025-soundoff/"><strong>SoundOff: Low-cost Passive Ultrasound Tags for Non-invasive and Non-Intrusive Smart Home Sensing</strong></a>. <em>Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies</em>.<br><span style="display:block; height:4px;"></span>
+    3. <span style="color:darkgray">Bolei Deng#, Mohamed Zanaty#, Antonio E Forte, Katia Bertoldi</span> (2022). <a href="../publication/deng-2022-topological/"><strong>Topological solitons make metamaterials crawl</strong></a>. <em>Physical Review Applied</em>.
+  </div>
+</div>
+</a>
+
 <a href="project/nonlinear-waves/" style="text-decoration:none; color:inherit; display:block;">
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
   <div class="project-card-title" style="margin-bottom:10px;">Nonlinear Waves in Metamaterials</div>
