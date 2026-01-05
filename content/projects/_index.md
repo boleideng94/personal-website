@@ -24,26 +24,6 @@ subtitle:
 </div>
 </a>
 
-<a href="project/fracture/" style="text-decoration:none; color:inherit; display:block;">
-<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
-  <div class="project-card-title" style="margin-bottom:10px;">Fracture of Metamaterials</div>
-  <div style="width:90%; border-radius:10px; overflow:hidden; margin:0 auto 12px;">
-    <video src="project/fracture/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block;"></video>
-  </div>
-  <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
-    We study how mechanical metamaterials with complex geometry fracture, especially for these askin to polymer ntworks. These insights guide scalable design rules for tougher, more resilient materials.
-  </div>
-  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
-  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
-    1. <span style="color:darkgray">Chase M Hartquist, Shu Wang, Bolei Deng, Haley K Beech, Stephen L Craig, Bradley D Olsen, Michael Rubinstein, Xuanhe Zhao</span> (2025). <a href="../publication/hartquist-2025-fracture/"><strong>Fracture of polymer-like networks with hybrid bond strengths</strong></a>. <em>Journal of the Mechanics and Physics of Solids</em>.<br><span style="display:block; height:4px;"></span>
-    2. <span style="color:darkgray">Chase Hartquist, Shu Wang, Qiaodong Cui, Wojciech Matusik, Bolei Deng, Xuanhe Zhao</span> (2025). <a href="../publication/hartquist-2025-scaling/"><strong>Scaling law for intrinsic fracture energy of diverse stretchable networks</strong></a>. <em>Physical Review X</em>.<br><span style="display:block; height:4px;"></span>
-    3. <span style="color:darkgray">Shu Wang, Chase M Hartquist, Bolei Deng, Xuanhe Zhao</span> (2024). <a href="../publication/wang-2024-loop/"><strong>A loop-opening model for the intrinsic fracture energy of polymer networks</strong></a>. <em>Macromolecules</em>.<br><span style="display:block; height:4px;"></span>
-    4. <span style="color:darkgray">Beichen Li, Bolei Deng, Wan Shou, Tae-Hyun Oh, Yuanming Hu, Yiyue Luo, Liang Shi, Wojciech Matusik</span> (2024). <a href="../publication/li-2024-computational/"><strong>Computational discovery of microstructured composites with optimal stiffness-toughness trade-offs</strong></a>. <em>Science Advances</em>.<br><span style="display:block; height:4px;"></span>
-    5. <span style="color:darkgray">Bolei Deng, Shu Wang, Chase Hartquist, Xuanhe Zhao</span> (2023). <a href="../publication/deng-2023-nonlocal/"><strong>Nonlocal intrinsic fracture energy of polymerlike networks</strong></a>. <em>Physical Review Letters</em>.
-  </div>
-</div>
-</a>
-
 <a href="project/electronic-free/" style="text-decoration:none; color:inherit; display:block;">
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
   <div class="project-card-title" style="margin-bottom:10px;">Electronic-Free Systems</div>
@@ -58,6 +38,26 @@ subtitle:
     1. <span style="color:darkgray">Xinyi Yang, Bohan Wang, Víctor Riera Naranjo, Minghao Guo, Olivia Rivera, Leonid Sopizhenko, Shucong Li, William Freeman, Wojciech Matusik, Bolei Deng</span> (2025). <a href="../publication/yang-2025-electronic/"><strong>Electronic-Free Particle Robots Communicate through Architected Tentacles</strong></a>. <em>Advanced Intelligent Systems</em>.<br><span style="display:block; height:4px;"></span>
     2. <span style="color:darkgray">Yibo Fu, Vivian Shen, Víctor Riera Naranjo, Bolei Deng, Alex Adams, Josiah Hester</span> (2025). <a href="../publication/fu-2025-soundoff/"><strong>SoundOff: Low-cost Passive Ultrasound Tags for Non-invasive and Non-Intrusive Smart Home Sensing</strong></a>. <em>Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies</em>.<br><span style="display:block; height:4px;"></span>
     3. <span style="color:darkgray">Bolei Deng#, Mohamed Zanaty#, Antonio E Forte, Katia Bertoldi</span> (2022). <a href="../publication/deng-2022-topological/"><strong>Topological solitons make metamaterials crawl</strong></a>. <em>Physical Review Applied</em>.
+  </div>
+</div>
+</a>
+
+<a href="project/fracture/" style="text-decoration:none; color:inherit; display:block;">
+<div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
+  <div class="project-card-title" style="margin-bottom:10px;">Fracture of Metamaterials</div>
+  <div style="width:90%; border-radius:10px; overflow:hidden; margin:0 auto 12px;">
+    <video src="project/fracture/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block; border-radius:10px;" onloadedmetadata="this.style.borderRadius='10px';"></video>
+  </div>
+  <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
+    We study how mechanical metamaterials with complex geometry fracture, especially for these askin to polymer ntworks. These insights guide scalable design rules for tougher, more resilient materials.
+  </div>
+  <div style="font-size:0.85rem; font-weight:600; margin-bottom:6px;">Selected publications</div>
+  <div style="font-size:0.78rem; line-height:1.4; color:#555;">
+    1. <span style="color:darkgray">Chase M Hartquist, Shu Wang, Bolei Deng, Haley K Beech, Stephen L Craig, Bradley D Olsen, Michael Rubinstein, Xuanhe Zhao</span> (2025). <a href="../publication/hartquist-2025-fracture/"><strong>Fracture of polymer-like networks with hybrid bond strengths</strong></a>. <em>Journal of the Mechanics and Physics of Solids</em>.<br><span style="display:block; height:4px;"></span>
+    2. <span style="color:darkgray">Chase Hartquist, Shu Wang, Qiaodong Cui, Wojciech Matusik, Bolei Deng, Xuanhe Zhao</span> (2025). <a href="../publication/hartquist-2025-scaling/"><strong>Scaling law for intrinsic fracture energy of diverse stretchable networks</strong></a>. <em>Physical Review X</em>.<br><span style="display:block; height:4px;"></span>
+    3. <span style="color:darkgray">Shu Wang, Chase M Hartquist, Bolei Deng, Xuanhe Zhao</span> (2024). <a href="../publication/wang-2024-loop/"><strong>A loop-opening model for the intrinsic fracture energy of polymer networks</strong></a>. <em>Macromolecules</em>.<br><span style="display:block; height:4px;"></span>
+    4. <span style="color:darkgray">Beichen Li, Bolei Deng, Wan Shou, Tae-Hyun Oh, Yuanming Hu, Yiyue Luo, Liang Shi, Wojciech Matusik</span> (2024). <a href="../publication/li-2024-computational/"><strong>Computational discovery of microstructured composites with optimal stiffness-toughness trade-offs</strong></a>. <em>Science Advances</em>.<br><span style="display:block; height:4px;"></span>
+    5. <span style="color:darkgray">Bolei Deng, Shu Wang, Chase Hartquist, Xuanhe Zhao</span> (2023). <a href="../publication/deng-2023-nonlocal/"><strong>Nonlocal intrinsic fracture energy of polymerlike networks</strong></a>. <em>Physical Review Letters</em>.
   </div>
 </div>
 </a>

@@ -69,6 +69,10 @@
   display: block;
   width: 100%;
 }
+.project-card video {
+  max-width: 90%;
+  margin: 0 auto 12px;
+}
 .dark .project-card {
   color: #f1f1f1;
   border-color: #3a3a3a;
