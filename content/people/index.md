@@ -82,7 +82,7 @@ advanced:
   <div style="flex:1 1 320px; max-width:calc(50% - 20px); border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
     <img src="miaomiao-dai.jpg" alt="Miaomiao Dai" style="width:100%; max-width:260px; border-radius:12px; display:block; margin:0 auto 12px;">
     <div style="font-size:0.9rem; font-weight:600; text-align:center;">Miaomiao Dai</div>
-    <div style="text-align:center; color:#666; margin-bottom:8px; font-size:0.8rem;">PhD in machine learning</div>
+    <div style="text-align:center; color:#666; margin-bottom:8px; font-size:0.8rem;">PhD in Machine Learning</div>
     <div style="font-size:0.8rem; line-height:1.3;">
       My research focuses on combining machine learning with physics-based modeling to uncover governing principles and enable inverse design of metamaterial systems. Beyond research, I enjoy hiking, photography, cooking, and discovering new restaurants.
     </div>
@@ -93,6 +93,23 @@ advanced:
     <div style="margin-top:8px; font-size:0.75rem; color:#777; text-align:center;">
       MS, Mechanical Engineering, Georgia Tech<br>
       BS, Biosystem Engineering, Zhejiang University
+    </div>
+  </div>
+
+  <div style="flex:1 1 320px; max-width:calc(50% - 20px); border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04);">
+    <img src="victornaranjo.jpg" alt="Victor Riera Naranjo" style="width:100%; max-width:260px; border-radius:12px; display:block; margin:0 auto 12px;">
+    <div style="font-size:0.9rem; font-weight:600; text-align:center;">Victor Riera Naranjo</div>
+    <div style="text-align:center; color:#666; margin-bottom:8px; font-size:0.8rem;">PhD in Aerospace Engineering</div>
+    <div style="font-size:0.8rem; line-height:1.3;">
+      My research interests lie in metamaterials and nonlinear dynamics of materials. From understanding fracture dynamics in hyperelastic regimes to optimizing structures for deep-sea environments, I try to apply a multidisciplinary approach to the problems I study. Outside the office, I enjoy playing tennis, watching films, and reading.
+    </div>
+    <div style="margin-top:8px; font-size:0.8rem; color:#555;">
+      Office: Weber 201<br>
+      Email: <a href="mailto:vnaranjo6@gatech.edu">vnaranjo6@gatech.edu</a>
+    </div>
+    <div style="margin-top:8px; font-size:0.75rem; color:#777; text-align:center;">
+      MS, Aerospace Engineering, Georgia Tech<br>
+      BS, Aerospace Engineering, Polytechnic University of Madrid
     </div>
   </div>
 </div>
@@ -169,6 +186,24 @@ advanced:
     <div style="font-size:0.8rem; color:#666; margin-top:4px;">Aerospace Engineering</div>
     <div style="font-size:0.8rem; color:#555; margin-top:6px;">
       <a href="mailto:wqian46@gatech.edu">wqian46@gatech.edu</a>
+    </div>
+  </div>
+
+  <div style="flex:1 1 240px; max-width:calc(33.333% - 20px); border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); text-align:center;">
+    <img src="jaehyeok-kim.jpg" alt="Jaehyeok (Joey) Kim" style="width:100%; max-width:220px; border-radius:12px; display:block; margin:0 auto 10px;">
+    <div style="font-size:0.9rem; font-weight:600;">Jaehyeok (Joey) Kim</div>
+    <div style="font-size:0.8rem; color:#666; margin-top:4px;">Mechanical Engineering</div>
+    <div style="font-size:0.8rem; color:#555; margin-top:6px;">
+      <a href="mailto:jkim3614@gatech.edu">jkim3614@gatech.edu</a>
+    </div>
+  </div>
+
+  <div style="flex:1 1 240px; max-width:calc(33.333% - 20px); border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); text-align:center;">
+    <img src="nafezahmmed.jpg" alt="Nafez Ahmmed" style="width:100%; max-width:220px; border-radius:12px; display:block; margin:0 auto 10px;">
+    <div style="font-size:0.9rem; font-weight:600;">Nafez Ahmmed</div>
+    <div style="font-size:0.8rem; color:#666; margin-top:4px;">Aerospace Engineering</div>
+    <div style="font-size:0.8rem; color:#555; margin-top:6px;">
+      <a href="mailto:nahmmed3@gatech.edu">nahmmed3@gatech.edu</a>
     </div>
   </div>
 </div>
