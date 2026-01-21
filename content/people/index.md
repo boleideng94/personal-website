@@ -71,6 +71,7 @@ advanced:
       My work is related to the intersection of artificial intelligence and physical intelligence. Currently, I'm focused on bringing physical intelligence to life through metamaterials, specifically by developing new design methodologies that leverage differentiable simulation. I am trying to find ways to make materials “smarter” through computational design.
     </div>
     <div style="margin-top:8px; font-size:0.8rem; color:#555;">
+      Office: Weber 201<br>
       Email: <a href="mailto:kna35@gatech.edu">kna35@gatech.edu</a>
     </div>
     <div style="margin-top:8px; font-size:0.75rem; color:#777; text-align:center;">
@@ -117,6 +118,14 @@ advanced:
 
 ## **Undergraduate Students**
 <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:stretch;">
+  <div style="flex:1 1 240px; max-width:calc(33.333% - 20px); border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); text-align:center;">
+    <img src="adeolu-adesuyi.jpg" alt="Adeolu Adekunmi Adesuyi" style="width:100%; max-width:220px; border-radius:12px; display:block; margin:0 auto 10px;">
+    <div style="font-size:0.9rem; font-weight:600;">Adeolu Adekunmi Adesuyi</div>
+    <div style="font-size:0.8rem; color:#666; margin-top:4px;">Aerospace Engineering</div>
+    <div style="font-size:0.8rem; color:#555; margin-top:6px;">
+      <a href="mailto:aadesuyi3@gatech.edu">aadesuyi3@gatech.edu</a>
+    </div>
+  </div>
   <div style="flex:1 1 240px; max-width:calc(33.333% - 20px); border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); text-align:center;">
     <img src="leo-liu.jpg" alt="Leo Liu" style="width:100%; max-width:220px; border-radius:12px; display:block; margin:0 auto 10px;">
     <div style="font-size:0.9rem; font-weight:600;">Leo Liu</div>
