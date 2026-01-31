@@ -215,4 +215,13 @@ advanced:
       <a href="mailto:nahmmed3@gatech.edu">nahmmed3@gatech.edu</a>
     </div>
   </div>
+
+  <div style="flex:1 1 240px; max-width:calc(33.333% - 20px); border:1px solid #eee; border-radius:12px; padding:12px; box-shadow:0 1px 4px rgba(0,0,0,0.04); text-align:center;">
+    <img src="jai-gandhi.png" alt="Jai Gandhi" style="width:100%; max-width:220px; border-radius:12px; display:block; margin:0 auto 10px;">
+    <div style="font-size:0.9rem; font-weight:600;">Jai Gandhi</div>
+    <div style="font-size:0.8rem; color:#666; margin-top:4px;">Aerospace Engineering</div>
+    <div style="font-size:0.8rem; color:#555; margin-top:6px;">
+      <a href="mailto:jgandhi38@gatech.edu">jgandhi38@gatech.edu</a>
+    </div>
+  </div>
 </div>

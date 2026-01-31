@@ -109,7 +109,9 @@ subtitle:
 <a href="project/soft-robots/" style="text-decoration:none; color:inherit; display:block;">
 <div class="project-card" style="border:1px solid #eee; border-radius:12px; padding:16px; box-shadow:0 1px 4px rgba(0,0,0,0.04); background:#f7f7f7; width:100%; margin-bottom:18px;">
   <div class="project-card-title" style="margin-bottom:10px;">Soft Robots via Metamaterials</div>
-  <img src="project/soft-robots/featured.jpg" alt="Soft robots via architected materials" style="width:90%; border-radius:10px; display:block; margin:0 auto 12px;">
+  <div style="width:90%; border-radius:10px; overflow:hidden; margin:0 auto 12px;">
+    <video src="project/soft-robots/featured.mp4" autoplay loop muted playsinline style="width:100%; display:block; border-radius:10px;"></video>
+  </div>
   <div style="font-size:0.9rem; line-height:1.4; color:#444; margin-bottom:10px;">
     We create soft robotic functions using metamaterials, leveraging nonlinear responses to achieve motion, crawling, and programmable shape change.
   </div>
