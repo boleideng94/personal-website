@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orbit Lab — Interactive Satellite Simulator</title>
+<style>
+:root{color-scheme:dark;--bg:#080e18;--panel:#111b2a;--line:#26354a;--muted:#93a5bd;--text:#eaf1fa;--cyan:#67dfeb;--amber:#ffbc72;--danger:#ff8391;--mono:ui-monospace,SFMono-Regular,Consolas,monospace;font:14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text)}button,input,select{font:inherit}button,select{cursor:pointer}button{border:1px solid #34455e;border-radius:8px;padding:9px 12px;background:#1c2a3e;color:var(--text);transition:background .12s,border-color .12s}button:hover:not(:disabled){background:#2b3d55;border-color:#728ca9}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}button:disabled{opacity:.35;cursor:default}button.primary{background:var(--cyan);border-color:var(--cyan);color:#07232c;font-weight:750}button.primary:hover:not(:disabled){background:#a0f3f6}button.stop{color:#ffd0c1;border-color:#89574a;background:#35272b}button.small{padding:5px 9px;font-size:12px}button.ghost{background:transparent}button.active{border-color:var(--cyan);color:var(--cyan);background:#153140}input[type=number],select{min-width:0;width:100%;border:1px solid #34455e;background:#0b1421;color:var(--text);border-radius:7px;padding:8px}input[type=checkbox]{accent-color:var(--cyan);vertical-align:middle}input[type=range]{accent-color:var(--cyan);width:100%}label{color:var(--muted);font-size:12px;display:block}label input, label select{margin-top:4px}header{height:70px;padding:0 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1c293d;gap:10px}.brand{display:flex;align-items:center;gap:11px}.brandmark{width:33px;height:33px;border:1px solid #50768b;border-radius:50%;position:relative;transform:rotate(-32deg)}.brandmark:before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--cyan)}.brandmark:after{content:"";position:absolute;width:8px;height:8px;top:-4px;left:12px;border-radius:50%;background:var(--amber)}h1{font-size:19px;line-height:1.1;letter-spacing:3px;margin:0}.subtitle{font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.4px}.header-right{display:flex;align-items:center;gap:8px}.tag{font:10px var(--mono);letter-spacing:1.1px;color:#9ab6ca;border:1px solid #2c4054;padding:6px 9px;border-radius:5px}.layout{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:12px;padding:12px;height:calc(100dvh - 70px);min-height:650px}.stage{position:relative;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#08121f;min-width:0}.stage canvas{display:block;width:100%;height:100%;touch-action:none}.stage-top{position:absolute;inset:17px 18px auto;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-start;gap:14px}.eyebrow{color:var(--muted);font-size:10px;letter-spacing:1.5px;text-transform:uppercase}.clock{font:23px var(--mono);margin:4px 0 7px;letter-spacing:-1px}.status{font-size:11px;display:inline-flex;gap:6px;align-items:center;border:1px solid #314559;border-radius:99px;padding:3px 8px;background:#0d1927cc}.status:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--amber)}.status.live:before{background:var(--cyan)}.status.danger{color:var(--danger);border-color:#814556}.viewbar{pointer-events:auto;display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:335px}.viewbar button{background:#101e30dc;backdrop-filter:blur(8px)}.canvas-note{position:absolute;top:103px;left:18px;color:#aabdd1;font-size:11px;max-width:310px;pointer-events:none}.stage-bottom{position:absolute;inset:auto 0 0;background:linear-gradient(0deg,#08111f 65%,#08111f00);padding:44px 18px 15px;pointer-events:none}.live-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.stat-value{font:19px var(--mono);margin:3px 0}.stat-value small{font:11px system-ui;color:var(--muted)}.stage-help{margin-top:14px;color:#8ba0b9;font-size:11px;border-top:1px solid #233349;padding-top:11px;display:flex;gap:14px;flex-wrap:wrap}.key{border:1px solid #42536b;padding:0 5px;border-radius:3px;font:10px var(--mono);color:#bdd2e7}.sidebar{overflow-y:auto;scrollbar-width:thin;scrollbar-color:#3a526b transparent;padding-right:2px;display:flex;flex-direction:column;gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px}.card-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:11px;letter-spacing:1.4px;font-weight:650;color:#c5d6e8}.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}.runrow{display:grid;grid-template-columns:1fr 1fr 38px;gap:7px}.runrow button{font-size:15px;padding:10px 5px}.speedrow{display:flex;align-items:center;gap:10px;margin:12px 0 1px}.speedrow label{flex:1;white-space:nowrap}.speedrow select{width:126px;font-size:12px;padding:5px}.hint{color:var(--muted);font-size:11px;line-height:1.5;margin:8px 0 0}.burn-lock{color:var(--amber);margin-bottom:10px;font-size:11px}.dv-title{display:flex;align-items:baseline;gap:5px;margin-bottom:9px}.dv-title strong{font:24px var(--mono);color:var(--amber)}.dv-title span{color:var(--muted);font-size:12px}.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin:10px 0}.presets button{font-size:11px;padding:6px 3px;background:#19273a}.section-divider{height:1px;background:var(--line);margin:11px 0}.checkrow{display:flex;align-items:center;gap:6px;margin:8px 0;color:#b4c4d7;font-size:11px}.checkrow input{margin:0}.checkrow label{font-size:11px}.wide{width:100%}.preview-box{border:1px solid #4f413a;background:#28252a;border-radius:7px;padding:9px 10px;color:#e1c6ac;font-size:11px;margin:10px 0}.preview-box.bad{border-color:#754353;background:#32212b;color:#ffbbc4}.preview-box b{font-weight:650;color:#ffce97}.burn-card fieldset{border:0;padding:0;margin:0;min-width:0}.burn-card fieldset:disabled{opacity:.48}.kv{display:flex;justify-content:space-between;gap:10px;font-size:11px;padding:4px 0;color:var(--muted)}.kv span:last-child{font-family:var(--mono);color:#cfdfef;text-align:right}.segment-list{max-height:180px;overflow-y:auto;scrollbar-width:thin}.segment{display:flex;gap:9px;padding:8px 0;border-top:1px solid #243348}.swatch{flex:none;width:20px;height:3px;border-radius:3px;margin-top:8px}.seginfo{flex:1;font-size:12px}.seginfo small{display:block;color:var(--muted);font:10px/1.7 var(--mono)}.segnum{font:10px var(--mono);color:#8ca0b8}.legend{display:flex;gap:11px;font-size:10px;color:#9bafc5;flex-wrap:wrap;margin-bottom:9px}.legend span:before{content:"";display:inline-block;width:15px;height:0;vertical-align:middle;border-top:2px solid #67dfeb;margin-right:5px}.legend .future:before{border-top:2px dashed #a6bacb}.legend .trial:before{border-top:2px dashed #ffbc72}details{font-size:12px}summary{cursor:pointer;color:#c7d9e9}details .inside{padding-top:12px}.warn{color:var(--amber)}.error{color:var(--danger)}.footer-note{text-align:center;color:#627d98;font-size:10px;padding:0 5px 9px}.toast{position:absolute;bottom:156px;left:50%;transform:translateX(-50%);max-width:80%;background:#14273cee;border:1px solid #60809b;border-radius:9px;padding:10px 16px;color:#e0efff;font-size:12px;z-index:4;box-shadow:0 7px 35px #0005;opacity:0;transition:opacity .2s;pointer-events:none}.toast.show{opacity:1}dialog{border:1px solid #415773;border-radius:14px;background:#111c2c;color:var(--text);padding:24px;max-width:720px;width:calc(100% - 30px);max-height:85dvh;line-height:1.65}dialog::backdrop{background:#000a;backdrop-filter:blur(3px)}dialog h2{margin:0 0 10px;font-size:23px}dialog h3{margin-bottom:3px;color:#bcdbe9;font-size:15px}dialog p{margin-top:5px;color:#b5c7db;font-size:13px}dialog code{color:#d5ecf5}dialog a{color:var(--cyan)}.dialog-head{display:flex;justify-content:space-between;gap:10px}.export-actions{display:grid;gap:9px;margin:20px 0}.source-note{font-size:11px!important}#hiddenUpload{display:none}.warning-banner{position:absolute;top:138px;left:18px;right:18px;color:#ffbfca;background:#301b2bbd;border:1px solid #653744;border-radius:7px;padding:8px 10px;font-size:11px;display:none;max-width:470px}
+@media(min-width:1600px){.layout{grid-template-columns:minmax(0,1fr) 382px}.card{padding:17px}.sidebar{gap:12px}}
+@media(max-width:1040px){.layout{grid-template-columns:minmax(0,1fr) 322px}.viewbar{max-width:200px}.clock{font-size:20px}.stat-value{font-size:16px}.stage-top{inset:14px 13px auto}.stage-bottom{padding-left:13px;padding-right:13px}.canvas-note{left:13px;top:115px;max-width:200px}.tag{display:none}}
+@media(max-width:760px){header{padding:0 12px;height:66px}.subtitle{font-size:10px}h1{font-size:16px}.header-right button{font-size:11px;padding:7px}.layout{display:flex;flex-direction:column;height:auto;min-height:0;padding:8px}.stage{height:65dvh;min-height:480px}.sidebar{overflow:visible;padding:0;display:grid;grid-template-columns:1fr 1fr;align-items:start}.burn-card{grid-row:span 3}.stage-help{gap:8px}.stage-top{inset:13px}.clock{font-size:17px}.live-stats{gap:5px}.stat-value{font-size:14px}.eyebrow{font-size:9px}.canvas-note{font-size:10px}.footer-note{grid-column:1/-1}.toast{bottom:150px;font-size:11px}.warning-banner{top:150px}}
+@media(max-width:500px){.sidebar{display:flex}.stage{min-height:500px}.brandmark{display:none}.viewbar{max-width:175px}.viewbar button{font-size:10px;padding:5px 7px}.header-right{gap:4px}.stage-help{font-size:10px}.clock{font-size:16px}.stat-value{font-size:13px}}
+</style>
+<style>
+/* Navigation back to the teaching collection; simulator behavior is unchanged. */
+.teaching-return{display:inline-flex;align-items:center;min-height:44px;padding:0 20px;color:#a8c3d6;text-decoration:none;font:12px system-ui,sans-serif}
+.teaching-return:hover{color:#67dfeb;text-decoration:underline}
+.layout{height:calc(100dvh - 114px)}
+@media(max-width:760px){.teaching-return{padding:0 12px}.layout{height:auto}}
+</style>
+</head>
+<body>
+<nav aria-label="Teaching"><a class="teaching-return" href="/teaching/">← Back to Teaching</a></nav>
+<header><div class="brand"><div class="brandmark" aria-hidden="true"></div><div><h1>ORBIT LAB</h1><div class="subtitle">A satellite. Real gravity. Your next maneuver.</div></div></div><div class="header-right"><span class="tag">3D TWO-BODY SANDBOX</span><button id="helpBtn" class="ghost small">How it works</button><button id="exportBtn" class="small">Save / export</button></div></header>
+<main class="layout">
+<section class="stage" id="stage" aria-label="Interactive three-dimensional orbit viewport">
+<canvas id="space" aria-label="Satellite orbit. Stop time, then drag from the satellite to aim a velocity change."></canvas>
+<div class="stage-top"><div><div class="eyebrow">Mission elapsed time</div><div class="clock" id="clock">00:00:00</div><div id="status" class="status">PAUSED · READY TO FLY</div></div><div class="viewbar"><button id="topView" class="small active" title="Look down the inertial +Z axis">Top / XY</button><button id="view3D" class="small" title="Oblique three-dimensional view">3D view</button><button id="orbitView" class="small" title="Look normal to the current orbital plane">Orbit plane</button><button id="fitBtn" class="small" title="Fit Earth, all flown segments, and enabled predictions">Fit all</button></div></div>
+<div class="canvas-note" id="canvasNote">Press Run, or drag from the satellite to plan a burn.</div>
+<div class="warning-banner" id="warningBanner"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="stage-bottom"><div class="legend"><span>Flown · colored by burn</span><span class="future">No-burn future</span><span class="trial">Proposed burn</span></div><div class="live-stats"><div><div class="eyebrow">Altitude</div><div class="stat-value" id="altStat">400 <small>km</small></div></div><div><div class="eyebrow">Speed</div><div class="stat-value" id="speedStat">7.673 <small>km/s</small></div></div><div><div class="eyebrow">Orbit</div><div class="stat-value" id="orbitStat">Circular</div></div><div><div class="eyebrow">Total Δv</div><div class="stat-value" id="dvStat">0 <small>m/s</small></div></div></div><div class="stage-help"><span><span class="key">Space</span> run / stop</span><span>Paused: drag satellite → aim Δv</span><span>Drag background → rotate · scroll → zoom</span></div></div>
+</section>
+<aside class="sidebar">
+<section class="card"><div class="card-title"><span>FLIGHT CONTROL</span><span class="segnum" id="coastCount">COAST 00</span></div><div class="runrow"><button id="runBtn" class="primary">▶ Run</button><button id="stopBtn" class="stop" disabled>■ Stop</button><button id="stepBtn" title="Advance 60 simulation seconds, then remain paused">+60</button></div><div class="speedrow"><label for="speed">Time acceleration</label><select id="speed"><option value="1">1× · real time</option><option value="10">10×</option><option value="60">60×</option><option value="120" selected>120×</option><option value="300">300×</option><option value="1000">1,000×</option><option value="5000">5,000×</option><option value="10000">10,000×</option></select></div><div class="hint">Stop freezes time, <b>not</b> the satellite’s velocity.</div></section>
+<section class="card burn-card"><div class="card-title"><span>PLAN A VELOCITY CHANGE</span><span class="segnum" id="nextBurn">BURN 01</span></div><div class="burn-lock" id="burnLock">Paused · choose Δv, then apply.</div><fieldset id="burnFields"><div class="three"><label for="magnitude">Magnitude · m/s<input id="magnitude" type="number" min="0" max="200000" step="10" value="500"></label><label for="azimuth">Azimuth · deg<input id="azimuth" type="number" step="1" value="122"></label><label for="elevation">Elevation · deg<input id="elevation" type="number" min="-90" max="90" step="1" value="0"></label></div><div class="hint">Angles: +X → +Y; elevation toward +Z.<br>Or drag from the satellite in the current screen plane.</div><div class="presets"><button data-preset="prograde" title="Along the current velocity">Prograde</button><button data-preset="retrograde" title="Opposite the current velocity">Retrograde</button><button data-preset="radialOut">Radial out</button><button data-preset="radialIn">Radial in</button><button data-preset="normalPlus">Normal +</button><button data-preset="normalMinus">Normal −</button></div><details id="componentDetails"><summary>Enter Δvx, Δvy, Δvz directly</summary><div class="inside three"><label for="dvx">Δvx · m/s<input id="dvx" type="number" step="10"></label><label for="dvy">Δvy · m/s<input id="dvy" type="number" step="10"></label><label for="dvz">Δvz · m/s<input id="dvz" type="number" step="10"></label></div></details><label class="checkrow"><input type="checkbox" id="dragMagnitude"> Drag length also sets magnitude · 5 m/s per pixel</label><div class="preview-box" id="previewBox">Plan a burn to preview its orbit.</div><button id="applyBtn" class="primary wide">Apply Δv & run</button><label class="checkrow"><input type="checkbox" id="resumeAfter" checked> Resume automatically after applying</label><div class="two"><button id="circularizeBtn" class="small" title="Stage the Δv needed for a circular orbit at the current radius">Circularize here</button><button id="undoBtn" class="small" disabled title="Rewind to immediately before the most recent burn">Undo last burn</button></div></fieldset></section>
+<section class="card"><div class="card-title"><span>CURRENT ORBIT</span><span class="segnum">LIVE</span></div><div class="kv"><span>Perigee altitude</span><span id="perigee">—</span></div><div class="kv"><span>Apogee altitude</span><span id="apogee">—</span></div><div class="kv"><span>Period</span><span id="period">—</span></div><div class="kv"><span>Eccentricity / inclination</span><span id="eccInc">—</span></div><div class="kv"><span>Local escape speed</span><span id="escapeSpeed">—</span></div><div class="kv"><span>Coast energy drift</span><span id="energyDrift">—</span></div></section>
+<section class="card"><div class="card-title"><span>TRAJECTORY HISTORY</span><span class="segnum" id="sampleCount">1 SAMPLE</span></div><div class="segment-list" id="segmentList"></div><div class="hint">Solid tracks are actually flown. Every burn starts a new color. All recorded samples are retained for export.</div></section>
+<section class="card"><details id="viewSettings" open><summary>View & prediction</summary><div class="inside"><label class="checkrow"><input type="checkbox" id="autoFit" checked> Auto-fit all flown trajectories</label><label class="checkrow"><input type="checkbox" id="showPrediction" checked> Show the no-burn future</label><label class="checkrow"><input type="checkbox" id="fitPrediction" checked> Include visible predictions in auto-fit</label><label class="checkrow"><input type="checkbox" id="showVelocity" checked> Show velocity arrow</label><label for="horizon">Maximum prediction horizon<select id="horizon"><option value="21600">6 hours</option><option value="86400" selected>24 hours</option><option value="604800">7 days</option></select></label><div class="hint">Bound orbits: up to one revolution. Escape / very long orbits: finite forward preview. Predictions end at impact.</div></div></details></section>
+<section class="card"><details id="initialSettings"><summary>New circular orbit / reset</summary><div class="inside"><div class="two"><label for="initialAltitude">Altitude · km<input type="number" id="initialAltitude" min="1" max="10000000" step="100" value="400"></label><label for="initialInclination">Inclination · deg<input type="number" id="initialInclination" min="0" max="180" step="5" value="0"></label></div><button id="resetBtn" class="wide small" style="margin-top:10px">Reset to this circular orbit</button><div class="hint">Reset clears the current history. Save your mission first to keep it.</div></div></details></section>
+<div class="footer-note">Earth radius 6,371 km · satellite marker enlarged<br>Offline · no libraries · no data sent anywhere</div>
+</aside>
+</main>
+<dialog id="helpDialog"><div class="dialog-head"><h2>Your orbital playground</h2><button class="closeDialog small">Close</button></div><h3>Run → Stop → aim → burn</h3><p>The satellite starts in a circular orbit 400 km above Earth. Press <b>Run</b> to advance time and <b>Stop</b> to freeze the exact state. Stop does not set velocity to zero. While paused, drag from the satellite (or the amber arrow tip) to aim an <b>additional</b> velocity. Enter its magnitude in m/s, or enable drag-length control. The amber dashed line is the proposed future; the muted dashed line is the future without a burn. Press <b>Apply Δv & run</b> to commit. Repeat as often as you like.</p><h3>Three-dimensional control</h3><p>The dynamics are fully 3D. The initial top view is a convenient 2D projection. Azimuth is measured from inertial +X toward +Y; elevation is measured out of the XY plane toward +Z. The XYZ boxes are equivalent direct component inputs. A mouse drag specifies a vector in the current <em>screen plane</em> and replaces any component pointing into the screen. Use XYZ or elevation for a general 3D burn. Prograde follows the actual velocity; radial and normal presets use the current position and orbital angular momentum. In a purely radial trajectory, the normal is undefined and a deterministic perpendicular fallback is used.</p><p>Drag the background to rotate the camera, use the scroll wheel to zoom, or choose Top / XY, 3D view, or Orbit plane. Manual zoom turns auto-fit off; <b>Fit all</b> turns it back on. Auto-fit includes Earth and every flown segment; including visible predictions is optional. Very distant trajectories make Earth correspondingly small—physical sizes are not distorted. The satellite symbol, velocity arrows, burn markers, and globe glow are visual annotations, not to scale.</p><h3>The physical model</h3><p><code>dr/dt = v</code><br><code>dv/dt = −μ r / |r|³</code><br>At a burn: <code>r⁺ = r⁻</code>, <code>v⁺ = v⁻ + Δv</code>.<br>Earth is a fixed sphere of radius <b>6,371 km</b>, with <b>μ = 398,600.435507 km³/s²</b>. Initial circular speed is <code>√(μ/r)</code>. The two-body motion between burns is evaluated with a universal-variable Kepler solution and a safeguarded root solver. Small geometric sampling intervals resolve the path; collision checks locate the surface event rather than letting a time step jump through Earth.</p><p>No atmosphere, drag, J₂ / oblateness, Moon, Sun, finite-duration thrust, fuel budget, or spacecraft attitude dynamics are included. This is a Newtonian Earth-only teaching sandbox, not an operational orbit predictor. In particular, low-altitude motion and very distant escape trajectories are idealizations. An impact stops the simulation at the spherical surface. Altitude below 100 km triggers a warning, not a drag model.</p><h3>History, saving, and numerical checks</h3><p>Every coast has its own color. Solid lines show only recorded motion; dashed lines are forecasts. Each sample stores simulation time, 3D position, and 3D velocity. Both pre-burn and post-burn states are retained at the same burn time. Drawing may use fewer points for performance, but exports keep all samples. To prevent unbounded browser memory use, the simulator pauses at 2,000,000 samples; export or reset before continuing a new mission. JSON preserves a reloadable mission and burn log. CSV contains sampled states. Closing or resetting without saving discards the session.</p><p><b>Undo last burn</b> rewinds to immediately before that burn and removes the flight after it. Energy drift is measured within the current coast, normalized by a characteristic orbital energy; a burn legitimately changes orbital energy. At high time acceleration a slow computer may advance more slowly than requested rather than skip physical checks. Switching to another browser tab automatically pauses the simulation.</p><h3>Try it</h3><p>Start at 400 km. Stage a <b>500 m/s prograde</b> burn to create an ellipse, or a <b>200 m/s retrograde</b> burn to see a surface-intersecting orbit. A <b>3,500 m/s prograde</b> burn creates an Earth-escape trajectory in this model. A <b>500 m/s normal</b> burn tilts the orbit: use 3D view to see it. <b>Circularize here</b> stages the velocity change for a circular orbit at the current radius; it does not apply it until you press Apply.</p><p class="source-note">Physical constants: <a href="https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html" target="_blank" rel="noopener">NASA Earth Fact Sheet</a>; <a href="https://ssd.jpl.nasa.gov/astro_par.html" target="_blank" rel="noopener">JPL Astrodynamic Parameters (DE440)</a>. Background: <a href="https://science.nasa.gov/learn/basics-of-space-flight/chapter3-1/" target="_blank" rel="noopener">NASA, Gravity & Mechanics</a>. No internet connection is needed to operate the simulator.</p></dialog>
+<dialog id="exportDialog"><div class="dialog-head"><h2>Keep your mission</h2><button class="closeDialog small">Close</button></div><p>Save before closing or resetting. JSON can be reopened here; CSV includes every recorded state, segment ID, and segment color. Units are explicit in the column headers.</p><div class="export-actions"><button id="saveJSON" class="primary">Save reloadable mission · JSON</button><button id="loadJSON">Open a saved mission · JSON</button><button id="saveCSV">Export full trajectory · CSV</button><button id="savePNG">Save viewport image · PNG</button></div><p id="exportInfo" class="hint"></p></dialog>
+<input id="hiddenUpload" type="file" accept=".json,application/json">
+<script>
+/* Orbit Lab: dependency-free three-dimensional two-body dynamics.
+   Distances: km; time: s; velocities: km/s. Display burns in m/s.
+   Sources: NASA Earth Fact Sheet; JPL DE440 Astrodynamic Parameters.
+   The universal-variable solution uses safeguarded Newton iteration.
+*/
+'use strict';
+const OrbitPhysics = (() => {
+  const MU = 398600.435507, R = 6371, TAU = 2 * Math.PI, SQMU = Math.sqrt(MU);
+  const dot = (a,b) => a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+  const add = (a,b) => a.map((x,i)=>x+b[i]);
+  const sub = (a,b) => a.map((x,i)=>x-b[i]);
+  const mul = (a,k) => a.map(x=>x*k);
+  const norm = a => Math.hypot(...a);
+  const cross = (a,b) => [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+  const unit = (a,fallback=[1,0,0]) => norm(a)>1e-14 ? mul(a,1/norm(a)) : fallback.slice();
+  const clamp = (x,a,b) => Math.max(a,Math.min(b,x));
+  function elements(r,v) {
+    const radius=norm(r), speed=norm(v), h=cross(r,v), hm=norm(h);
+    const energy=0.5*speed*speed-MU/radius;
+    const ev=mul(sub(mul(r,speed*speed-MU/radius),mul(v,dot(r,v))),1/MU);
+    const e=norm(ev), a=energy<0 ? -MU/(2*energy) : (energy>0 ? -MU/(2*energy) : Infinity);
+    const p=hm*hm/MU, rp=p/(1+e);
+    const period=energy<0 ? TAU*Math.sqrt(a*a*a/MU) : Infinity;
+    return {radius,speed,h,hm,energy,e,ev,a,p,rp,ra:energy<0?a*(1+e):Infinity,period,
+      inclination:hm>1e-12?Math.acos(clamp(h[2]/hm,-1,1))*180/Math.PI:NaN,
+      radialSpeed:dot(r,v)/radius,escapeSpeed:Math.sqrt(2*MU/radius)};
+  }
+  function basis(r,v) {
+    const radial=unit(r), hv=cross(r,v);
+    const normal=unit(hv,unit(cross(radial, Math.abs(radial[2])<0.9?[0,0,1]:[0,1,0])));
+    return {radial,normal,tangent:unit(cross(normal,radial)),prograde:unit(v,unit(cross(normal,radial)))};
+  }
+  function circular(altitude=400,inclination=0,phase=32) {
+    if(!Number.isFinite(altitude)||altitude<=0) throw new Error('Altitude must be above the surface.');
+    const rr=R+altitude, vv=Math.sqrt(MU/rr), i=inclination*Math.PI/180, f=phase*Math.PI/180;
+    return {r:[rr*Math.cos(f),rr*Math.sin(f)*Math.cos(i),rr*Math.sin(f)*Math.sin(i)],
+      v:[-vv*Math.sin(f),vv*Math.cos(f)*Math.cos(i),vv*Math.cos(f)*Math.sin(i)]};
+  }
+  function stumpff(z) {
+    if(Math.abs(z)<0.1) {
+      let c=0.5,s=1/6,tc=c,ts=s;
+      for(let k=1;k<16;k++) {
+        tc *= -z/((2*k+1)*(2*k+2)); ts *= -z/((2*k+2)*(2*k+3));
+        c+=tc; s+=ts;
+        if(Math.abs(tc)+Math.abs(ts)<1e-18) break;
+      }
+      return [c,s];
+    }
+    if(z>0) { const q=Math.sqrt(z); return [2*Math.sin(q/2)**2/z,(q-Math.sin(q))/(q*q*q)]; }
+    const q=Math.sqrt(-z);
+    if(q>700) return [Infinity,Infinity];
+    return [2*Math.sinh(q/2)**2/(-z),(Math.sinh(q)-q)/(q*q*q)];
+  }
+  function propagate(r0,v0,dt) {
+    if(!Number.isFinite(dt)) throw new Error('Non-finite propagation interval.');
+    if(dt<0) { const s=propagate(r0,mul(v0,-1),-dt); return {r:s.r,v:mul(s.v,-1)}; }
+    if(dt===0) return {r:r0.slice(),v:v0.slice()};
+    const rr=norm(r0), rv=dot(r0,v0), alpha=2/rr-dot(v0,v0)/MU;
+    if(!(rr>0)) throw new Error('Cannot propagate at the central singularity.');
+    // Removing complete elliptic revolutions improves numerical conditioning.
+    if(alpha>0) {
+      const period=TAU/(SQMU*Math.pow(alpha,1.5));
+      if(dt>period) dt%=period;
+      if(dt<1e-12) return {r:r0.slice(),v:v0.slice()};
+    }
+    const A=rv/SQMU, B=1-alpha*rr, target=SQMU*dt;
+    function evaluate(x) {
+      const z=alpha*x*x,[c,s]=stumpff(z);
+      const F=A*x*x*c+B*x*x*x*s+rr*x-target;
+      const dF=A*x*(1-z*s)+B*x*x*c+rr;
+      return [F,dF,c,s];
+    }
+    let lo=0,hi=Math.max(1,SQMU*dt/rr);
+    if(alpha<0) hi=Math.max(1,Math.log1p(dt*SQMU*Math.pow(-alpha,1.5))/Math.sqrt(-alpha));
+    let eh=evaluate(hi), bracket=0;
+    while((!Number.isFinite(eh[0])?false:eh[0]<0)&&bracket++<100) {hi*=2;eh=evaluate(hi);}
+    if(bracket>=100) throw new Error('Universal-anomaly root could not be bracketed.');
+    let x=(lo+hi)/2, converged=false;
+    for(let k=0;k<100;k++) {
+      const [F,dF]=evaluate(x);
+      if(Number.isFinite(F)&&Math.abs(F)<=2e-13*Math.max(target,1)) {converged=true;break;}
+      if(!Number.isFinite(F)||F>0) hi=x; else lo=x;
+      let next=x-F/dF;
+      if(!Number.isFinite(next)||next<=lo||next>=hi) next=0.5*(lo+hi);
+      if(Math.abs(next-x)<1e-13*Math.max(1,Math.abs(x))) {x=next;converged=true;break;}
+      x=next;
+    }
+    if(!converged) throw new Error('Universal-variable solver did not converge.');
+    const [, ,c,s]=evaluate(x), f=1-x*x*c/rr, g=dt-x*x*x*s/SQMU;
+    const r=add(mul(r0,f),mul(v0,g)), rmag=norm(r);
+    const fd=SQMU/(rmag*rr)*(alpha*x*x*x*s-x), gd=1-x*x*c/rmag;
+    const v=add(mul(r0,fd),mul(v0,gd));
+    if(![...r,...v].every(Number.isFinite)) throw new Error('Non-finite propagated state.');
+    return {r,v};
+  }
+  function safeStep(r,v) {
+    const rr=norm(r), vv=norm(v);
+    // Resolves orbital curvature and makes a central-singularity crossing impossible
+    // in an accepted collision-check interval while the satellite is above Earth.
+    return Math.min(600,0.035*rr/Math.max(vv,Math.sqrt(MU/rr)));
+  }
+  function stepWithImpact(r,v,dt) {
+    if(norm(r)<=R+1e-9 && dot(r,v)<0) return {r:r.slice(),v:v.slice(),dt:0,impact:true};
+    const s=propagate(r,v,dt);
+    let hi=null;
+    if(norm(s.r)<=R) hi=dt;
+    else if(dot(r,v)<0 && dot(s.r,s.v)>0) {
+      // Catch a shallow surface crossing even when both step endpoints are outside.
+      let a=0,b=dt,mid;
+      for(let k=0;k<42;k++) {const t=(a+b)/2;mid=propagate(r,v,t);if(dot(mid.r,mid.v)>0)b=t;else a=t;}
+      const t=(a+b)/2, m=propagate(r,v,t);
+      if(norm(m.r)<=R) hi=t;
+    }
+    if(hi===null) return {...s,dt,impact:false};
+    let lo=0;
+    for(let k=0;k<48;k++) {const m=(lo+hi)/2;if(norm(propagate(r,v,m).r)>R)lo=m;else hi=m;}
+    const hit=propagate(r,v,hi);
+    hit.r=mul(hit.r,R/norm(hit.r));
+    return {...hit,dt:hi,impact:true};
+  }
+  function trajectory(r0,v0,horizon=21600,maxPoints=3500) {
+    const el=elements(r0,v0);
+    const duration=Math.min(Number.isFinite(el.period)?el.period:horizon,horizon);
+    let r=r0.slice(),v=v0.slice(),t=0;
+    const points=[r.slice()]; let impact=false;
+    // Long steps far from periapsis, tightly resolved steps close to Earth.
+    while(t<duration-1e-8&&points.length<maxPoints) {
+      const dt=Math.min(safeStep(r,v)*2,duration/240,duration-t);
+      const st=stepWithImpact(r,v,dt);r=st.r;v=st.v;t+=st.dt;points.push(r.slice());
+      if(st.impact) {impact=true;break;}
+    }
+    return {points,impact,duration:t,complete:Math.abs(t-duration)<1e-5,
+      fullOrbit:!impact&&Number.isFinite(el.period)&&t>=el.period-1e-5,el};
+  }
+  return {MU,R,TAU,dot,add,sub,mul,norm,cross,unit,clamp,elements,basis,circular,stumpff,propagate,safeStep,stepWithImpact,trajectory};
+})();
+if(typeof module!=='undefined'&&module.exports) module.exports=OrbitPhysics;
+
+</script>
+<script>
+'use strict';
+(() => {
+const P=OrbitPhysics;
+const $=id=>document.getElementById(id), canvas=$('space'), ctx=canvas.getContext('2d');
+const TAU=2*Math.PI, DEG=Math.PI/180, MAX_SAMPLES=2000000;
+const palette=['#67dfeb','#ffb36b','#b79bff','#83dfae','#ff829e','#86b8ff','#e4da7c','#d292df'];
+const color=i=>i<palette.length?palette[i]:`hsl(${(190+i*137.508)%360} 75% 72%)`;
+const number=(n,d=0)=>Number.isFinite(n)?n.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d}):'—';
+const vec=n=>n.map(v=>+v.toFixed(6));
+const pad=n=>String(n).padStart(2,'0');
+const clock=t=>{t=Math.floor(Math.max(0,t));const d=Math.floor(t/86400);return (d?d+'d ':'')+pad(Math.floor(t/3600)%24)+':'+pad(Math.floor(t/60)%60)+':'+pad(t%60);};
+const duration=t=>!Number.isFinite(t)?'No closed orbit':t>=86400?number(t/86400,2)+' d':number(t/60,2)+' min';
+const orbitName=el=>el.e<1e-5?'Circular':Math.abs(el.energy)<1e-8?'Parabolic':el.energy<0?'Elliptic':'Hyperbolic';
+let W=800,H=700,DPR=1, sim, dv=[0,0,0], presetName='Prograde', trial=null, forecast=null;
+let predictionsDirty=true,lastPredictionWall=0,lastStats=0,lastHistory=0,lastFrame=0,toastTimer;
+let inputValid=true, drag=null, cachedSat=[0,0,0],cachedTip=[0,0],errorShown=false;
+let cam={az:-Math.PI/2,el:Math.PI/2,right:[1,0,0],up:[0,1,0],normal:[0,0,1],cx:0,cy:0,scale:0.03,mode:'top'};
+let bounds=[[-P.R,-P.R,-P.R],[P.R,P.R,P.R]];
+let stars=[];
+for(let i=0;i<105;i++){const x=Math.sin(i*91.721+1)*43758.5453,y=Math.sin(i*57.337+2)*19364.273;stars.push([x-Math.floor(x),y-Math.floor(y),i%7===0?1.25:.65]);}
+function toast(text){$('toast').textContent=text;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3800);}
+function extendBounds(r){for(let k=0;k<3;k++){bounds[0][k]=Math.min(bounds[0][k],r[k]);bounds[1][k]=Math.max(bounds[1][k],r[k]);}}
+function rebuildBounds(){bounds=[[-P.R,-P.R,-P.R],[P.R,P.R,P.R]];for(const seg of sim.segments)for(const s of seg.samples)extendBounds(s.slice(1,4));extendBounds(sim.r);}
+function sample(force=false){
+ const seg=sim.segments[sim.segments.length-1],last=seg.samples.at(-1);
+ if(last&&Math.abs(last[0]-sim.t)<1e-9)return;
+ const every=Math.min(10,0.01*P.norm(sim.r)/Math.max(P.norm(sim.v),Math.sqrt(P.MU/P.norm(sim.r))));
+ if(!force&&last&&sim.t-last[0]<every-1e-9)return;
+ if(sim.samples>=MAX_SAMPLES){sim.running=false;sim.capacity=true;toast('Recording limit reached. Export this mission, then reset.');return;}
+ seg.samples.push([sim.t,...sim.r,...sim.v]);sim.samples++;extendBounds(sim.r);
+ if(sim.samples>=MAX_SAMPLES){sim.running=false;sim.capacity=true;updateControls();toast('Recording limit reached. Export this mission, then reset.');}
+}
+function makeSegment(id,burn=null){return{id,color:color(id),startTime:sim.t,startR:sim.r.slice(),startV:sim.v.slice(),energyRef:P.elements(sim.r,sim.v).energy,burn,samples:[]};}
+function reset(alt=400,inc=0,announce=false){
+ const s=P.circular(alt,inc);
+ sim={t:0,r:s.r,v:s.v,running:false,impact:false,capacity:false,samples:0,totalDV:0,initial:{altitude:alt,inclination:inc,phase:32},segments:[]};
+ sim.segments.push(makeSegment(0));bounds=[[-P.R,-P.R,-P.R],[P.R,P.R,P.R]];sample(true);
+ setDV(P.mul(P.unit(sim.v),500),'Prograde');$('initialAltitude').value=alt;$('initialInclination').value=inc;
+ $('autoFit').checked=true;setView('top');predictionsDirty=true;updatePredictions(true);fitCamera(true);updateStats(true);updateHistory();updateControls();errorShown=false;
+ if(announce)toast('New circular orbit. History reset.');
+}
+function updateControls(){
+ $('runBtn').disabled=sim.running||sim.impact||sim.capacity;
+ $('stopBtn').disabled=!sim.running;$('stepBtn').disabled=sim.running||sim.impact||sim.capacity;
+ $('burnFields').disabled=sim.running||sim.impact||sim.capacity;
+ $('applyBtn').disabled=!inputValid||P.norm(dv)<1e-8||sim.running||sim.impact||sim.capacity;
+ // Undo must remain available after a crash. Its button is moved outside the disabled fieldset state via fieldset handling.
+ $('undoBtn').disabled=sim.segments.length<2||sim.running;
+ if(sim.impact||sim.capacity){$('burnFields').disabled=false;for(const el of $('burnFields').querySelectorAll('input,button'))el.disabled=el.id!=='undoBtn';$('undoBtn').disabled=sim.segments.length<2;}
+ else for(const el of $('burnFields').querySelectorAll('input,button')){if(!['applyBtn','undoBtn'].includes(el.id))el.disabled=false;}
+ $('burnLock').textContent=sim.impact?'Surface impact · undo the burn or reset.':sim.capacity?'Recording limit reached · save and reset.':sim.running?'Running · press Stop to plan a maneuver.':'Paused · choose Δv, then apply.';
+ $('status').textContent=sim.impact?'SURFACE IMPACT':sim.capacity?'RECORDING LIMIT':sim.running?'RUNNING · '+number(+$('speed').value)+'×':'PAUSED · '+(sim.t===0?'READY TO FLY':'PLAN YOUR NEXT BURN');
+ $('status').className='status'+(sim.running?' live':'')+(sim.impact?' danger':'');
+ $('applyBtn').textContent=$('resumeAfter').checked?'Apply Δv & run':'Apply Δv';
+ $('nextBurn').textContent='BURN '+pad(sim.segments.length);$('coastCount').textContent='COAST '+pad(sim.segments.length-1);
+ $('canvasNote').textContent=sim.impact?'Surface reached. Undo the last burn or start a new orbit.':sim.running?'Coasting under gravity. Stop anywhere to change velocity.':P.norm(dv)>0?'Drag from the satellite or amber arrow tip to aim Δv.':'Choose a magnitude and direction for the next burn.';
+}
+function setDV(vector,name='Custom vector',sync=true){
+ dv=vector.slice();presetName=name;inputValid=dv.every(Number.isFinite)&&P.norm(dv)<=200000+1e-6;
+ if(sync){const m=P.norm(dv);$('magnitude').value=+m.toFixed(6);$('azimuth').value=+(Math.atan2(dv[1],dv[0])/DEG).toFixed(5);$('elevation').value=+(Math.atan2(dv[2],Math.hypot(dv[0],dv[1]))/DEG).toFixed(5);['dvx','dvy','dvz'].forEach((id,i)=>$(id).value=+dv[i].toFixed(6));}
+ predictionsDirty=true;if(sim)updateControls();
+}
+function readAngles(){
+ const fields=['magnitude','azimuth','elevation'];
+ const vals=fields.map(id=>$(id).value.trim()===''?NaN:Number($(id).value));const [m,a,e]=vals;
+ inputValid=vals.every(Number.isFinite)&&m>=0&&m<=200000&&e>=-90&&e<=90;
+ if(inputValid){setDV([m*Math.cos(e*DEG)*Math.cos(a*DEG),m*Math.cos(e*DEG)*Math.sin(a*DEG),m*Math.sin(e*DEG)],'Custom vector',false);['dvx','dvy','dvz'].forEach((id,i)=>$(id).value=+dv[i].toFixed(6));}
+ else{predictionsDirty=true;updateControls();}
+}
+function readComponents(){
+ const v=['dvx','dvy','dvz'].map(id=>$(id).value.trim()===''?NaN:Number($(id).value));
+ inputValid=v.every(Number.isFinite)&&P.norm(v)<=200000;
+ if(inputValid){dv=v;presetName='XYZ vector';const m=P.norm(v);$('magnitude').value=+m.toFixed(6);$('azimuth').value=+(Math.atan2(v[1],v[0])/DEG).toFixed(5);$('elevation').value=+(Math.atan2(v[2],Math.hypot(v[0],v[1]))/DEG).toFixed(5);}
+ predictionsDirty=true;updateControls();
+}
+function preset(kind){
+ const b=P.basis(sim.r,sim.v),m=Math.max(0,Math.min(200000,Number($('magnitude').value)||500));
+ const dirs={prograde:b.prograde,retrograde:P.mul(b.prograde,-1),radialOut:b.radial,radialIn:P.mul(b.radial,-1),normalPlus:b.normal,normalMinus:P.mul(b.normal,-1)};
+ const names={prograde:'Prograde',retrograde:'Retrograde',radialOut:'Radial out',radialIn:'Radial in',normalPlus:'Normal +',normalMinus:'Normal −'};
+ setDV(P.mul(dirs[kind],m),names[kind]);
+}
+function run(){if(sim.impact||sim.capacity)return;sim.running=true;trial=null;lastFrame=performance.now();updateControls();}
+function stop(announce=false){sim.running=false;sample(true);predictionsDirty=true;updateControls();updateStats(true);updateHistory();if(announce)toast('Time paused. Velocity is unchanged.');}
+function applyBurn(){
+ if(sim.running||sim.impact||sim.capacity||!inputValid||P.norm(dv)<1e-8)return;
+ sample(true);if(sim.capacity)return;
+ const before=sim.v.slice(),delta=P.mul(dv,.001),burn={time:sim.t,r:sim.r.slice(),dv:delta.slice(),magnitude:P.norm(dv),vBefore:before,label:presetName};
+ sim.v=P.add(sim.v,delta);sim.totalDV+=P.norm(dv);sim.segments.push(makeSegment(sim.segments.length,burn));sample(true);
+ setDV([0,0,0]);predictionsDirty=true;updatePredictions(true);updateHistory();updateStats(true);
+ if($('resumeAfter').checked)run();else updateControls();
+ toast('Burn '+pad(sim.segments.length-1)+' applied · '+number(burn.magnitude,1)+' m/s. New coast, new color.');
+}
+function undo(){
+ if(sim.running||sim.segments.length<2)return;
+ const seg=sim.segments.pop(),burn=seg.burn;
+ sim.r=burn.r.slice();sim.v=burn.vBefore.slice();sim.t=burn.time;sim.impact=false;sim.capacity=false;
+ sim.samples=sim.segments.reduce((n,s)=>n+s.samples.length,0);sim.totalDV=sim.segments.reduce((n,s)=>n+(s.burn?s.burn.magnitude:0),0);
+ setDV(P.mul(burn.dv,1000),burn.label);rebuildBounds();predictionsDirty=true;updatePredictions(true);fitCamera(true);updateStats(true);updateHistory();updateControls();toast('Rewound to immediately before the last burn.');
+}
+function advance(seconds,budget=Infinity){
+ let left=seconds,steps=0;const start=performance.now();
+ while(left>1e-9&&!sim.impact&&!sim.capacity){
+  const dt=Math.min(left,10,P.safeStep(sim.r,sim.v));
+  const s=P.stepWithImpact(sim.r,sim.v,dt);sim.r=s.r;sim.v=s.v;sim.t+=s.dt;left-=s.dt;extendBounds(sim.r);sample(false);
+  if(s.impact){sim.impact=true;sim.running=false;sample(true);predictionsDirty=true;updateControls();toast('Surface impact. Simulation stopped at Earth’s radius.');break;}
+  if(++steps%20===0&&performance.now()-start>budget)break;
+ }
+ return seconds-left;
+}
+function updatePredictions(force=false){
+ if(!sim)return;
+ const now=performance.now();
+ if(!force&&!(predictionsDirty||sim.running&&now-lastPredictionWall>900))return;
+ const horizon=Number($('horizon').value);
+ if(!sim.impact){forecast=P.trajectory(sim.r,sim.v,horizon);trial=!sim.running&&inputValid&&P.norm(dv)>1e-8?P.trajectory(sim.r,P.add(sim.v,P.mul(dv,.001)),horizon):null;}
+ else{forecast=null;trial=null;}
+ predictionsDirty=false;lastPredictionWall=now;updatePreview();
+}
+function updatePreview(){
+ const box=$('previewBox');box.className='preview-box';
+ if(!inputValid){box.classList.add('bad');box.textContent='Enter finite values. Magnitude: 0–200,000 m/s; elevation: −90° to +90°.';return;}
+ if(sim.impact){box.classList.add('bad');box.textContent='The satellite has reached Earth’s surface. Undo the last burn or reset.';return;}
+ if(sim.running){box.textContent='The current trajectory is live. Stop to preview another burn.';return;}
+ if(!trial){box.textContent='No velocity change staged. Set a magnitude, choose a preset, or enter XYZ components.';return;}
+ const e=trial.el,per=e.rp-P.R,apo=e.ra-P.R;
+ let txt=orbitName(e)+' after burn · perigee '+number(per,0)+' km';
+ txt+=Number.isFinite(apo)?' · apogee '+number(apo,0)+' km':' · unbound from Earth';
+ if(trial.impact){box.classList.add('bad');txt+='\nSurface impact in '+duration(trial.duration)+'.';}
+ else if(per<0){box.classList.add('bad');txt+='\nSurface-intersecting conic; the encounter may lie outside this forward preview.';}
+ else if(per<100){box.classList.add('bad');txt+='\nBelow 100 km at perigee; atmospheric drag is not modeled.';}
+ txt+='\nPreview: '+(trial.fullOrbit?'one full orbit':duration(trial.duration)+' forward'+(trial.complete?'':' (sampling limit)'))+'.';
+ box.textContent=txt;box.style.whiteSpace='pre-line';
+}
+function updateStats(force=false){
+ const now=performance.now();if(!force&&now-lastStats<140)return;lastStats=now;
+ const el=P.elements(sim.r,sim.v),current=sim.segments.at(-1),refScale=Math.max(Math.abs(current.energyRef),P.MU/P.norm(current.startR));
+ $('clock').textContent=clock(sim.t);$('altStat').innerHTML=number(Math.max(0,el.radius-P.R),el.radius-P.R<100?1:0)+' <small>km</small>';
+ $('speedStat').innerHTML=number(el.speed,3)+' <small>km/s</small>';$('orbitStat').textContent=sim.impact?'Impact':orbitName(el);$('dvStat').innerHTML=number(sim.totalDV,0)+' <small>m/s</small>';
+ $('perigee').textContent=number(el.rp-P.R,1)+' km';$('apogee').textContent=Number.isFinite(el.ra)?number(el.ra-P.R,1)+' km':'∞ · unbound';$('period').textContent=duration(el.period);
+ $('eccInc').textContent=number(el.e,5)+' / '+(Number.isFinite(el.inclination)?number(el.inclination,2)+'°':'undefined');$('escapeSpeed').textContent=number(el.escapeSpeed,4)+' km/s';
+ $('energyDrift').textContent=((el.energy-current.energyRef)/refScale).toExponential(1);
+ $('sampleCount').textContent=number(sim.samples)+' SAMPLES';
+ const banner=$('warningBanner');
+ let warning='';if(sim.impact)warning='SURFACE IMPACT — stopped at 6,371 km from Earth’s center.';
+ else if(el.radius-P.R<100)warning='Below 100 km: the no-atmosphere assumption is not realistic here.';
+ else if(el.radius>1500000)warning='Far from Earth: Sun and Moon gravity are omitted. This is an Earth-only idealization.';
+ else if(el.rp<P.R&&el.energy<0)warning='This orbit intersects Earth. A future surface encounter will stop the simulation.';
+ banner.textContent=warning;banner.style.display=warning?'block':'none';
+}
+function updateHistory(){
+ const list=$('segmentList');list.replaceChildren();
+ for(let k=sim.segments.length-1;k>=0;k--){
+  const seg=sim.segments[k],row=document.createElement('div');row.className='segment';
+  const sw=document.createElement('span');sw.className='swatch';sw.style.background=seg.color;row.append(sw);
+  const info=document.createElement('div');info.className='seginfo';
+  info.append(document.createTextNode(seg.burn?'Burn '+pad(seg.id)+' · '+number(seg.burn.magnitude,1)+' m/s':'Initial circular orbit'));
+  const sub=document.createElement('small');sub.textContent=clock(seg.startTime)+(seg.burn?' · '+seg.burn.label:' · '+number(sim.initial.altitude)+' km');info.append(sub);
+  if(seg.burn){const v=document.createElement('small');v.textContent='Δv XYZ: '+seg.burn.dv.map(x=>number(x*1000,1)).join(', ')+' m/s';info.append(v);}
+  row.append(info);list.append(row);
+ }
+ lastHistory=performance.now();
+}
+function basisFromAngles(){cam.normal=[Math.cos(cam.el)*Math.cos(cam.az),Math.cos(cam.el)*Math.sin(cam.az),Math.sin(cam.el)];cam.right=[-Math.sin(cam.az),Math.cos(cam.az),0];cam.up=P.cross(cam.normal,cam.right);}
+function setView(mode){
+ cam.mode=mode;
+ if(mode==='top'){cam.az=-Math.PI/2;cam.el=Math.PI/2;basisFromAngles();}
+ else if(mode==='3d'){cam.az=-55*DEG;cam.el=32*DEG;basisFromAngles();}
+ else if(mode==='orbit'){
+  cam.normal=P.basis(sim.r,sim.v).normal;let right=P.sub([1,0,0],P.mul(cam.normal,cam.normal[0]));
+  if(P.norm(right)<1e-8)right=P.sub([0,1,0],P.mul(cam.normal,cam.normal[1]));
+  cam.right=P.unit(right);cam.up=P.cross(cam.normal,cam.right);cam.az=Math.atan2(cam.normal[1],cam.normal[0]);cam.el=Math.asin(cam.normal[2]);
+ }
+ ['topView','view3D','orbitView'].forEach((id,i)=>$(id).classList.toggle('active',['top','3d','orbit'][i]===mode));
+ if(sim)fitCamera(true);
+}
+function project(r){return[(P.dot(r,cam.right)-cam.cx)*cam.scale+W/2,(cam.cy-P.dot(r,cam.up))*cam.scale+plotCenterY(),P.dot(r,cam.normal)];}
+function plotCenterY(){return 108+(H-108-153)/2;}
+function viewBounds(){
+ let loX=-P.R,hiX=P.R,loY=-P.R,hiY=P.R;
+ const take=p=>{const x=P.dot(p,cam.right),y=P.dot(p,cam.up);loX=Math.min(loX,x);hiX=Math.max(hiX,x);loY=Math.min(loY,y);hiY=Math.max(hiY,y);};
+ // Project every corner of the all-history 3D bounding box. This conservatively
+ // contains all stored trajectories even when rendering is visually decimated.
+ for(let i=0;i<8;i++)take([bounds[i&1?1:0][0],bounds[i&2?1:0][1],bounds[i&4?1:0][2]]);
+ take(sim.r);
+ if($('fitPrediction').checked){if(forecast&&$('showPrediction').checked)for(const p of forecast.points)take(p);if(trial&&!sim.running)for(const p of trial.points)take(p);}
+ return{loX,hiX,loY,hiY};
+}
+function fitCamera(immediate=false){
+ if(!sim||drag?.kind==='burn')return;
+ const b=viewBounds(),cx=(b.loX+b.hiX)/2,cy=(b.loY+b.hiY)/2;
+ if(immediate){cam.cx=cx;cam.cy=cy;}else{cam.cx+=(cx-cam.cx)*.16;cam.cy+=(cy-cam.cy)*.16;}
+ const halfX=Math.max(b.hiX-cam.cx,cam.cx-b.loX,100),halfY=Math.max(b.hiY-cam.cy,cam.cy-b.loY,100);
+ const availableW=Math.max(80,W-130),availableH=Math.max(80,H-108-153-80);
+ const scale=Math.min(availableW/(2*halfX),availableH/(2*halfY));
+ if(immediate||scale<cam.scale)cam.scale=scale;else cam.scale+=(scale-cam.scale)*.1;
+ cam.scale=P.clamp(cam.scale,1e-12,2);
+}
+function resize(){
+ const b=$('stage').getBoundingClientRect();W=b.width;H=b.height;DPR=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(W*DPR);canvas.height=Math.round(H*DPR);canvas.style.width=W+'px';canvas.style.height=H+'px';
+ ctx.setTransform(DPR,0,0,DPR,0,0);if(sim)fitCamera(true);
+}
+function lineArrow(a,b,c,width=2,dashed=false){
+ if(![...a,...b].every(Number.isFinite))return;
+ ctx.save();ctx.strokeStyle=c;ctx.fillStyle=c;ctx.lineWidth=width;ctx.setLineDash(dashed?[5,4]:[]);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.setLineDash([]);
+ const th=Math.atan2(b[1]-a[1],b[0]-a[0]),n=8;ctx.beginPath();ctx.moveTo(b[0],b[1]);ctx.lineTo(b[0]-n*Math.cos(th-.4),b[1]-n*Math.sin(th-.4));ctx.lineTo(b[0]-n*Math.cos(th+.4),b[1]-n*Math.sin(th+.4));ctx.closePath();ctx.fill();ctx.restore();
+}
+function roundedRect(x,y,w,h,r=5){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
+function label(text,x,y,c='#bbd3e5',align='left'){
+ ctx.save();ctx.font='11px ui-monospace, monospace';ctx.textAlign=align;const width=ctx.measureText(text).width;let start=align==='center'?x-width/2:align==='right'?x-width:x;
+ roundedRect(start-5,y-13,width+10,19,4);ctx.fillStyle='#091421c9';ctx.fill();ctx.fillStyle=c;ctx.fillText(text,x,y);ctx.restore();
+}
+function drawEarth(){
+ const q=project([0,0,0]),rad=P.R*cam.scale;if(rad<.5){ctx.fillStyle='#4dabcc';ctx.beginPath();ctx.arc(q[0],q[1],1.5,0,TAU);ctx.fill();return;}
+ ctx.save();
+ const glow=ctx.createRadialGradient(q[0],q[1],rad*.95,q[0],q[1],rad*1.10);glow.addColorStop(0,'#4197be1c');glow.addColorStop(.5,'#4dbee317');glow.addColorStop(1,'#39b9e300');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(q[0],q[1],rad*1.1,0,TAU);ctx.fill();
+ const g=ctx.createRadialGradient(q[0]-rad*.42,q[1]-rad*.45,rad*.08,q[0],q[1],rad*1.15);g.addColorStop(0,'#214b67');g.addColorStop(.48,'#102e45');g.addColorStop(.82,'#0b1d31');g.addColorStop(1,'#081421');
+ ctx.fillStyle=g;ctx.strokeStyle='#48809d';ctx.lineWidth=1;ctx.beginPath();ctx.arc(q[0],q[1],rad,0,TAU);ctx.fill();ctx.stroke();ctx.clip();
+ // Geographic graticule. Earth is a sphere; this grid is a visual annotation.
+ ctx.strokeStyle='#54839c46';ctx.lineWidth=.6;
+ const surface=(lat,lon)=>[P.R*Math.cos(lat)*Math.cos(lon),P.R*Math.cos(lat)*Math.sin(lon),P.R*Math.sin(lat)];
+ function gridCurve(f){ctx.beginPath();let drawing=false;for(let i=0;i<=144;i++){const r=f(i/144),p=project(r);if(p[2]<-1){drawing=false;continue;}if(drawing)ctx.lineTo(p[0],p[1]);else ctx.moveTo(p[0],p[1]);drawing=true;}ctx.stroke();}
+ for(let lat=-60;lat<=60;lat+=30)gridCurve(u=>surface(lat*DEG,u*TAU));
+ for(let lon=0;lon<360;lon+=30)gridCurve(u=>surface((u-.5)*Math.PI,lon*DEG));
+ ctx.restore();
+ if(rad>35){ctx.save();ctx.textAlign='center';ctx.fillStyle='#91c1d0';ctx.font='11px system-ui';ctx.fillText('E A R T H',q[0],q[1]-2);ctx.fillStyle='#608ca5';ctx.font='10px ui-monospace, monospace';ctx.fillText('R = 6,371 km',q[0],q[1]+16);ctx.restore();}
+}
+function visiblePoint(p){return p[2]>=0||Math.hypot(p[0]-project([0,0,0])[0],p[1]-project([0,0,0])[1])>=P.R*cam.scale;}
+function drawPath(points,c,width=1.8,dash=[],frontOnly=false,alpha=1,sampleArray=false,stride=1){
+ if(!points||points.length<2)return;
+ ctx.save();ctx.strokeStyle=c;ctx.lineWidth=width;ctx.globalAlpha=alpha;ctx.setLineDash(dash);ctx.beginPath();let was=false;
+ for(let i=0;i<points.length;i+=stride){const p=project(sampleArray?points[i].slice(1,4):points[i]);const visible=!frontOnly||visiblePoint(p);
+  if(visible&&was)ctx.lineTo(p[0],p[1]);else if(visible)ctx.moveTo(p[0],p[1]);was=visible;
+ }
+ if((points.length-1)%stride!==0){const p=project(sampleArray?points.at(-1).slice(1,4):points.at(-1));if((!frontOnly||visiblePoint(p))&&was)ctx.lineTo(p[0],p[1]);}
+ ctx.stroke();ctx.restore();
+}
+function drawPaths(front){
+ const stride=Math.max(1,Math.floor(sim.samples/20000));
+ for(const seg of sim.segments){drawPath(seg.samples,seg.color,2,[],front,front?.95:.3,true,stride);}
+ const seg=sim.segments.at(-1),last=seg.samples.at(-1);if(last)drawPath([last.slice(1,4),sim.r],seg.color,2,[],front,front?.95:.3);
+ if(forecast&&$('showPrediction').checked)drawPath(forecast.points,'#a0b8cb',1.15,[6,6],front,front?.52:.13);
+ if(trial&&!sim.running){drawPath(trial.points,'#ffbc72',1.65,[7,5],front,front?.95:.25);if(front&&trial.impact){const p=project(trial.points.at(-1));ctx.strokeStyle='#ff8391';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(p[0]-5,p[1]-5);ctx.lineTo(p[0]+5,p[1]+5);ctx.moveTo(p[0]+5,p[1]-5);ctx.lineTo(p[0]-5,p[1]+5);ctx.stroke();label('predicted impact',p[0]+10,p[1]-8,'#ff9ea9');}}
+}
+function drawAxes(){
+ const origin=[W-65,110],sz=24;const axes=[[1,0,0],[0,1,0],[0,0,1]],cols=['#d99b96','#a7cfa9','#90b6db'];
+ axes.forEach((a,i)=>{const end=[origin[0]+sz*P.dot(a,cam.right),origin[1]-sz*P.dot(a,cam.up)];lineArrow(origin,end,cols[i],1);ctx.fillStyle=cols[i];ctx.font='10px ui-monospace,monospace';ctx.fillText('XYZ'[i],end[0]+4,end[1]-3);});
+}
+function drawScale(){
+ const target=90/cam.scale,pow=10**Math.floor(Math.log10(target));let amount=[1,2,5,10].map(n=>n*pow).filter(n=>n<=target).at(-1)||pow;const px=amount*cam.scale,x=20,y=H-177;
+ ctx.save();ctx.strokeStyle='#7996ae';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,y-3);ctx.lineTo(x,y+3);ctx.moveTo(x,y);ctx.lineTo(x+px,y);ctx.moveTo(x+px,y-3);ctx.lineTo(x+px,y+3);ctx.stroke();ctx.fillStyle='#8ca6bd';ctx.font='10px ui-monospace,monospace';ctx.fillText(number(amount)+' km',x,y-9);ctx.restore();
+}
+function drawBurns(){
+ for(const seg of sim.segments){if(!seg.burn)continue;const p=project(seg.burn.r);ctx.save();ctx.strokeStyle=seg.color;ctx.fillStyle='#081422';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(p[0],p[1],4.5,0,TAU);ctx.fill();ctx.stroke();ctx.restore();label('B'+pad(seg.id),p[0]+9,p[1]+5,seg.color);}
+}
+function drawSatellite(){
+ const p=project(sim.r);cachedSat=p;
+ ctx.save();
+ const vdir=P.unit(sim.v),vx=P.dot(vdir,cam.right),vy=P.dot(vdir,cam.up);
+ if($('showVelocity').checked&&P.norm(sim.v)>1e-10&&!sim.impact){const end=[p[0]+vx*63,p[1]-vy*63];if(Math.hypot(vx,vy)>.03){lineArrow(p,end,'#a0e3f2',1.5);label('v',end[0]+7,end[1]-3,'#a0e3f2');}}
+ const m=P.norm(dv);cachedTip=p.slice(0,2);
+ if(!sim.running&&!sim.impact&&inputValid&&m>0){
+  const dir=P.mul(dv,1/m),len=P.clamp(45+m*.095,48,175),dx=P.dot(dir,cam.right),dy=P.dot(dir,cam.up);cachedTip=[p[0]+dx*len,p[1]-dy*len];
+  if(Math.hypot(dx,dy)>.025){lineArrow(p,cachedTip,'#ffbc72',2.3);ctx.fillStyle='#ffbc72';ctx.beginPath();ctx.arc(cachedTip[0],cachedTip[1],4,0,TAU);ctx.fill();label('Δv '+number(m,0)+' m/s',cachedTip[0]+10,cachedTip[1]-8,'#ffcf9b');}
+  else label('Δv '+number(m,0)+' m/s · into / out of view',p[0]+15,p[1]-30,'#ffcf9b');
+ }
+ if(!sim.running&&!sim.impact){ctx.strokeStyle='#d5eef559';ctx.setLineDash([3,4]);ctx.beginPath();ctx.arc(p[0],p[1],18,0,TAU);ctx.stroke();ctx.setLineDash([]);}
+ ctx.translate(p[0],p[1]);const theta=Math.atan2(-vy,vx);ctx.rotate(theta);
+ ctx.shadowColor=sim.impact?'#ff7d8c':'#9fefff';ctx.shadowBlur=12;ctx.fillStyle=sim.impact?'#ff8391':'#daf8ff';ctx.fillRect(-4,-4,8,8);ctx.shadowBlur=0;ctx.fillStyle='#629fbf';ctx.strokeStyle='#b9e1f4';ctx.lineWidth=.7;ctx.fillRect(-2,-12,4,6);ctx.strokeRect(-2,-12,4,6);ctx.fillRect(-2,6,4,6);ctx.strokeRect(-2,6,4,6);ctx.restore();
+}
+function draw(){
+ ctx.setTransform(DPR,0,0,DPR,0,0);ctx.clearRect(0,0,W,H);
+ const g=ctx.createRadialGradient(W*.48,H*.42,0,W*.48,H*.42,W*.8);g.addColorStop(0,'#102039');g.addColorStop(.6,'#0a1525');g.addColorStop(1,'#080f1b');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ ctx.fillStyle='#97b3cd';for(const [x,y,r]of stars){ctx.globalAlpha=r>1?.4:.19;ctx.beginPath();ctx.arc(x*W,y*H,r,0,TAU);ctx.fill();}ctx.globalAlpha=1;
+ if(!sim)return;
+ drawPaths(false);drawEarth();drawPaths(true);drawBurns();drawSatellite();drawAxes();drawScale();
+ if(!$('autoFit').checked)label('MANUAL ZOOM · Fit all to reset',W/2,H-176,'#8ca6bd','center');
+}
+function frame(now){
+ const delta=Math.max(0,Math.min((now-lastFrame)/1000,.12));lastFrame=now;
+ try{
+  if(sim.running){advance(delta*Number($('speed').value),10);}
+  updatePredictions();if($('autoFit').checked)fitCamera(false);draw();updateStats();
+ }catch(err){sim.running=false;updateControls();if(!errorShown){toast('Simulation paused: '+err.message);console.error(err);errorShown=true;}}
+ requestAnimationFrame(frame);
+}
+function pointerCoords(e){const b=canvas.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top];}
+canvas.addEventListener('pointerdown',e=>{
+ if(e.button!==0&&e.button!==2)return;const p=pointerCoords(e);
+ const nearSat=Math.hypot(p[0]-cachedSat[0],p[1]-cachedSat[1])<25,nearTip=Math.hypot(p[0]-cachedTip[0],p[1]-cachedTip[1])<18;
+ if(e.button===0&&!sim.running&&!sim.impact&&(nearSat||nearTip))drag={kind:'burn',start:p,origin:cachedSat.slice(0,2),magnitude:Math.max(P.norm(dv),Number($('magnitude').value)||500)};
+ else drag={kind:'camera',start:p,az:cam.az,el:cam.el};
+ canvas.setPointerCapture(e.pointerId);canvas.style.cursor=drag.kind==='burn'?'crosshair':'grabbing';e.preventDefault();
+});
+canvas.addEventListener('pointermove',e=>{
+ const p=pointerCoords(e);
+ if(!drag){const near=Math.hypot(p[0]-cachedSat[0],p[1]-cachedSat[1])<25||Math.hypot(p[0]-cachedTip[0],p[1]-cachedTip[1])<18;canvas.style.cursor=!sim.running&&!sim.impact&&near?'crosshair':'grab';return;}
+ if(drag.kind==='burn'){
+  const x=p[0]-drag.origin[0],y=drag.origin[1]-p[1],len=Math.hypot(x,y);if(len<4)return;
+  const magnitude=$('dragMagnitude').checked?Math.min(200000,len*5):drag.magnitude;
+  setDV(P.mul(P.add(P.mul(cam.right,x/len),P.mul(cam.up,y/len)),magnitude),'Mouse / screen plane');
+ }else{
+  cam.az=drag.az-(p[0]-drag.start[0])*.008;cam.el=P.clamp(drag.el+(p[1]-drag.start[1])*.008,-Math.PI/2,Math.PI/2);cam.mode='custom';basisFromAngles();['topView','view3D','orbitView'].forEach(id=>$(id).classList.remove('active'));if($('autoFit').checked)fitCamera(true);
+ }
+});
+function endPointer(e){if(!drag)return;drag=null;canvas.style.cursor='grab';if(canvas.hasPointerCapture(e.pointerId))canvas.releasePointerCapture(e.pointerId);}
+canvas.addEventListener('pointerup',endPointer);canvas.addEventListener('pointercancel',endPointer);canvas.addEventListener('contextmenu',e=>e.preventDefault());
+canvas.addEventListener('wheel',e=>{e.preventDefault();if(drag?.kind==='burn')return;$('autoFit').checked=false;cam.scale=P.clamp(cam.scale*Math.exp(-e.deltaY*.0012),1e-12,2);},{passive:false});
+$('runBtn').onclick=run;$('stopBtn').onclick=()=>stop(true);$('stepBtn').onclick=()=>{advance(60);stop();};$('applyBtn').onclick=applyBurn;$('undoBtn').onclick=undo;
+$('speed').onchange=updateControls;$('resumeAfter').onchange=updateControls;
+['magnitude','azimuth','elevation'].forEach(id=>$(id).addEventListener('input',readAngles));['dvx','dvy','dvz'].forEach(id=>$(id).addEventListener('input',readComponents));
+for(const b of document.querySelectorAll('[data-preset]'))b.onclick=()=>preset(b.dataset.preset);
+$('circularizeBtn').onclick=()=>{const target=P.mul(P.basis(sim.r,sim.v).tangent,Math.sqrt(P.MU/P.norm(sim.r)));setDV(P.mul(P.sub(target,sim.v),1000),'Circularize');toast('Circularization burn staged. Press Apply to commit.');};
+$('topView').onclick=()=>setView('top');$('view3D').onclick=()=>setView('3d');$('orbitView').onclick=()=>setView('orbit');$('fitBtn').onclick=()=>{$('autoFit').checked=true;fitCamera(true);};
+['showPrediction','fitPrediction','horizon'].forEach(id=>$(id).onchange=()=>{predictionsDirty=true;});
+$('resetBtn').onclick=()=>{const alt=Number($('initialAltitude').value),inc=Number($('initialInclination').value);if(!Number.isFinite(alt)||alt<1||alt>10000000||!Number.isFinite(inc)||inc<0||inc>180){toast('Use altitude 1–10,000,000 km and inclination 0–180°.');return;}if(sim.t>0||sim.segments.length>1){if(!confirm('Reset this mission and clear its trajectory history? Save/export first to retain it.'))return;}reset(alt,inc,true);};
+$('helpBtn').onclick=()=>{if(sim.running)stop();$('helpDialog').showModal();};
+$('exportBtn').onclick=()=>{if(sim.running)stop();$('exportInfo').textContent=number(sim.samples)+' samples · '+sim.segments.length+' coasts · '+(sim.segments.length-1)+' burns · mission time '+clock(sim.t);$('exportDialog').showModal();};
+for(const b of document.querySelectorAll('.closeDialog'))b.onclick=()=>b.closest('dialog').close();
+for(const d of document.querySelectorAll('dialog'))d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
+window.addEventListener('keydown',e=>{if(['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)||document.querySelector('dialog[open]'))return;if(e.code==='Space'){e.preventDefault();sim.running?stop():run();}if(e.code==='Escape')stop();});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&sim.running){stop();toast('Paused when the tab became hidden.');}});
+function download(name,data,type){const blob=data instanceof Blob?data:new Blob([data],{type});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);}
+function missionData(){sample(true);return{format:'orbit-lab-mission',version:1,createdAt:new Date().toISOString(),units:{position:'km',velocity:'km/s',time:'s',burnMagnitude:'m/s'},model:{earthRadius:P.R,mu:P.MU,description:'Spherical Earth; 3D Newtonian two-body dynamics; impulsive burns; no drag or third bodies.'},time:sim.t,r:sim.r,v:sim.v,impact:sim.impact,initial:sim.initial,segments:sim.segments,stagedDV_m_s:dv,view:{...cam,autoFit:$('autoFit').checked},settings:{speed:Number($('speed').value),horizon:Number($('horizon').value)}};}
+$('saveJSON').onclick=()=>{download('orbit_lab_mission.json',JSON.stringify(missionData()),'application/json');toast('Mission JSON saved.');};
+$('saveCSV').onclick=()=>{
+ sample(true);const chunks=['segment_id,segment_color,time_s,x_km,y_km,z_km,vx_km_s,vy_km_s,vz_km_s,altitude_km,speed_km_s\n'];let lines=[];
+ for(const seg of sim.segments)for(const s of seg.samples){lines.push([seg.id,seg.color,...s,P.norm(s.slice(1,4))-P.R,P.norm(s.slice(4,7))].join(',')+'\n');if(lines.length>=10000){chunks.push(lines.join(''));lines=[];}}
+ if(lines.length)chunks.push(lines.join(''));download('orbit_lab_trajectory.csv',new Blob(chunks,{type:'text/csv'}));toast('Trajectory CSV saved with all recorded samples.');
+};
+$('savePNG').onclick=()=>{draw();canvas.toBlob(blob=>{if(blob)download('orbit_lab_view.png',blob);},'image/png');};
+$('loadJSON').onclick=()=>$('hiddenUpload').click();
+function loadMission(data){
+ if(!data||data.format!=='orbit-lab-mission'||data.version!==1||!Array.isArray(data.segments)||data.segments.length<1||data.segments.length>20000)throw new Error('Not a supported Orbit Lab mission.');
+ const finiteVec=a=>Array.isArray(a)&&a.length===3&&a.every(Number.isFinite);
+ if(!finiteVec(data.r)||!finiteVec(data.v)||!Number.isFinite(data.time)||data.time<0||P.norm(data.r)<P.R-1e-3)throw new Error('Invalid current state.');
+ if(!data.model||Math.abs(data.model.mu-P.MU)>1e-6||Math.abs(data.model.earthRadius-P.R)>1e-6)throw new Error('Earth constants do not match this simulator.');
+ if(!data.initial||!Number.isFinite(data.initial.altitude)||data.initial.altitude<=0||!Number.isFinite(data.initial.inclination))throw new Error('Invalid initial orbit.');
+ let n=0,prev=-Infinity,segments=[];
+ for(let k=0;k<data.segments.length;k++){
+  const s=data.segments[k];if(s.id!==k||!finiteVec(s.startR)||!finiteVec(s.startV)||!Number.isFinite(s.startTime)||s.startTime<0||!Array.isArray(s.samples)||s.samples.length<1)throw new Error('Invalid coast record.');
+  n+=s.samples.length;if(n>MAX_SAMPLES)throw new Error('Mission exceeds the sample limit.');
+  for(const p of s.samples){if(!Array.isArray(p)||p.length!==7||!p.every(Number.isFinite)||p[0]<prev-1e-8||p[0]>data.time+1e-6)throw new Error('Invalid or unordered trajectory sample.');prev=p[0];}
+  let burn=null;if(k>0){const b=s.burn;if(!b||!finiteVec(b.dv)||!finiteVec(b.vBefore)||!finiteVec(b.r)||!Number.isFinite(b.time)||Math.abs(b.time-s.startTime)>1e-6)throw new Error('Invalid burn record.');burn={time:b.time,r:b.r.slice(),dv:b.dv.slice(),vBefore:b.vBefore.slice(),magnitude:P.norm(b.dv)*1000,label:typeof b.label==='string'?b.label.slice(0,60):'Imported burn'};}
+  const first=s.samples[0];if(Math.abs(first[0]-s.startTime)>1e-6||P.norm(P.sub(first.slice(1,4),s.startR))>1e-5||P.norm(P.sub(first.slice(4,7),s.startV))>1e-7)throw new Error('Coast start does not match its samples.');
+  segments.push({id:k,color:color(k),startTime:s.startTime,startR:s.startR.slice(),startV:s.startV.slice(),energyRef:P.elements(s.startR,s.startV).energy,burn,samples:s.samples});
+ }
+ const last=segments.at(-1).samples.at(-1);if(Math.abs(last[0]-data.time)>1e-5||P.norm(P.sub(last.slice(1,4),data.r))>1e-4||P.norm(P.sub(last.slice(4,7),data.v))>1e-7)throw new Error('Current state does not match the final recorded sample.');
+ sim={t:data.time,r:data.r.slice(),v:data.v.slice(),running:false,impact:Boolean(data.impact),capacity:n>=MAX_SAMPLES,samples:n,totalDV:segments.reduce((t,s)=>t+(s.burn?s.burn.magnitude:0),0),initial:data.initial,segments};
+ setDV(finiteVec(data.stagedDV_m_s)&&P.norm(data.stagedDV_m_s)<=200000?data.stagedDV_m_s:[0,0,0]);
+ $('initialAltitude').value=data.initial.altitude;$('initialInclination').value=data.initial.inclination;
+ if([1,10,60,120,300,1000,5000,10000].includes(data.settings?.speed))$('speed').value=data.settings.speed;
+ if([21600,86400,604800].includes(data.settings?.horizon))$('horizon').value=data.settings.horizon;
+ rebuildBounds();setView('3d');$('autoFit').checked=true;
+ const view=data.view;
+ if(view&&finiteVec(view.right)&&finiteVec(view.up)&&finiteVec(view.normal)&&
+    [view.cx,view.cy,view.az,view.el,view.scale].every(Number.isFinite)&&view.scale>0&&view.scale<=2&&
+    [view.right,view.up,view.normal].every(a=>Math.abs(P.norm(a)-1)<1e-6)&&
+    Math.abs(P.dot(view.right,view.up))<1e-6&&P.norm(P.sub(P.cross(view.right,view.up),view.normal))<1e-6){
+   cam={az:view.az,el:view.el,right:view.right.slice(),up:view.up.slice(),normal:view.normal.slice(),cx:view.cx,cy:view.cy,scale:view.scale,mode:view.mode};
+   $('autoFit').checked=Boolean(view.autoFit);
+   ['topView','view3D','orbitView'].forEach((id,i)=>$(id).classList.toggle('active',['top','3d','orbit'][i]===cam.mode));
+ }
+ predictionsDirty=true;updatePredictions(true);if($('autoFit').checked)fitCamera(true);updateStats(true);updateHistory();updateControls();errorShown=false;
+}
+$('hiddenUpload').onchange=async e=>{
+ const file=e.target.files[0];if(!file)return;
+ try{if(file.size>300*1024*1024)throw new Error('Mission file is larger than 300 MB.');const data=JSON.parse(await file.text());loadMission(data);$('exportDialog').close();toast('Mission restored, paused at '+clock(sim.t)+'.');}catch(err){toast('Could not open mission: '+err.message);}finally{e.target.value='';}
+};
+// Small, documented test interface. The same production engine is used in tests.
+window.OrbitLab={physics:P,getState:()=>JSON.parse(JSON.stringify(sim)),getDV:()=>dv.slice(),setDV,reset,advance,run,stop,applyBurn,undo,missionData,loadMission,project,getCamera:()=>({...cam}),getPredictions:()=>({forecast,trial}),refresh:()=>{predictionsDirty=true;updatePredictions(true);updateStats(true);updateControls();draw();}};
+resize();reset();new ResizeObserver(resize).observe($('stage'));lastFrame=performance.now();requestAnimationFrame(frame);
+})();
+
+</script>
+</body></html>

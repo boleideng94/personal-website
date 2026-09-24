@@ -1,0 +1,12 @@
+# Add another entry here to list a new teaching tool.
+- title: Satellite Orbit Simulator
+  label: Orbit Lab
+  category: Orbital mechanics
+  description: Take the controls of a satellite. Change its velocity, preview a maneuver, and watch its orbit evolve around Earth in three dimensions.
+  url: /teaching/satellite-orbit-simulator/
+  image: /images/teaching/orbit-lab.svg
+  topics:
+    - Orbital motion
+    - Velocity changes
+    - 3D visualization
+  activity: Start with a circular orbit, try a prograde burn, and see how the path changes. Switch to the 3D view to explore a maneuver out of the orbital plane.

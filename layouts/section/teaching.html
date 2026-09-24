@@ -1,0 +1,34 @@
+{{ define "main" }}
+<main class="universal-wrapper teaching-page">
+  <header class="teaching-intro">
+    <p class="teaching-eyebrow">Learn by doing</p>
+    <h1>{{ .Title }}</h1>
+    <div class="teaching-lede">{{ .Content }}</div>
+  </header>
+  <section class="teaching-tools" aria-label="Interactive teaching tools">
+    {{ range site.Data.teaching }}
+    <article class="teaching-tool">
+      <a class="teaching-art" href="{{ .url | relURL }}" aria-label="Launch {{ .title }}">
+        <img src="{{ .image | relURL }}" alt="" width="720" height="560">
+        <span class="teaching-art-label">{{ .label }} <span aria-hidden="true">↗</span></span>
+      </a>
+      <div class="teaching-tool-body">
+        <p class="teaching-eyebrow">{{ .category }}</p>
+        <h2>{{ .title }}</h2>
+        <p class="teaching-description">{{ .description }}</p>
+        <ul class="teaching-topics" aria-label="Topics">
+          {{ range .topics }}<li>{{ . }}</li>{{ end }}
+        </ul>
+        <a class="teaching-launch" href="{{ .url | relURL }}">Launch simulator <span aria-hidden="true">→</span></a>
+        <p class="teaching-browser-note">Runs in your browser · No installation needed</p>
+      </div>
+      <div class="teaching-activity">
+        <h3>A first experiment</h3>
+        <p>{{ .activity }}</p>
+      </div>
+    </article>
+    {{ end }}
+  </section>
+  <p class="teaching-closing">A growing collection of tools for the classroom and your own curiosity.</p>
+</main>
+{{ end }}

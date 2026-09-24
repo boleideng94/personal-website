@@ -25,6 +25,9 @@ main:
   - name: Fun
     url: '/fun'
     weight: 55
+  - name: Teaching
+    url: '/teaching/'
+    weight: 60
   # - name: Opportunities
   #   url: '/opportunities'
   #   weight: 55
