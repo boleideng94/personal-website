@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A self-contained downhill cycling game for teaching intrinsic coordinates and the tire friction circle. Brake, corner, and race the clock.">
+<title>APEX · Downhill Traction Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1017;--panel:#111c27;--panel2:#15222f;--line:#293743;--text:#e7eff2;--muted:#93a8b4;--lime:#d8f67a;--cyan:#72d8e7;--amber:#ffbe73;--red:#ff7580;--radius:16px;--mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}
+*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:radial-gradient(ellipse at 60% -20%,#203849 0,transparent 50%),var(--bg);font-size:14px;line-height:1.45}button,input,select{font:inherit}button,select,input[type=number],input[type=text]{border:1px solid var(--line);background:#17242f;color:var(--text);border-radius:9px;min-height:36px}button{padding:8px 13px;cursor:pointer;white-space:nowrap;font-weight:600;transition:background .14s,transform .12s}button:hover{background:#263747}button:active{transform:translateY(1px)}button:disabled{opacity:.4;cursor:default;transform:none}button.primary{background:var(--lime);border-color:var(--lime);color:#172216}button.primary:hover{background:#e6ffa0}button.outline{background:transparent}button.danger{color:var(--red)}button.small{padding:5px 9px;font-size:12px;min-height:30px}button.icon{padding:6px 10px;font-size:17px;min-width:34px}button[aria-pressed=true]{border-color:var(--lime);color:var(--lime)}button.primary[aria-pressed=true]{color:#142015}input,select{padding:6px 9px}input[type=checkbox]{accent-color:var(--lime);width:15px;height:15px;vertical-align:middle;margin-right:6px}input[type=range]{padding:0;height:23px;min-width:0;accent-color:var(--amber);cursor:pointer}input[type=number]{width:90px}input[type=text]{width:125px}input:focus-visible,button:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}a{color:var(--cyan)}h1,h2,h3,p{margin:0}h2{font-size:15px;letter-spacing:-.2px}h3{font-size:14px}.muted{color:var(--muted)}.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}.eyebrow{font-size:10px;letter-spacing:1.7px;text-transform:uppercase;font-weight:750;color:var(--muted)}.app{max-width:1660px;margin:auto;padding:20px 26px 25px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:17px}.identity{display:flex;gap:13px;align-items:center}.brandmark{width:40px;height:40px;position:relative;border:1px solid #526044;border-radius:12px;background:#d8f67a10;display:grid;place-items:center;color:var(--lime)}.wordmark{font-size:27px;letter-spacing:4px;font-weight:850;line-height:1.1}.identity .eyebrow{margin-top:4px;letter-spacing:1.45px}.header-actions{display:flex;align-items:center;gap:8px}.coursebar{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#101b25;border:1px solid var(--line);border-radius:12px;padding:10px 13px;margin-bottom:14px;flex-wrap:wrap}.course-identity{display:flex;align-items:center;gap:13px}.course-dot{width:9px;height:9px;background:var(--lime);box-shadow:0 0 0 5px #d8f67a10;border-radius:50%}.course-name{font-size:14px;font-weight:650}.course-meta{font-size:11px;color:var(--muted);margin-top:2px}.course-actions{display:flex;gap:7px;align-items:center}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 334px;gap:15px;align-items:start}.leftcol,.rightcol{display:flex;flex-direction:column;gap:14px}.card{border:1px solid var(--line);background:linear-gradient(145deg,#14202b,#111b26);border-radius:var(--radius);overflow:hidden}.card-head{padding:14px 16px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}.small-note{font-size:11px;color:var(--muted);line-height:1.5}.stage{height:clamp(490px,65vh,720px);position:relative;background:#16312e;border:1px solid #384a46;border-radius:var(--radius);overflow:hidden}.stage canvas{width:100%;height:100%;display:block}.stage-head{position:absolute;top:15px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;pointer-events:none}.hud-box{background:#0c171cdb;border:1px solid #78938a3b;border-radius:12px;padding:10px 14px;backdrop-filter:blur(8px)}.speed-num{font-size:42px;line-height:1;font-weight:650;letter-spacing:-2px;color:#fff}.speed-unit{font-size:12px;font-family:var(--mono);color:var(--muted);margin-left:4px}.timer-box{text-align:right;min-width:140px}.timer{font-size:25px;font-weight:650;letter-spacing:-.5px}.hud-mini{font-size:10px;color:var(--muted);margin-top:6px}.run-tag{display:inline-block;font-size:10px;font-weight:750;letter-spacing:1.2px;padding:3px 7px;border-radius:5px;background:#d8f67a1c;color:var(--lime);margin-top:5px}.next-bend{position:absolute;top:121px;left:16px;pointer-events:none;max-width:245px;padding:10px 12px;background:#0c171cdd;border:1px solid #78938a32;border-radius:10px}.bend-value{font-size:14px;font-weight:650;margin:3px 0}.bend-arrow{display:inline-block;color:var(--amber);font-size:22px;line-height:1;vertical-align:middle;margin-right:7px}.next-bend .small-note{font-size:10px}.view-tools{position:absolute;top:147px;right:16px;display:flex;flex-direction:column;gap:6px}.view-tools button{background:#0c171cd9;border-color:#526b644e;font-size:11px}.map-shell{position:absolute;bottom:18px;left:16px;width:183px;height:159px;background:#091820e8;border:1px solid #61787960;border-radius:13px;overflow:hidden;pointer-events:none}.map-label{position:absolute;left:11px;top:9px;font-size:9px;font-weight:700;letter-spacing:1.15px;color:#b0c5c4}.map-shell canvas{position:absolute;top:21px;left:0;width:100%;height:134px}.stage-caption{position:absolute;bottom:18px;right:16px;left:212px;display:flex;align-items:flex-end;flex-direction:column;gap:7px;pointer-events:none}.stage-hint{font-size:11px;max-width:380px;padding:8px 12px;border-radius:9px;border:1px solid #62797450;background:#0b1b21e8;text-align:right;color:#cfdfdc}.progress-line{width:200px;height:4px;background:#71857d66;border-radius:5px;overflow:hidden}.progress-fill{height:100%;width:0%;background:var(--lime);transition:width .2s linear}.distance{font-size:11px;color:#e0e8df;font-family:var(--mono);background:#0b1b2180;border-radius:4px;padding:1px 4px}.status-banner{position:absolute;left:50%;top:45%;transform:translate(-50%,-50%);text-align:center;padding:13px 20px;border-radius:12px;background:#0c1820ed;border:1px solid #63827566;min-width:230px;max-width:75%;pointer-events:none}.status-banner strong{font-size:18px;color:var(--lime);display:block}.status-banner p{font-size:12px;color:#c3d1d0;margin-top:5px}.result{position:absolute;z-index:5;inset:0;display:flex;align-items:center;justify-content:center;background:#07111865;backdrop-filter:blur(2px)}[hidden]{display:none!important}.result-card{width:min(420px,89%);background:#12212a;border:1px solid #5a737780;border-radius:17px;box-shadow:0 15px 70px #0008;padding:24px}.result-card h2{font-size:27px;letter-spacing:-.7px;margin:6px 0 9px}.result-card .result-time{font-size:33px;letter-spacing:-1px;color:var(--lime);margin:8px 0}.result-metrics{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.result-metrics>div{background:#09151c;border:1px solid #2c3c45;border-radius:9px;padding:10px}.result-metrics b{display:block;font:600 17px var(--mono);margin-top:5px}.result-actions{display:flex;gap:8px;margin-top:17px}.result-message{color:#b4c5cd;font-size:12px;line-height:1.6}.grip-header-right{font:650 22px var(--mono);color:var(--lime)}.circle-wrap{height:206px;position:relative}.circle-wrap canvas{width:100%;height:100%;display:block}.grip-readouts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 12px}.readout{background:#0d1720;border:1px solid #25343f;border-radius:9px;padding:8px 9px}.readout-label{font-size:10px;color:var(--muted)}.readout-num{font:650 17px var(--mono);margin-top:2px}.readout-brake{color:var(--amber)}.readout-turn{color:var(--cyan)}.budget-line{margin:0 16px 13px;font-size:11px;border-top:1px solid var(--line);padding-top:9px;display:flex;justify-content:space-between;gap:5px}.grip-state{font-size:10px;letter-spacing:.8px;font-weight:650;text-transform:uppercase;color:var(--lime)}.brake-card .card-head{padding-bottom:0}.brake-total{font:600 24px var(--mono);color:var(--amber)}.lever-wrap{height:183px;position:relative;margin:0 15px}.lever-wrap svg{width:100%;height:100%;display:block;touch-action:none;cursor:grab;overflow:visible}.lever-wrap svg.dragging{cursor:grabbing}.lever-caption{position:absolute;left:1px;bottom:8px;font-size:10px;line-height:1.6;color:var(--muted);pointer-events:none}.lever-caption strong{color:var(--amber);font-weight:600}.brake-slider{padding:0 16px}.brake-slider input{width:100%}.slider-labels{display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:2px}.brake-buttons{display:flex;gap:6px;padding:12px 16px 8px}.brake-buttons button{flex:1}.spring-row{display:flex;align-items:center;justify-content:space-between;padding:0 16px 12px;font-size:11px;color:var(--muted)}.spring-row label{cursor:pointer}.brake-note{font-size:10px;line-height:1.5;color:#9db0ba;padding:10px 16px 12px;background:#0c171f;border-top:1px solid #223440}.telemetry-card .card-head{padding-bottom:9px;flex-wrap:wrap}.chart-legend{display:flex;gap:13px;font-size:10px;align-items:center;color:var(--muted)}.legend-mark{display:inline-block;width:13px;height:3px;vertical-align:middle;margin-right:4px;border-radius:4px}.chart-wrap{height:182px;position:relative;margin:0 5px}.chart-wrap canvas{width:100%;height:100%;display:block}.chart-tooltip{position:absolute;padding:7px 9px;font:11px var(--mono);line-height:1.6;background:#050c13f2;border:1px solid #3f5260;border-radius:7px;pointer-events:none;white-space:nowrap;z-index:4}.accel-strip{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--line);padding:12px 16px;gap:15px}.accel-label{font-size:10px;color:var(--muted);margin-bottom:3px}.accel-value{font:600 16px var(--mono)}.accel-equation{font-size:10px;color:var(--muted);margin-top:3px}.attempt-list{padding:8px 15px 12px;max-height:184px;overflow:auto;scrollbar-width:thin}.attempt-row{display:grid;grid-template-columns:25px 1fr auto;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid #29374370;font-size:11px}.attempt-row:last-child{border:0}.attempt-dot{height:20px;width:20px;display:grid;place-items:center;border-radius:6px;background:#263543;color:var(--muted);font-size:10px}.attempt-row.best .attempt-dot{background:#d8f67a20;color:var(--lime)}.attempt-sub{font-size:9px;color:var(--muted);margin-top:1px}.attempt-time{font:600 13px var(--mono)}.empty-state{padding:10px 0;color:var(--muted);font-size:11px;line-height:1.6}.footer{display:flex;justify-content:space-between;gap:12px;font-size:10px;color:#7e939f;margin-top:15px;flex-wrap:wrap}.footer a{color:#a3bfc9}.tiny-key{font:10px var(--mono);padding:2px 4px;border-radius:4px;border:1px solid #384651;background:#17212c;margin:0 2px}.footer-links{display:flex;gap:13px}.footer-links button{padding:0;border:0;background:none;color:#9cbbc9;min-height:15px;font-size:10px;text-decoration:underline;text-underline-offset:3px;font-weight:500}.live-dot{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:6px;background:var(--lime)}dialog{width:min(760px,calc(100vw - 30px));max-height:88vh;background:#111e29;color:var(--text);border:1px solid #40525e;border-radius:17px;padding:0;box-shadow:0 20px 90px #0009}dialog::backdrop{background:#03090db5;backdrop-filter:blur(4px)}.modal-head{position:sticky;top:0;padding:18px 22px;background:#15242f;border-bottom:1px solid #34434c;display:flex;justify-content:space-between;align-items:center;z-index:3}.modal-head h2{font-size:19px}.modal-content{padding:20px 22px 24px}.modal-content h3{color:var(--lime);margin:21px 0 7px;font-size:15px}.modal-content h3:first-child{margin-top:0}.modal-content p{font-size:13px;line-height:1.7;color:#bfccd3;margin:8px 0}.modal-content .formula{font-family:var(--mono);font-size:14px;padding:13px 15px;border:1px solid #3b505d;border-radius:9px;background:#0c1720;line-height:2;color:var(--text);margin:12px 0;overflow-wrap:anywhere}.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:15px 0}.help-item{padding:13px;border:1px solid var(--line);border-radius:10px;background:#0d1822}.help-item strong{font-size:13px}.help-item p{font-size:12px;margin:5px 0 0}.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px;margin-bottom:20px}.settings-grid label{display:flex;flex-direction:column;gap:6px;font-size:12px;font-weight:600}.settings-grid label span{font-size:10px;font-weight:400;color:var(--muted)}.settings-grid input,.settings-grid select{width:100%}.settings-grid .wide{grid-column:1/-1}.dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;padding-top:15px;border-top:1px solid var(--line)}.settings-error{color:var(--red);font-size:12px;margin-top:10px}.inline-controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.callout{padding:12px 15px;border-left:3px solid var(--amber);background:#ffbe730a;border-radius:0 8px 8px 0}.small-links{font-size:11px;line-height:1.8}.small-links a{display:block}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);max-width:min(560px,90vw);padding:11px 16px;background:#21313d;border:1px solid #5b6e79;border-radius:10px;z-index:40;font-size:12px;box-shadow:0 8px 40px #0009;text-align:center}.mobile-dock{display:none}.storage-warning{padding:7px 15px;font-size:10px;color:var(--amber);background:#ffbe7308}.freeze-hint{color:var(--amber)}.autopause-note{font-size:10px;margin-top:6px;color:#d2ddc4}
+@media(min-width:1700px){.app{padding-top:26px}.stage{height:700px}}
+@media(max-width:1150px){.app{padding:16px}.workspace{grid-template-columns:minmax(0,1fr) 305px;gap:12px}.stage{height:600px}.header-actions button{padding:8px 10px}.brandmark{width:35px;height:35px}.wordmark{font-size:24px}.next-bend{max-width:195px}.map-shell{width:160px;height:143px}.map-shell canvas{height:119px}.stage-caption{left:183px}.stage-hint{max-width:255px;font-size:10px}.progress-line{width:150px}}
+@media(max-width:900px){.workspace{grid-template-columns:1fr}.rightcol{display:grid;grid-template-columns:1fr 1fr;align-items:start}.attempts-card{grid-column:1/-1}.stage{height:570px}.coursebar{gap:10px}.course-actions{flex-wrap:wrap}.header-actions .desktop-extra{display:none}.footer{margin-bottom:78px}.mobile-dock{display:flex;position:fixed;bottom:0;left:0;right:0;padding:9px 13px max(9px,env(safe-area-inset-bottom));background:#101e2bef;border-top:1px solid #50616a;gap:11px;align-items:center;backdrop-filter:blur(12px);z-index:12}.mobile-dock label{font-size:10px;color:var(--amber);width:42px;line-height:1.5}.mobile-dock label b{font:650 15px var(--mono)}.mobile-dock input{flex:1}.mobile-dock button{min-width:74px}.circle-wrap{height:205px}.stage-caption{left:210px}.map-shell{width:184px;height:153px}.map-shell canvas{height:129px}}
+@media(max-width:550px){.app{padding:12px 9px}.identity{gap:8px}.identity .eyebrow{font-size:8px;letter-spacing:1px}.wordmark{font-size:21px}.brandmark{width:31px;height:35px}.header-actions{gap:5px}.header-actions button{padding:7px 9px;font-size:12px}.header-actions #retryBtn{display:none}.coursebar{padding:10px}.course-identity{gap:9px}.course-actions{width:100%;justify-content:space-between}.course-actions button{font-size:11px;padding:6px 8px}.course-actions select{font-size:11px;max-width:83px;min-height:32px;padding:4px}.stage{height:510px}.stage-head{left:10px;right:10px;top:10px}.hud-box{padding:9px 11px}.speed-num{font-size:34px}.timer-box{min-width:115px}.timer{font-size:21px}.next-bend{left:10px;top:108px;max-width:194px}.view-tools{right:10px;top:136px}.view-tools button{font-size:9px;padding:4px 7px;min-height:27px}.map-shell{left:10px;bottom:11px;width:125px;height:130px}.map-shell canvas{height:106px}.map-label{font-size:8px;letter-spacing:.8px}.stage-caption{right:10px;bottom:12px;left:145px}.stage-hint{font-size:9px;padding:6px 7px}.distance{font-size:10px}.progress-line{width:125px}.rightcol{gap:10px}.card-head{padding:12px 11px 0}.card-head h2{font-size:13px}.circle-wrap{height:171px}.grip-header-right{font-size:18px}.grip-readouts{padding:0 8px 9px;gap:5px}.readout{padding:6px}.readout-label{font-size:8px}.readout-num{font-size:13px}.budget-line{font-size:9px;margin:0 9px 10px;flex-direction:column;gap:2px}.grip-state{font-size:8px}.lever-wrap{margin:0 6px;height:174px}.brake-total{font-size:18px}.lever-caption{font-size:8px}.brake-slider{padding:0 10px}.brake-buttons{padding:10px 8px 8px;gap:4px;flex-wrap:wrap}.brake-buttons button{padding:5px;font-size:10px;min-height:27px}.spring-row{padding:0 9px 9px;font-size:9px;flex-wrap:wrap;gap:5px}.brake-note{padding:8px 9px;font-size:9px}.slider-labels{font-size:8px}.telemetry-card .card-head{padding:12px 12px 7px}.chart-legend{font-size:9px;gap:9px}.chart-wrap{height:170px}.accel-strip{padding:10px;gap:8px}.accel-value{font-size:12px}.accel-label,.accel-equation{font-size:8px}.settings-grid,.help-grid{grid-template-columns:1fr}.settings-grid .wide{grid-column:auto}.modal-content{padding:17px}.modal-head{padding:14px 17px}.modal-head h2{font-size:16px}.footer{font-size:9px}.status-banner{min-width:210px;max-width:80%;top:49%}.status-banner strong{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.result{backdrop-filter:none}}
+</style>
+</head>
+<body>
+<nav aria-label="Teaching" style="max-width:1536px;margin:auto;padding:8px 16px"><a href="/teaching/" style="display:inline-flex;align-items:center;min-height:36px;color:#93a8b4;font-size:12px;text-decoration:underline;text-underline-offset:3px">← Back to Teaching</a></nav>
+<div class="app">
+<header class="topbar">
+  <div class="identity"><div class="brandmark" aria-hidden="true"><svg width="27" height="25" viewBox="0 0 27 25" fill="none"><path d="M2 21 13 3l12 18M8 16h12M12 21l5-8" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h1 class="wordmark">APEX</h1><div class="eyebrow">Downhill traction lab</div></div></div>
+  <div class="header-actions"><button id="helpBtn" class="outline desktop-extra">How to play</button><button id="demoBtn" class="outline desktop-extra" title="Watch a conservative, unranked demonstration">Watch demo</button><button id="retryBtn" title="Restart the same course (R)">↻ Retry</button><button id="runBtn" class="primary" title="Start or pause simulation (Space)">▶ Ride</button></div>
+</header>
+<section class="coursebar" aria-label="Current course">
+  <div class="course-identity"><span class="course-dot"></span><div><div class="course-name" id="courseName">Ridgeway / technical descent</div><div class="course-meta" id="courseMeta"></div></div></div>
+  <div class="course-actions"><label for="playback" class="small-note">Time</label><select id="playback" aria-label="Simulation playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option><option value="4">4×</option></select><button id="settingsBtn" class="small">Course & physics</button><button id="randomBtn" class="small">⤨ Random road</button></div>
+</section>
+<main class="workspace">
+<div class="leftcol">
+<section class="stage" id="stage" aria-label="Downhill cycling simulation">
+ <canvas id="roadCanvas" aria-label="Top-down road. The rider stays pointed up in the rotating view. The minimap shows the entire descent.">Your browser needs HTML canvas support.</canvas>
+ <div class="stage-head"><div class="hud-box"><div><span class="speed-num mono" id="speed">0.0</span><span class="speed-unit">km/h</span></div><div class="hud-mini" id="elevationHud">0 m descended</div></div><div class="hud-box timer-box"><div class="eyebrow">Race clock</div><div class="timer mono" id="timer">00:00.00</div><div class="run-tag" id="runTag">READY</div><div class="hud-mini" id="bestHud">Best —</div></div></div>
+ <div class="next-bend" id="bendCard"><div class="eyebrow" id="bendEyebrow">Next bend</div><div class="bend-value"><span class="bend-arrow" id="bendArrow">↱</span><span id="bendName">Right turn · 100 m</span></div><div class="small-note" id="bendLimit">No-brake limit at tightest point: —</div></div>
+ <div class="view-tools"><button id="headingBtn" class="small" aria-pressed="true" title="Toggle rotating rider-following view / fixed north-up view">↑ Heading up</button><button id="vectorsBtn" class="small" title="Cycle acceleration vectors, tire-force vectors, and no vectors">Vectors: aₜ / aₙ</button><div style="display:flex;gap:5px;justify-content:flex-end"><button id="zoomInBtn" class="small" aria-label="Zoom in">＋</button><button id="zoomOutBtn" class="small" aria-label="Zoom out">−</button><button id="fullBtn" class="small" title="Fullscreen (F)" aria-label="Fullscreen">⛶</button></div></div>
+ <div class="map-shell"><div class="map-label">WHOLE DESCENT · NORTH ↑</div><canvas id="mapCanvas" aria-label="Global map with current rider position"></canvas></div>
+ <div class="stage-caption"><div class="stage-hint" id="stageHint">Gravity accelerates you. The lever spends grip.</div><div class="progress-line"><div class="progress-fill" id="progressFill"></div></div><div class="distance" id="distance">0 / 1,000 m</div></div>
+ <div class="status-banner" id="statusBanner"><strong id="bannerTitle">The descent is yours.</strong><p id="bannerText">Press Ride. Brake before the bends.<br>Stay inside the traction circle.</p></div>
+ <div class="result" id="result" hidden><div class="result-card"><div class="eyebrow" id="resultKicker">End of attempt</div><h2 id="resultTitle">Traction lost.</h2><div class="result-time mono" id="resultTime"></div><p class="result-message" id="resultMessage"></p><div class="result-metrics"><div><span class="eyebrow" id="resultMetric1Label">Cornering</span><b id="resultMetric1"></b></div><div><span class="eyebrow" id="resultMetric2Label">Braking</span><b id="resultMetric2"></b></div></div><p class="small-note" id="resultFootnote"></p><div class="result-actions"><button class="primary" id="resultRetry">↻ Try again</button><button id="inspectBtn">Inspect run</button></div></div></div>
+</section>
+<section class="card telemetry-card">
+ <div class="card-head"><h2>Your braking line</h2><div class="chart-legend"><span><i class="legend-mark" style="background:var(--amber)"></i>Lever %</span><span><i class="legend-mark" style="background:var(--cyan)"></i>Speed</span><span><i class="legend-mark" style="background:var(--lime)"></i>Grip %</span><button id="csvBtn" class="small outline" title="Export this attempt’s sampled state and control history">CSV ↗</button></div></div>
+ <div class="chart-wrap" id="chartWrap"><canvas id="chartCanvas" aria-label="Brake lever, speed, and traction utilization as functions of simulation time"></canvas><div class="chart-tooltip" id="chartTooltip" hidden></div></div>
+ <div class="accel-strip"><div><div class="accel-label">TANGENTIAL ACCELERATION</div><div class="accel-value" id="atValue">+0.78 m/s²</div><div class="accel-equation">aₜ = g sin θ − B / m</div></div><div><div class="accel-label">NORMAL ACCELERATION</div><div class="accel-value" id="anValue">0.00 m/s²</div><div class="accel-equation">aₙ = v² / ρ</div></div><div><div class="accel-label">LOCAL RADIUS OF CURVATURE</div><div class="accel-value" id="radiusValue">∞</div><div class="accel-equation" id="forceValue">N = 782 N</div></div></div>
+</section>
+</div>
+<aside class="rightcol">
+<section class="card grip-card">
+ <div class="card-head"><div><h2>One traction budget.</h2><span class="grip-state" id="gripState">INSIDE THE CIRCLE</span></div><div class="grip-header-right" id="gripPercent">0%</div></div>
+ <div class="circle-wrap"><canvas id="circleCanvas" aria-label="Friction circle: lateral tire force horizontally and braking force downward. Combined force must stay inside the circle."></canvas></div>
+ <div class="grip-readouts"><div class="readout"><div class="readout-label">BRAKING / μN</div><div class="readout-num readout-brake" id="brakeForcePct">0.0%</div></div><div class="readout"><div class="readout-label">CORNERING / μN</div><div class="readout-num readout-turn" id="lateralForcePct">0.0%</div></div></div>
+ <div class="budget-line"><span>Available brake at this speed</span><b class="mono" id="availableBrake">100%</b></div>
+</section>
+<section class="card brake-card">
+ <div class="card-head"><div><h2>Your brake lever</h2><span class="small-note" id="brakeMode">Drag to set · holds on release</span></div><span class="brake-total" id="brakePercent">0%</span></div>
+ <div class="lever-wrap">
+  <svg id="leverSvg" viewBox="0 0 300 190" role="slider" tabindex="0" aria-label="Brake lever: drag left to squeeze or right to release. Arrow keys adjust." aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+   <defs><linearGradient id="hoodGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#546674"/><stop offset="1" stop-color="#263a48"/></linearGradient><linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e7eef0"/><stop offset=".5" stop-color="#a9bbc6"/><stop offset="1" stop-color="#687e8d"/></linearGradient></defs>
+   <path d="M126 25 C115 47 100 57 78 57 C47 57 35 74 35 97 C35 129 53 155 85 155 L112 155" stroke="#080f17" stroke-width="25" fill="none" stroke-linecap="round"/>
+   <path d="M126 25 C115 47 100 57 78 57 C47 57 35 74 35 97 C35 129 53 155 85 155 L112 155" stroke="#3c505d" stroke-width="17" fill="none" stroke-linecap="round"/>
+   <path d="M44 82 28 87 M45 97 28 101 M46 112 32 119 M53 128 39 136 M67 143 57 157 M84 148 82 164 M100 148 100 164" stroke="#72818c" stroke-opacity=".35" stroke-width="2"/>
+   <path d="M100 43 C106 22 117 15 138 18 C157 21 168 40 161 62 L146 74 L123 67 L107 62 Z" fill="url(#hoodGrad)" stroke="#798b93" stroke-width="1.2"/>
+   <path d="M114 30 135 31 M111 38 140 42 M114 46 138 52" stroke="#789099" stroke-width="2" opacity=".4"/>
+   <path d="M169 83 C184 108 194 138 197 162" stroke="#ffbe7344" stroke-width="2" fill="none" stroke-dasharray="3 5"/>
+   <g id="leverBlade" transform="rotate(0 153 60)"><path d="M148 59 C157 54 161 63 164 76 C168 95 174 108 183 126 C193 146 199 160 198 170 C197 178 190 180 185 174 C180 167 179 155 174 145 L153 105 C147 91 144 78 148 59 Z" fill="url(#bladeGrad)" stroke="#d4e0e5" stroke-width="1.2"/><path d="M157 78 C160 106 179 137 186 157" fill="none" stroke="#4e6777" stroke-width="2" opacity=".6"/><circle cx="188" cy="162" r="13" fill="#ffbe7320" stroke="#ffbe7390" stroke-width="1"/><circle cx="188" cy="162" r="3" fill="#ffce92"/></g>
+   <circle cx="153" cy="60" r="7" fill="#0b1822" stroke="#90a3ad" stroke-width="2"/><circle cx="153" cy="60" r="2" fill="#b7c4cb"/>
+   <path d="M261 114H222m0 0 7-5m-7 5 7 5" stroke="#ffbe73" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+   <text x="240" y="102" fill="#d4ad7d" text-anchor="middle" font-size="10" font-family="system-ui,sans-serif">SQUEEZE</text>
+  </svg>
+  <div class="lever-caption">One control.<br><strong>Two forces. One limit.</strong></div>
+ </div>
+ <div class="brake-slider"><input id="brakeRange" type="range" min="0" max="100" step="1" value="0" aria-label="Brake lever percentage"><div class="slider-labels"><span>0 · RELEASE</span><span>100 · FULL LEVER</span></div></div>
+ <div class="brake-buttons"><button class="small" id="releaseBtn">Release</button><button class="small" id="brake25">25%</button><button class="small" id="brake50">50%</button><button class="small" id="brake75">75%</button></div>
+ <div class="spring-row"><label><input id="springReturn" type="checkbox">Spring return</label><span class="mono" id="brakeNewtons">0 N requested</span></div>
+ <div class="brake-note">100% requests the straight-line grip limit. No automatic traction limiter: squeezing too hard in a bend ends the run.</div>
+</section>
+<section class="card attempts-card">
+ <div class="card-head"><h2>Same descent. Faster line.</h2><span class="small-note" id="attemptCount">0 trials</span></div>
+ <div id="storageWarning" class="storage-warning" hidden>Browser storage is unavailable. Results last only for this open session.</div>
+ <div class="attempt-list" id="attemptList"><div class="empty-state">Finish once to set a time.<br>Your fastest clean run becomes a ghost to chase.</div></div>
+ <div style="padding:0 15px 12px" class="small-note">Local results · matching course and physics only.<br>Pauses are allowed. The clock measures simulation time.</div>
+</section>
+</aside>
+</main>
+<footer class="footer"><div><span class="live-dot"></span>Offline & local · no account, no server · <span class="tiny-key">Space</span> pause <span class="tiny-key">↑ ↓</span> brake <span class="tiny-key">0</span> release <span class="tiny-key">R</span> retry</div><div class="footer-links"><button id="physicsBtn">Physics & assumptions</button><button id="saveChallengeBtn">Save challenge</button><button id="loadChallengeBtn">Load challenge</button></div></footer>
+</div>
+<div class="mobile-dock"><label for="mobileBrake">BRAKE<br><b id="mobileBrakePct">0%</b></label><span id="mobileGrip" class="mono" style="font-size:10px;min-width:44px;color:var(--lime)">GRIP<br>0%</span><input type="range" id="mobileBrake" min="0" max="100" step="1" value="0" aria-label="Mobile brake percentage"><button id="mobileRun" class="primary">▶ Ride</button></div>
+<div class="toast" id="toast" hidden role="status"></div><input id="challengeFile" type="file" accept=".json,application/json" hidden>
+<dialog id="settingsDialog"><form id="settingsForm"><div class="modal-head"><h2>Build your descent</h2><button type="button" class="icon outline" data-close="settingsDialog" aria-label="Close course settings">×</button></div><div class="modal-content"><div class="settings-grid">
+<label>Road character<select id="courseType"><option value="flow">Flowing bends</option><option value="technical">Technical descent</option><option value="switchback">Switchbacks</option><option value="straight">Straight physics test</option></select><span>Smooth curvature; no steering or line selection.</span></label>
+<label>Reproducible road seed<input type="text" id="seedInput" maxlength="60" required><span>The same seed and settings reproduce the same road.</span></label>
+<label>Road length (m)<input type="number" id="lengthInput" min="300" max="3000" step="50" required><span>True distance along the sloping centerline.</span></label>
+<label>Constant downhill grade (%)<input type="number" id="gradeInput" min="2" max="16" step="0.5" required><span>8% means tan θ = 0.08, not θ = 8°.</span></label>
+<label>Tire friction coefficient μ<input type="number" id="muInput" min="0.25" max="1.1" step="0.01" required><span>Illustrative uniform grip; not a measured road surface.</span></label>
+<label>Rider + bicycle mass (kg)<input type="number" id="massInput" min="35" max="160" step="1" required><span>Changes forces, but cancels from acceleration in this model.</span></label>
+</div><div class="callout small-note">Applying settings starts a new attempt from rest. Grip is constant across the course. There is no pedaling, aerodynamic drag, or rolling resistance in this classroom model, so releasing the brake always accelerates the moving rider downhill.</div><div id="settingsError" class="settings-error" hidden></div><div class="dialog-actions"><button type="button" data-close="settingsDialog">Cancel</button><button type="submit" class="primary">Apply & restart</button></div></div></form></dialog>
+<dialog id="helpDialog"><div class="modal-head"><h2>Beat the descent. Not the physics.</h2><button class="icon outline" data-close="helpDialog" aria-label="Close instructions">×</button></div><div class="modal-content">
+<div class="help-grid"><div class="help-item"><strong>01 / Ride, then react</strong><p>Start from rest. Gravity builds speed on the constant downhill. The cyclist follows the road centerline automatically.</p></div><div class="help-item"><strong>02 / Squeeze the lever</strong><p>Drag the silver brake lever left to pull, right to release, or use the slider. The setting stays where you leave it unless Spring return is on.</p></div><div class="help-item"><strong>03 / Watch the vector</strong><p>Amber is backward braking force. Cyan is sideways cornering force. Their vector sum must remain inside the traction circle.</p></div><div class="help-item"><strong>04 / Make a clean run</strong><p>Cross the finish for a time. Exceed available grip and the attempt ends. Retry the same road and race your best clean run’s ghost.</p></div></div>
+<p><b>Stop freezes everything:</b> time, distance, and speed. While stopped, moving the brake previews the force that would be demanded on resume; it does not change the recorded run. A red preview warns of an immediate crash. On-resume inputs are checked before the bicycle moves.</p>
+<p><b>The road moves around you.</b> Heading-up mode keeps the cyclist pointed toward the top of the screen. The bottom-left map does not rotate. Its top is farther along the overall downhill direction. Neither display is a vertical elevation view.</p>
+<p><b>Controls:</b> Space = Ride/Stop; ↑ / ↓ = 5% more/less brake; 0 = release; R = retry; F = fullscreen. Use 0.5× playback for careful demonstrations. The mobile bottom bar provides the same brake and pause controls.</p>
+<p><b>Spring return:</b> pointer-controlled lever and sliders return to zero when released. Preset buttons and keyboard changes remain latched. Pausing also ends an active spring-return pull. Opening settings/help or hiding the page pauses the run; returning does not resume it.</p>
+<h3 id="physicsSection">The force circle is not the net-acceleration circle</h3>
+<p>Gravity supplies the downhill driving component. The tire supplies braking and the lateral force that turns the cyclist. On an unbanked road of constant longitudinal grade:</p>
+<div class="formula">N = mg cos θ<br>a<sub>t</sub> = g sin θ − B/m<br>a<sub>n</sub> = v²/ρ, &nbsp; |F<sub>n</sub>| = ma<sub>n</sub><br>√(B² + F<sub>n</sub>²) ≤ μN</div>
+<p>Here B ≥ 0 is the brake-force magnitude and ρ is the spatial centerline’s radius of curvature. The circle’s vertical axis is signed forward tire force, so braking points downward. The horizontal axis is signed lateral force: left turns go left; right turns go right. Gravity is <b>not</b> included in this tire-force circle.</p>
+<div class="formula">b = B/(μN), &nbsp; ℓ = F<sub>n</sub>/(μN)<br>Grip used = 100√(b² + ℓ²) %<br>Available brake = 100√max(0, 1 − ℓ²) %</div>
+<p>For example, at 80% lateral utilization, 60% of the straight-line braking limit remains, not 20%. Braking during a turn is possible if the combined force stays inside the circle. Braking can slow the rider and reduce future lateral demand, yet an excessively large brake command can exceed the current budget immediately.</p>
+<p><b>At rest:</b> a sufficiently squeezed brake holds the bicycle stationary. Its actual force only balances the downhill gravity component, rather than pulling the bicycle backward. The lever percentage is still the requested brake capacity. The race clock keeps running while the bicycle is held still.</p>
+<h3>Geometry and numerical model</h3>
+<p>The road is a smooth, unbanked ribbon descending at constant grade. Let q be distance along its horizontal map, s true road distance, and ψ its heading. Then q = s cos θ, z = −s sin θ, and 1/ρ = cos²θ |dψ/dq|. Smooth quintic heading transitions produce continuous curvature. This geometry has no centerline acceleration normal to the road surface, so N = mg cos θ is consistent with the model.</p>
+<p>Within each 1/120 s physics step, constant-force tangential motion is solved analytically, including stops. Traction and finish events are bracketed inside the step and refined by bisection. The simulation clock advances from physics steps, not frame count. Slow frames may slow playback rather than skip physics; a hidden tab pauses automatically.</p>
+<h3>What this model deliberately leaves out</h3>
+<p>A single resultant contact force represents both tires. There is no banking, steering choice, front/rear brake split, weight transfer, wheel lock dynamics, tire relaxation, drag, rolling resistance, pedaling, brake heating, or active balance. Coefficients are illustrative. A grip-limit violation ends the game; the outward skid-and-fall is a <b>stylized animation, not a post-crash dynamics calculation</b>. The rider icon is enlarged for visibility. This is a mechanics teaching game, not a prediction of safe speeds or braking on a real descent.</p>
+<h3>Reproducible classroom challenges</h3>
+<p>Random road changes the seed but preserves the other rules. Save challenge exports a small JSON with the exact course and physics; Load challenge restores it. CSV exports this run’s time, distance, velocity, lever, tire forces, acceleration, curvature, and traction use. Every brake change is recorded as a before/after pair at the same simulation time.</p>
+<p>Leaderboard entries match the full course and physics configuration. All manual runs allow pauses; playback speed does not change the physics. Watch demo uses a conservative preview-based controller, is <b>not an optimized solution</b>, and never enters the leaderboard. Taking control of a demo keeps that attempt unranked. Ghosts replay your best completed manual run, not an ideal trajectory. Records stay in this browser only; export important runs.</p>
+<h3>Physics references</h3>
+<div class="small-links"><a href="https://openstax.org/books/university-physics-volume-1/pages/6-3-centripetal-force" target="_blank" rel="noopener">OpenStax, University Physics §6.3 — tire friction and centripetal force on unbanked curves</a><a href="https://www.mathworks.com/help/simscape/ug/configuring-gravity-friction.html" target="_blank" rel="noopener">MathWorks, Gravity and Friction — incline components and static holding</a><a href="https://www.mathworks.com/matlabcentral/fileexchange/110955-magic-formula-tyre-library" target="_blank" rel="noopener">Magic Formula Tyre Library — friction ellipse / Kamm-circle visualization</a><a href="https://www.mathworks.com/help/vdynblks/ref/combinedslipwheel2dof.html" target="_blank" rel="noopener">MathWorks, Combined Slip Wheel — more complete longitudinal–lateral tire modeling</a></div>
+<p class="small-note">APEX · version 1.0.0 · single-file HTML / JavaScript / canvas. Everything except opening the optional reference links works offline. No external code, fonts, images, or analytics are loaded.</p>
+<div class="dialog-actions"><button class="primary" data-close="helpDialog">Back to the descent</button></div>
+</div></dialog>
+<script>
+/* APEX Downhill Traction Lab — deterministic mechanics, no browser dependencies.
+   SI units. Constant longitudinal grade; unbanked road ribbon. No pedaling,
+   drag, rolling resistance, wheel inertia, or front/rear load transfer.
+   Projected road coordinate q = s*cos(theta), where s is true road distance.
+   Signed spatial curvature kappa = cos(theta)^2 * d(heading)/dq.
+   Copyright 2026. Released under the MIT license; see LICENSE.txt. */
+(function(root,factory){ const api=factory(); if(typeof module==='object'&&module.exports)module.exports=api; else root.DownhillPhysics=api; })(typeof globalThis!=='undefined'?globalThis:this,function(){
+'use strict';
+const VERSION='1.0.0', G=9.80665, DT=1/120, EPS=1e-9;
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const DEFAULTS=Object.freeze({seed:'APEX-42',type:'technical',length:1000,grade:8,mu:0.65,mass:80});
+function config(input={}) {
+  const c={...DEFAULTS,...input};
+  for(const [key,lo,hi] of [['length',300,3000],['grade',2,16],['mu',0.25,1.10],['mass',35,160]]) {
+    if(typeof c[key]!=='number'||!Number.isFinite(c[key])||c[key]<lo||c[key]>hi) throw new Error(`${key} must be a number between ${lo} and ${hi}.`);
+  }
+  if(!['flow','technical','switchback','straight'].includes(c.type))throw new Error('Unknown course type.');
+  if(typeof c.seed!=='string'||!c.seed.trim()||c.seed.length>60)throw new Error('Use a seed of 1–60 characters.');
+  return {seed:c.seed.trim(),type:c.type,length:c.length,grade:c.grade,mu:c.mu,mass:c.mass};
+}
+function hash(str) {let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
+function random(seed){let a=typeof seed==='number'?seed:hash(seed);return ()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+function constants(c){const theta=Math.atan(c.grade/100),co=Math.cos(theta),si=Math.sin(theta);return {theta,co,si,gDown:G*si,N:c.mass*G*co,A:c.mu*G*co,capacity:c.mu*c.mass*G*co};}
+function key(c){c=config(c);return 'apex-'+VERSION+'-'+JSON.stringify([c.seed,c.type,c.length,c.grade,c.mu,c.mass]);}
+function smoother(x){return x*x*x*(10+x*(-15+6*x));}
+function smootherD(x){return 30*x*x*(1-x)*(1-x);}
+function generateRoad(input={}){
+  const c=config(input),C=constants(c),rng=random(c.seed+'|'+c.type),Q=c.length*C.co;
+  const segments=[],bends=[];let q=0,heading=0;
+  function add(len,end){const start=heading;segments.push({q0:q,q1:q+len,length:len,h0:start,h1:end,delta:end-start});if(Math.abs(end-start)>1e-8)bends.push({q:q+len/2,kPeak:(end-start)*1.875/len,sign:Math.sign(end-start),q0:q,q1:q+len});q+=len;heading=end;}
+  if(c.type==='straight')add(Q,0);
+  else {
+    const n=Math.max(3,Math.round(c.length/(c.type==='flow'?185:145)));
+    const first=Math.min(72,Q*.13),last=Math.min(65,Q*.12);
+    const weights=[];let sum=0;
+    for(let i=0;i<n;i++){const b=75+45*rng();const st=i<n-1?24+35*rng():0;weights.push([b,st]);sum+=b+st;}
+    const f=(Q-first-last)/sum;add(first,0);
+    let side=rng()<.5?-1:1;
+    for(let i=0;i<n;i++){
+      const amp=c.type==='flow'?.40+.27*rng():c.type==='switchback'?1.10+.22*rng():.72+.43*rng();
+      add(weights[i][0]*f,side*amp);if(weights[i][1]>0)add(weights[i][1]*f,heading);side*=-1;
+    }
+    add(last,heading);
+  }
+  function shapeAt(qv){qv=clamp(qv,0,Q);let lo=0,hi=segments.length-1;while(lo<hi){const mid=(lo+hi)>>1;if(segments[mid].q1<qv)lo=mid+1;else hi=mid;}const p=segments[lo],u=clamp((qv-p.q0)/p.length,0,1);return {heading:p.h0+p.delta*smoother(u),kh:p.delta*smootherD(u)/p.length};}
+  const count=Math.ceil(Q/.5),dq=Q/count,samples=[];let x=0,y=0;
+  samples.push({q:0,x,y,...shapeAt(0)});
+  for(let i=1;i<=count;i++){
+    // Simpson's quadrature keeps the drawn curve consistent with its analytic tangent.
+    const qa=(i-1)*dq,qb=i*dq,a=shapeAt(qa).heading,b=shapeAt((qa+qb)/2).heading,d=shapeAt(qb).heading;
+    x+=dq*(Math.sin(a)+4*Math.sin(b)+Math.sin(d))/6;
+    y+=dq*(Math.cos(a)+4*Math.cos(b)+Math.cos(d))/6;
+    samples.push({q:qb,x,y,...shapeAt(qb)});
+  }
+  const bounds={xmin:Math.min(...samples.map(p=>p.x)),xmax:Math.max(...samples.map(p=>p.x)),ymin:0,ymax:y};
+  function at(qv){qv=clamp(qv,0,Q);const idx=Math.min(count-1,Math.floor(qv/dq)),f=(qv-samples[idx].q)/dq,a=samples[idx],b=samples[idx+1];return {q:qv,x:a.x+(b.x-a.x)*f,y:a.y+(b.y-a.y)*f,...shapeAt(qv)};}
+  function atS(s){const p=at(s*C.co);return {...p,s:clamp(s,0,c.length),kappa:p.kh*C.co*C.co,z:-clamp(s,0,c.length)*C.si};}
+  return {config:c,C,Q,length:c.length,segments,bends,samples,dq,bounds,shapeAt,at,atS};
+}
+function forces(state,u,c,road){
+  u=clamp(Number.isFinite(u)?u:0,0,1);const C=road.C||constants(c),p=road.atS(state.s);
+  const requestedB=u*C.capacity;
+  // A brake holds a stopped bicycle: it must not accelerate the rider uphill.
+  const B=state.v<=1e-8?Math.min(requestedB,c.mass*C.gDown):requestedB;
+  const aT=state.v<=1e-8?Math.max(0,C.gDown-B/c.mass):C.gDown-B/c.mass;
+  const aL=state.v*state.v*p.kappa,F_l=c.mass*aL,b=B/C.capacity,l=F_l/C.capacity;
+  return {u,B,requestedB,F_l,aT,aN:Math.abs(aL),aL,b,l,usage:Math.hypot(b,l),N:C.N,capacity:C.capacity,A:C.A,kappa:p.kappa,radius:Math.abs(p.kappa)>1e-12?1/Math.abs(p.kappa):Infinity,coastLimit:Math.abs(p.kappa)>1e-12?Math.sqrt(C.A/Math.abs(p.kappa)):Infinity,availableBrake:Math.sqrt(Math.max(0,1-l*l)),...p};
+}
+function initial(){return {s:0,v:0,t:0,status:'ready',event:null};}
+function kinematic(state,u,h,C){
+  let a=C.gDown-clamp(u,0,1)*C.A;
+  if(state.v<=1e-8&&a<=0)return {s:state.s,v:0,t:state.t+h};
+  const moving=(a<0)?Math.min(h,state.v/(-a)):h;
+  return {s:state.s+state.v*moving+.5*a*moving*moving,v:Math.max(0,state.v+a*moving),t:state.t+h};
+}
+function step(state,u,h,c,road){
+  if(state.status!=='running'||h<=0)return {...state};
+  if(!Number.isFinite(h)||h>.25)throw new Error('Physics steps must be finite and at most 0.25 s.');
+  u=clamp(Number.isFinite(u)?u:0,0,1);const C=road.C||constants(c);
+  let end=h,finish=false,sp=kinematic(state,u,end,C);
+  if(sp.s>=road.length){let lo=0,hi=end;for(let j=0;j<45;j++){const mid=(lo+hi)/2;if(kinematic(state,u,mid,C).s>=road.length)hi=mid;else lo=mid;}end=hi;finish=true;}
+  const startF=forces(state,u,c,road);
+  function crashed(k,force,reason){return {...k,status:'crashed',event:{type:'traction',reason,instant:reason==='command',u,usage:force.usage,b:force.b,l:force.l,kappa:force.kappa,force}};}
+  if(startF.usage>1+EPS)return crashed(state,startF,'command');
+  // Probe at no more than 1/240 s or 0.20 m, then bracket the first limit crossing.
+  const distance=Math.max(0,kinematic(state,u,end,C).s-state.s);
+  const probes=Math.max(2,Math.ceil(end/(1/240)),Math.ceil(distance/.20));let prior=0;
+  for(let j=1;j<=probes;j++){
+    const t=end*j/probes,sample=kinematic(state,u,t,C),f=forces(sample,u,c,road);
+    if(f.usage>1+EPS){let lo=prior,hi=t;for(let k=0;k<36;k++){const m=(lo+hi)/2;if(forces(kinematic(state,u,m,C),u,c,road).usage>1+EPS)hi=m;else lo=m;}
+      const hit=kinematic(state,u,hi,C),ff=forces(hit,u,c,road);return crashed(hit,ff,'crossing');
+    }
+    prior=t;
+  }
+  const out=kinematic(state,u,end,C);
+  if(finish)return {...out,s:road.length,status:'finished',event:{type:'finish'}};
+  return {...out,status:'running',event:null};
+}
+function demoEnvelope(c,road){
+  // Conservative teaching demo, NOT an optimal-control solution or player assistance.
+  const ds=.5,n=Math.ceil(road.length/ds),ss=[],e=[];const C=road.C;
+  for(let i=0;i<=n;i++){const s=i*road.length/n,k=Math.abs(road.atS(s).kappa);ss.push(s);e.push(Math.min(900,k>1e-10?.53*C.A/k:900));}
+  const decel=.72*C.A-C.gDown;
+  for(let i=n-1;i>=0;i--)e[i]=Math.min(e[i],e[i+1]+2*Math.max(.05,decel)*(ss[i+1]-ss[i]));
+  return {s:ss,e,at(s){const idx=Math.min(n-1,Math.max(0,Math.floor(s/road.length*n))),f=(s-ss[idx])/(ss[idx+1]-ss[idx]);return Math.sqrt(Math.max(0,e[idx]+(e[idx+1]-e[idx])*clamp(f,0,1)));}};
+}
+function demoBrake(state,c,road,envelope){const target=Math.max(.8,envelope.at(Math.min(road.length,state.s+2))-.65);return clamp(road.C.gDown/road.C.A+.58*(state.v-target),0,.72);}
+return {VERSION,G,DT,EPS,DEFAULTS,clamp,config,constants,key,hash,random,generateRoad,forces,initial,kinematic,step,demoEnvelope,demoBrake};
+});
+
+</script>
+<script>
+/* APEX UI. The game and all artwork are rendered locally, without dependencies. */
+(function(){'use strict';
+const P=DownhillPhysics,$=id=>document.getElementById(id),C={lime:'#d8f67a',cyan:'#72d8e7',amber:'#ffbe73',red:'#ff7580',muted:'#94aab4'};
+const contexts={};for(const id of ['roadCanvas','mapCanvas','circleCanvas','chartCanvas'])contexts[id]=$(id).getContext('2d');
+let cfg=P.config(),road=P.generateRoad(cfg),state=P.initial(),brake=0,appliedBrake=0,history=[],lastSample=0;
+let headingUp=true,vectorMode=0,viewAhead=140,accumulator=0,lastWall=0,lastPaint=0,lastUI=0,dirty=true;
+let demoActive=false,unranked=false,demoEnv=null,pauses=0,maxSpeed=0,maxGrip=0,ended=false,crashWall=0,resultDismissed=false;
+let roadPath,edgeMarks=[],trees=[],patches=[],storageOK=true,book={version:1,courses:{}},toastTimer,leverDrag=null,sliderHeld=null,ghost=null;
+const STORAGE='apex-downhill-v1',reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+function text(id,value){const e=$(id);if(e&&e.textContent!==String(value))e.textContent=String(value);}
+function timeString(t,short=false){if(!Number.isFinite(t))return '—';const n=Math.round(t*100),m=Math.floor(n/6000),sec=Math.floor(n/100)%60,h=n%100;return (short?String(m):String(m).padStart(2,'0'))+':'+String(sec).padStart(2,'0')+'.'+String(h).padStart(2,'0');}
+function nfmt(x,dec=0){return Number.isFinite(x)?x.toLocaleString('en-US',{maximumFractionDigits:dec,minimumFractionDigits:dec}):'∞';}
+function toast(msg){text('toast',msg);$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,4200);}
+function loadBook(){try{const raw=localStorage.getItem(STORAGE);if(raw){const b=JSON.parse(raw);if(b&&b.version===1&&b.courses&&typeof b.courses==='object')book=b;}localStorage.setItem(STORAGE,JSON.stringify(book));}catch(e){storageOK=false;}$('storageWarning').hidden=storageOK;}
+function saveBook(){try{const ks=Object.keys(book.courses);while(ks.length>25){const k=ks.shift();if(k!==P.key(cfg))delete book.courses[k];}localStorage.setItem(STORAGE,JSON.stringify(book));}catch(e){storageOK=false;$('storageWarning').hidden=false;}}
+function courseRecord(){const key=P.key(cfg);if(!book.courses[key]||!Array.isArray(book.courses[key].attempts))book.courses[key]={attempts:[],count:0,best:null};return book.courses[key];}
+function getGhost(){const b=courseRecord().best;ghost=b&&Number.isFinite(b.time)&&Array.isArray(b.trace)&&b.trace.length>1?b:null;}
+function append(parent,tag,cls,str){const e=document.createElement(tag);if(cls)e.className=cls;if(str!==undefined)e.textContent=str;parent.append(e);return e;}
+function renderAttempts(){
+ const rec=courseRecord();getGhost();text('attemptCount',(rec.count||0)+(rec.count===1?' trial':' trials'));const list=$('attemptList');list.replaceChildren();
+ if(!rec.attempts.length){append(list,'div','empty-state','Finish once to set a time. Your fastest clean run becomes a ghost to chase.');return;}
+ const rows=rec.attempts.slice(-8).reverse();for(const a of rows){const best=a.status==='finished'&&rec.best&&Math.abs(a.t-rec.best.time)<1e-7;const row=append(list,'div','attempt-row'+(best?' best':''));append(row,'div','attempt-dot',best?'★':String(a.number));const main=append(row,'div','');append(main,'div','',a.status==='finished'?(best?'Personal best':'Clean finish'):'Traction lost · '+Math.round(a.s/cfg.length*100)+'%');append(main,'div','attempt-sub',`${a.pauses||0} pause${a.pauses===1?'':'s'} · peak ${Number(a.maxSpeed||0).toFixed(1)} km/h`);const val=append(row,'div','attempt-time',timeString(a.t,true));if(a.status==='crashed')val.style.color=C.red;}
+}
+function sample(event='',u=appliedBrake,override=null){const f=override||P.forces(state,u,cfg,road);const row={t:state.t,s:state.s,v:state.v,u,b:f.b,l:f.l,grip:f.usage,B:f.B,F_l:f.F_l,a_t:f.aT,a_n:f.aN,kappa:f.kappa,N:f.N,capacity:f.capacity,event};history.push(row);lastSample=state.t;dirty=true;}
+function makeScene(){
+ roadPath=new Path2D();road.samples.forEach((p,i)=>i?roadPath.lineTo(p.x,p.y):roadPath.moveTo(p.x,p.y));
+ const rng=P.random(cfg.seed+'scenery');trees=[];patches=[];edgeMarks=[];
+ for(let q=0;q<road.Q;q+=9+8*rng()){
+  const p=road.at(q);for(const side of [-1,1]){const off=11+65*rng(),a=side*off;trees.push({x:p.x+Math.cos(p.heading)*a,y:p.y-Math.sin(p.heading)*a,r:1.9+2.4*rng(),rot:rng()*6.28,tone:Math.floor(rng()*3)});}
+ }
+ for(let q=0;q<road.Q;q+=45){const p=road.at(q),side=rng()<.5?-1:1,off=side*(30+60*rng());patches.push({x:p.x+off*Math.cos(p.heading),y:p.y-off*Math.sin(p.heading),r:15+20*rng(),ry:18+20*rng(),rot:rng()*3});}
+ for(const b of road.bends)for(let q=b.q0+10;q<b.q1-10;q+=5){if(Math.abs(road.shapeAt(q).kh)<.012)continue;const a=road.at(q),b1=road.at(Math.min(q+2.6,road.Q));edgeMarks.push({a,b:b1,side:-Math.sign(a.kh)});}
+}
+function updateCourseText(){const name={flow:'Flowing bends',technical:'Technical descent',switchback:'Switchbacks',straight:'Straight physics test'}[cfg.type];text('courseName',`Ridgeway / ${name.toLowerCase()}`);text('courseMeta',`${nfmt(cfg.length)} m · ${road.bends.length} bends · ${cfg.grade}% downhill · μ ${cfg.mu.toFixed(2)} · seed ${cfg.seed}`);}
+function reset(newCfg=null){
+ clearTimeout(toastTimer);$('toast').hidden=true;
+ if(newCfg){cfg=P.config(newCfg);road=P.generateRoad(cfg);makeScene();updateCourseText();}
+ state=P.initial();brake=appliedBrake=0;history=[];lastSample=0;accumulator=0;demoActive=unranked=false;demoEnv=null;pauses=0;maxSpeed=maxGrip=0;ended=false;crashWall=0;resultDismissed=false;leverDrag=null;sliderHeld=null;$('leverSvg').classList.remove('dragging');$('result').hidden=true;
+ sample('start',0);renderAttempts();syncBrake();updateUI();dirty=true;
+}
+function isAttemptActive(){return state.t>0&&!['finished','crashed'].includes(state.status);}
+function confirmReplace(){if(!isAttemptActive())return true;pause(false);return window.confirm('Restarting will discard this unfinished attempt. Continue?');}
+function pause(count=true){
+ if(state.status==='running'){state.status='paused';if(count)pauses++;accumulator=0;if($('springReturn').checked&&(leverDrag||sliderHeld)){brake=0;leverDrag=null;sliderHeld=null;$('leverSvg').classList.remove('dragging');syncBrake();}updateUI();dirty=true;}
+}
+function toggleRun(){
+ if(state.status==='running'){pause();return;}
+ if(state.status==='finished'||state.status==='crashed')reset();
+ if($('settingsDialog').open||$('helpDialog').open)return;
+ state.status='running';accumulator=0;lastWall=performance.now();dirty=true;updateUI();
+}
+function retry(){if(confirmReplace())reset();}
+function setBrake(u,source='manual'){
+ if(state.status==='crashed'||state.status==='finished')return;
+ if(!Number.isFinite(u))return;
+ brake=P.clamp(u,0,1);
+ if(source==='manual'&&demoActive){demoActive=false;toast('You have control. This demonstration remains unranked; Retry starts a ranked attempt.');}
+ syncBrake();dirty=true;
+}
+function syncBrake(){const b=Math.round(brake*100);$('brakeRange').value=b;$('mobileBrake').value=b;$('leverSvg').setAttribute('aria-valuenow',String(b));$('leverSvg').setAttribute('aria-valuetext',`${b} percent brake`);$('leverBlade').setAttribute('transform',`rotate(${brake*49} 153 60)`);text('brakePercent',b+'%');text('mobileBrakePct',b+'%');text('brakeNewtons',Math.round(brake*road.C.capacity)+' N requested');}
+function startDemo(){if(!confirmReplace())return;reset();demoActive=unranked=true;demoEnv=P.demoEnvelope(cfg,road);state.status='running';lastWall=performance.now();toast('Conservative demo · unranked. Move the lever at any time to take control.');updateUI();}
+function finishAttempt(now){
+ if(ended)return;ended=true;sample(state.status==='crashed'?'traction_loss':'finish',appliedBrake,state.event&&state.event.force);maxSpeed=Math.max(maxSpeed,state.v*3.6);maxGrip=Math.max(maxGrip,history[history.length-1].grip);
+ if(!unranked){const rec=courseRecord();rec.count=(rec.count||0)+1;rec.attempts.push({number:rec.count,t:state.t,s:state.s,status:state.status,pauses,maxSpeed,maxGrip});rec.attempts=rec.attempts.slice(-20);
+  if(state.status==='finished'&&(!rec.best||state.t<rec.best.time)){
+   const trace=[];let lt=-1;for(const r of history)if(r.t-lt>=.19||r===history[history.length-1]){trace.push([r.t,r.s]);lt=r.t;}rec.best={time:state.t,trace};
+  }saveBook();renderAttempts();}
+ if(state.status==='crashed'){crashWall=now;resultDismissed=false;}else{showResult();}
+ updateUI();dirty=true;
+}
+function showResult(){
+ if(resultDismissed)return;
+ const crash=state.status==='crashed';text('resultKicker',unranked?'DEMONSTRATION · UNRANKED':crash?'ATTEMPT ENDED':'CLEAN FINISH');text('resultTitle',crash?'Traction lost.':'Descent complete.');$('resultTitle').style.color=crash?C.red:C.lime;text('resultTime',timeString(state.t));
+ if(crash){const e=state.event,lat=Math.abs(e.l)*100,bb=e.b*100;
+  text('resultMessage',e.instant?'That brake command demanded more tire force than the available grip. The check happened before advancing time.':lat>=99.9?'Speed and curvature used up the entire lateral grip budget. The rider could no longer follow the road.':'Braking and cornering together crossed the tire-force limit. The run ended at the first detected crossing.');
+  text('resultMetric1Label','CORNERING / μN');text('resultMetric2Label','BRAKING / μN');text('resultMetric1',lat.toFixed(1)+'%');text('resultMetric2',bb.toFixed(1)+'%');
+  text('resultFootnote',`Vector magnitude: ${(e.usage*100).toFixed(1)}% of grip · ${Math.round(state.s)} / ${cfg.length} m. ${e.instant?'':'100.0% is the rounded, localized threshold.'} Skid animation is illustrative.`);
+ }else{text('resultMessage',unranked?'A conservative demonstration, not an optimized solution. Retry to set your own time.':'A clean run is on the board. Try the same road again: your fastest run will ride beside you as a ghost.');text('resultMetric1Label','PEAK SPEED');text('resultMetric2Label','PEAK GRIP');text('resultMetric1',maxSpeed.toFixed(1)+' km/h');text('resultMetric2',(100*maxGrip).toFixed(1)+'%');text('resultFootnote',`${pauses} pause${pauses===1?'':'s'} · ${Math.round(cfg.length*road.C.si)} m descended · clock counts simulation time.`);}
+ $('result').hidden=false;
+}
+function currentForces(){return state.status==='crashed'&&state.event?state.event.force:P.forces(state,brake,cfg,road);}
+function nextBend(){const q=state.s*road.C.co;return road.bends.find(b=>b.q>q+2*road.C.co)||null;}
+function updateUI(){
+ const f=currentForces(),running=state.status==='running',paused=state.status==='paused',end=['crashed','finished'].includes(state.status);const btxt=running?'Ⅱ Stop':end?'↻ Ride again':state.t>0?'▶ Resume':'▶ Ride';text('runBtn',btxt);text('mobileRun',running?'Ⅱ Stop':end?'↻ Retry':state.t>0?'▶ Resume':'▶ Ride');
+ text('speed',(state.v*3.6).toFixed(1));text('timer',timeString(state.t));text('elevationHud',`${Math.floor(state.s*road.C.si)} m descended · ${cfg.grade}% grade`);
+ const tag=unranked?(demoActive?'DEMO · UNRANKED':'PRACTICE · UNRANKED'):{ready:'READY',running:'LIVE',paused:'PAUSED',crashed:'TRACTION LOST',finished:'FINISHED'}[state.status];text('runTag',tag);$('runTag').style.color=end&&state.status==='crashed'?C.red:C.lime;
+ text('bestHud',ghost?'Best '+timeString(ghost.time):'Best —');text('distance',`${nfmt(state.s)} / ${nfmt(cfg.length)} m`);$('progressFill').style.width=(state.s/cfg.length*100)+'%';
+ const color=f.usage>1+P.EPS?C.red:f.usage>=.85?C.amber:C.lime;text('gripPercent',Math.round(f.usage*100)+'%');$('gripPercent').style.color=color;text('mobileGrip','GRIP '+Math.round(f.usage*100)+'%');$('mobileGrip').style.color=color;
+ text('gripState',state.status==='crashed'?'LIMIT CROSSED':paused?(f.usage>1+P.EPS?'PREVIEW · ABOVE LIMIT':'PAUSED · FORCE PREVIEW'):f.usage>.85?'NEAR THE LIMIT':'INSIDE THE CIRCLE');$('gripState').style.color=color;
+ text('brakeForcePct',(f.b*100).toFixed(1)+'%');text('lateralForcePct',(Math.abs(f.l)*100).toFixed(1)+'%');text('availableBrake',Math.floor(100*f.availableBrake+1e-8)+'%');
+ text('atValue',(f.aT>=0?'+':'')+f.aT.toFixed(2)+' m/s²');$('atValue').style.color=f.aT>=0?C.lime:C.amber;text('anValue',f.aN.toFixed(2)+' m/s²');$('anValue').style.color=C.cyan;text('radiusValue',f.radius>9999?'∞ (straight)':nfmt(f.radius,1)+' m');text('forceValue',`N = ${Math.round(f.N)} N · μN = ${Math.round(f.capacity)} N`);
+ const b=nextBend();if(b){text('bendEyebrow','Next tightest point');text('bendArrow',b.sign>0?'↱':'↰');text('bendName',`${b.sign>0?'Right':'Left'} turn · ${Math.round(b.q/road.C.co-state.s)} m`);const limit=Math.sqrt(road.C.A/(Math.abs(b.kPeak)*road.C.co*road.C.co))*3.6;text('bendLimit',`No-brake limit there: ${limit.toFixed(0)} km/h`);}else{text('bendEyebrow','The final section');text('bendArrow','↑');text('bendName',`${Math.max(0,Math.round(cfg.length-state.s))} m to finish`);text('bendLimit','Carry speed. Keep the vector inside.');}
+ $('statusBanner').hidden=running||end;
+ if(paused){text('bannerTitle','Time is frozen.');text('bannerText',f.usage>1+P.EPS?'Above the grip limit. Ease the lever before Resume.':'Set your brake, inspect the budget, then Resume.');$('bannerTitle').style.color=f.usage>1+P.EPS?C.red:C.lime;}
+ else if(state.status==='ready'){text('bannerTitle','The descent is yours.');text('bannerText','Press Ride. Brake before the bends. Stay inside the traction circle.');$('bannerTitle').style.color=C.lime;}
+ let hint='Brake on the approach. Ease the lever as cornering grows.';
+ if(state.status==='ready')hint='Gravity accelerates you. The lever spends grip.';
+ else if(state.status==='crashed')hint='Attempt ended. Inspect the circle and your braking history.';
+ else if(state.status==='finished')hint='Clean finish. Same road, same physics—try a faster time.';
+ else if(paused)hint='Paused: changing the lever previews forces, not motion.';
+ else if(state.v<.02&&brake>road.C.gDown/road.C.A)hint='Brake is holding you still. Release it to roll; the clock is running.';
+ else if(f.usage>.85)hint='Grip is nearly spent. Brake and cornering add as vectors.';
+ else if(demoActive)hint='Conservative demo · move the lever to take control.';
+ text('stageHint',hint);text('brakeMode',$('springReturn').checked?'Drag to squeeze · releases when let go':'Drag to set · holds on release');
+ for(const id of ['brakeRange','mobileBrake','releaseBtn','brake25','brake50','brake75'])$(id).disabled=end;
+ $('leverSvg').setAttribute('aria-disabled',end?'true':'false');syncBrake();
+}
+function fitCanvas(id){const canvas=$(id),r=canvas.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2),w=Math.max(1,r.width),h=Math.max(1,r.height);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}const ctx=contexts[id];ctx.setTransform(dpr,0,0,dpr,0,0);return {ctx,w,h,dpr};}
+function pathRound(ctx,x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
+function screenProject(p,cam,sc,ax,ay){const dx=p.x-cam.x,dy=p.y-cam.y,co=Math.cos(cam.heading),si=Math.sin(cam.heading);return {x:ax+sc*(dx*co-dy*si),y:ay-sc*(dx*si+dy*co)};}
+function arrow(ctx,x,y,dx,dy,color,width=2.4){const len=Math.hypot(dx,dy);if(len<1)return;ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=width;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+dx,y+dy);ctx.stroke();const a=Math.atan2(dy,dx),z=Math.min(8,Math.max(4,len*.2));ctx.beginPath();ctx.moveTo(x+dx,y+dy);ctx.lineTo(x+dx-z*Math.cos(a-.46),y+dy-z*Math.sin(a-.46));ctx.lineTo(x+dx-z*Math.cos(a+.46),y+dy-z*Math.sin(a+.46));ctx.closePath();ctx.fill();ctx.restore();}
+function label(ctx,str,x,y,color='#e7efeb',align='left',size=11){ctx.save();ctx.font=`600 ${size}px ui-monospace, SFMono-Regular, monospace`;ctx.textAlign=align;ctx.textBaseline='middle';ctx.lineWidth=4;ctx.strokeStyle='#102529e8';ctx.strokeText(str,x,y);ctx.fillStyle=color;ctx.fillText(str,x,y);ctx.restore();}
+function drawBike(ctx,x,y,angle,lean=0,alpha=1,fall=0){
+ ctx.save();ctx.translate(x,y);ctx.rotate(angle);ctx.globalAlpha=alpha;
+ ctx.fillStyle='#04141670';ctx.beginPath();ctx.ellipse(4+fall*5,3,10+fall*3,23,0,0,Math.PI*2);ctx.fill();
+ ctx.lineCap='round';ctx.strokeStyle='#0a151e';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(0,-20);ctx.lineTo(0,-10);ctx.moveTo(0,11);ctx.lineTo(0,23);ctx.stroke();ctx.strokeStyle='#b6c8cb';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,-20);ctx.lineTo(0,-10);ctx.moveTo(0,11);ctx.lineTo(0,23);ctx.stroke();
+ ctx.strokeStyle='#adcec7';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,-14);ctx.lineTo(0,15);ctx.moveTo(-9,-10);ctx.lineTo(9,-10);ctx.stroke();
+ ctx.strokeStyle='#1c2935';ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(-2,5);ctx.lineTo(-5,12);ctx.moveTo(3,4);ctx.lineTo(6,12);ctx.stroke();
+ ctx.save();ctx.translate(lean,0);ctx.strokeStyle='#e0c4a4';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-5,-4);ctx.lineTo(-8,-10);ctx.lineTo(-9,-11);ctx.moveTo(5,-4);ctx.lineTo(8,-10);ctx.lineTo(9,-11);ctx.stroke();
+ ctx.fillStyle=alpha<1?'#b9f2eb':C.lime;ctx.beginPath();ctx.ellipse(0,-1,7,10,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#547158';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(0,-8);ctx.lineTo(0,7);ctx.stroke();
+ ctx.fillStyle='#f1f5e8';ctx.beginPath();ctx.ellipse(0,-13,4.8,6,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#718885';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(-1,-17);ctx.lineTo(-1,-11);ctx.moveTo(2,-17);ctx.lineTo(2,-11);ctx.stroke();ctx.restore();ctx.restore();
+}
+function ghostS(t){if(!ghost||!ghost.trace.length)return null;const a=ghost.trace;if(t>=a[a.length-1][0])return a[a.length-1][1];let lo=0,hi=a.length-1;while(lo+1<hi){const m=(lo+hi)>>1;if(a[m][0]<=t)lo=m;else hi=m;}const z=(t-a[lo][0])/Math.max(1e-8,a[hi][0]-a[lo][0]);return a[lo][1]+(a[hi][1]-a[lo][1])*P.clamp(z,0,1);}
+function drawStage(now){
+ const {ctx,w,h}=fitCanvas('roadCanvas');ctx.clearRect(0,0,w,h);ctx.fillStyle='#193731';ctx.fillRect(0,0,w,h);
+ const p=road.atS(state.s),cam={x:p.x,y:p.y,heading:headingUp?p.heading:0},ax=w*.50,ay=h*.73,sc=ay/viewAhead;
+ const toScreen=v=>screenProject(v,cam,sc,ax,ay);
+ ctx.save();ctx.translate(ax,ay);ctx.transform(sc*Math.cos(cam.heading),-sc*Math.sin(cam.heading),-sc*Math.sin(cam.heading),-sc*Math.cos(cam.heading),0,0);ctx.translate(-cam.x,-cam.y);
+ for(const patch of patches){const a=toScreen(patch);if(a.x<-200||a.x>w+200||a.y<-200||a.y>h+200)continue;ctx.fillStyle='#25463a';ctx.beginPath();ctx.ellipse(patch.x,patch.y,patch.r,patch.ry,patch.rot,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#78977820';ctx.lineWidth=.24;for(let j=1;j<=4;j++){ctx.beginPath();ctx.ellipse(patch.x,patch.y,patch.r+j*7,patch.ry+j*9,patch.rot,0,Math.PI*2);ctx.stroke();}}
+ ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#06161255';ctx.lineWidth=15;ctx.stroke(roadPath);ctx.strokeStyle='#8c937358';ctx.lineWidth=12;ctx.stroke(roadPath);ctx.strokeStyle='#b9b79b';ctx.lineWidth=9.0;ctx.stroke(roadPath);ctx.strokeStyle='#2c3b3e';ctx.lineWidth=8.25;ctx.stroke(roadPath);ctx.strokeStyle='#37474a';ctx.lineWidth=7.2;ctx.stroke(roadPath);
+ for(const e of edgeMarks){const side=e.side,off=side*4.2;ctx.lineWidth=.85;ctx.strokeStyle='#e5c88f';ctx.beginPath();ctx.moveTo(e.a.x+off*Math.cos(e.a.heading),e.a.y-off*Math.sin(e.a.heading));ctx.lineTo(e.b.x+off*Math.cos(e.b.heading),e.b.y-off*Math.sin(e.b.heading));ctx.stroke();}
+ ctx.setLineDash([3,5]);ctx.lineWidth=.14;ctx.strokeStyle='#cad2c580';ctx.stroke(roadPath);ctx.setLineDash([]);
+ // The trail shows recorded braking only; it never predicts a player's input.
+ let i=history.length-1,n=0;while(i>0&&history[i].s>=state.s-150&&n<550){const a=history[i-1],b=history[i];if(b.s-a.s>.02){const aa=road.atS(a.s),bb=road.atS(b.s);ctx.strokeStyle=b.u>.7?'#ff9284':b.u>.12?'#ffcb86':'#b4e0c0';ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(aa.x,aa.y);ctx.lineTo(bb.x,bb.y);ctx.stroke();}i--;n++;}
+ for(const tree of trees){const a=toScreen(tree);if(a.x<-40||a.x>w+40||a.y<-40||a.y>h+40)continue;const r=tree.r;ctx.fillStyle='#081f2390';ctx.beginPath();ctx.ellipse(tree.x+1.1,tree.y-1,r*.95,r*1.2,0,0,Math.PI*2);ctx.fill();ctx.save();ctx.translate(tree.x,tree.y);ctx.rotate(tree.rot);ctx.fillStyle=['#2c5847','#35604b','#315c49'][tree.tone];ctx.beginPath();for(let j=0;j<10;j++){const t=j*Math.PI/5,rr=j%2?r*.77:r;const x=Math.cos(t)*rr,y=Math.sin(t)*rr;j?ctx.lineTo(x,y):ctx.moveTo(x,y);}ctx.closePath();ctx.fill();ctx.fillStyle='#59806160';ctx.beginPath();ctx.arc(-r*.18,r*.2,r*.45,0,Math.PI*2);ctx.fill();ctx.restore();}
+ // Checkered finish line, true road width (rider is deliberately enlarged).
+ const end=road.at(road.Q);for(let i=0;i<8;i++)for(let j=0;j<2;j++){ctx.save();ctx.translate(end.x,end.y);ctx.rotate(-end.heading);ctx.fillStyle=(i+j)%2?'#f0f1db':'#182b2d';ctx.fillRect(-4+i,-1.5+j*1.5,1,1.5);ctx.restore();}
+ ctx.restore();
+ for(let s=Math.max(0,Math.floor((state.s-80)/100)*100);s<=Math.min(cfg.length,state.s+viewAhead*1.8);s+=100){const p1=road.atS(s),off={x:p1.x+8*Math.cos(p1.heading),y:p1.y-8*Math.sin(p1.heading)},v=toScreen(off);if(v.x>10&&v.x<w-10&&v.y>10&&v.y<h-10)label(ctx,`${s} m`,v.x,v.y,'#a3baad','left',9);}
+ const gs=ghostS(state.t);if(gs!==null&&state.t>0&&!unranked){const gp=road.atS(gs),a=toScreen(gp);if(a.x>-40&&a.x<w+40&&a.y>-40&&a.y<h+40){drawBike(ctx,a.x+7,a.y,gp.heading-cam.heading,0,.42);label(ctx,'PB',a.x+25,a.y-4,C.cyan,'left',9);}}
+ if(state.status==='crashed'){
+  const t=reduced?3:Math.max(0,(now-crashWall)/1000),tt=Math.min(t,3),side=-Math.sign(p.kappa||1),dist=state.v*road.C.co*.95*(1-Math.exp(-tt/.85)),out=side*7*Math.pow(1-Math.exp(-tt/1.05),2);
+  const cp={x:p.x+dist*Math.sin(p.heading)+out*Math.cos(p.heading),y:p.y+dist*Math.cos(p.heading)-out*Math.sin(p.heading)},a=toScreen(cp),origin=toScreen(p);
+  ctx.save();ctx.strokeStyle='#091813c0';ctx.lineWidth=3;ctx.setLineDash([6,3]);ctx.beginPath();ctx.moveTo(origin.x,origin.y);ctx.quadraticCurveTo((origin.x+a.x)/2,origin.y+(a.y-origin.y)*.7,a.x,a.y);ctx.stroke();ctx.restore();
+  for(let j=0;j<8;j++){const z=P.clamp(tt-j*.045,0,1.5),ang=j*2.4;ctx.fillStyle=`rgba(197,183,149,${Math.max(0,.36-z*.18)})`;ctx.beginPath();ctx.arc(a.x+Math.sin(ang)*z*18,a.y+Math.cos(ang)*z*16,2+z*4,0,Math.PI*2);ctx.fill();}
+  drawBike(ctx,a.x,a.y,p.heading-cam.heading+side*1.6*(1-Math.exp(-tt*2)),0,1,1);ctx.strokeStyle=C.red;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(origin.x,origin.y,15,0,Math.PI*2);ctx.stroke();label(ctx,'GRIP LOST',origin.x+21,origin.y,C.red,'left',10);
+ }else{
+  const f=currentForces();drawBike(ctx,ax,ay,p.heading-cam.heading,P.clamp(f.l,-1,1)*3);
+  if(vectorMode!==2){const ang=p.heading-cam.heading,rx=Math.cos(ang),ry=Math.sin(ang),tx=Math.sin(ang),ty=-Math.cos(ang),factor=73/road.C.A;
+    ctx.save();ctx.setLineDash([3,4]);ctx.strokeStyle='#cfdbd866';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax+tx*85,ay+ty*85);ctx.stroke();ctx.restore();label(ctx,'eₜ',ax+tx*89+8,ay+ty*89,'#d2dfd5','left',12);
+    if(Math.abs(f.kappa)>1e-5){const sn=Math.sign(f.kappa);ctx.save();ctx.setLineDash([3,4]);ctx.strokeStyle='#cfdbd866';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax+rx*sn*82,ay+ry*sn*82);ctx.stroke();ctx.restore();label(ctx,'eₙ',ax+rx*sn*86,ay+ry*sn*86+16,'#d2dfd5',sn>0?'left':'right',12);}
+    const al=f.aL,at=vectorMode===0?f.aT:-f.B/cfg.mass;const lenN=P.clamp(al*factor,-94,94),lenT=P.clamp(at*factor,-92,92);arrow(ctx,ax,ay,rx*lenN,ry*lenN,C.cyan);arrow(ctx,ax,ay,tx*lenT,ty*lenT,at>=0?C.lime:C.amber);
+    if(Math.abs(lenN)>5)label(ctx,vectorMode===0?`aₙ ${f.aN.toFixed(1)}`:`Fₙ ${Math.round(Math.abs(f.F_l))} N`,ax+rx*lenN+Math.sign(lenN)*9,ay+ry*lenN-9,C.cyan,lenN>0?'left':'right',10);
+    if(Math.abs(lenT)>4)label(ctx,vectorMode===0?`aₜ ${at>=0?'+':''}${at.toFixed(1)}`:`B ${Math.round(f.B)} N`,ax+tx*lenT+12,ay+ty*lenT+(at>0?-5:8),at>=0?C.lime:C.amber,'left',10);
+  }
+ }
+ // A discreet scale bar emphasizes that this is a plan view, not a slope profile.
+ ctx.strokeStyle='#a4bbb38c';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(w-80,h-110);ctx.lineTo(w-80+10*sc,h-110);ctx.stroke();label(ctx,'10 m',w-80,h-119,'#a4bbb3','left',8);
+}
+function drawMap(){
+ const {ctx,w,h}=fitCanvas('mapCanvas');ctx.clearRect(0,0,w,h);const b=road.bounds,rangeX=Math.max(30,b.xmax-b.xmin),rangeY=Math.max(30,b.ymax-b.ymin),sc=Math.min((w-34)/rangeX,(h-22)/rangeY),ox=(w-(b.xmax+b.xmin)*sc)/2,oy=h-12+b.ymin*sc;
+ function point(p){return {x:ox+p.x*sc,y:oy-p.y*sc};}
+ ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#53676d';ctx.lineWidth=2.4;ctx.beginPath();road.samples.forEach((p,i)=>{const z=point(p);i?ctx.lineTo(z.x,z.y):ctx.moveTo(z.x,z.y);});ctx.stroke();
+ ctx.strokeStyle=state.status==='crashed'?C.red:C.lime;ctx.lineWidth=2.6;ctx.beginPath();for(const p of road.samples){if(p.q>state.s*road.C.co)break;const z=point(p);p.q?ctx.lineTo(z.x,z.y):ctx.moveTo(z.x,z.y);}ctx.stroke();
+ const end=point(road.at(road.Q));ctx.fillStyle='#e5eadf';ctx.fillRect(end.x-2.7,end.y-2.7,5.4,5.4);const r=road.atS(state.s),s=point(r);ctx.fillStyle=state.status==='crashed'?C.red:C.lime;ctx.beginPath();ctx.arc(s.x,s.y,4.1,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#0c1c23';ctx.lineWidth=1.6;ctx.stroke();
+ ctx.strokeStyle='#b9c8c4';ctx.lineWidth=1;arrow(ctx,w-13,25,0,-13,'#91a9aa',1);ctx.fillStyle='#98acad';ctx.font='8px system-ui';ctx.fillText('N',w-16,7);
+}
+function drawCircle(){
+ const {ctx,w,h}=fitCanvas('circleCanvas');ctx.clearRect(0,0,w,h);const x=w/2,y=h/2-2,r=Math.min(h*.355,w*.34),f=currentForces();const ratio=f.usage,col=ratio>1+P.EPS?C.red:ratio>.85?C.amber:C.lime;
+ ctx.fillStyle='#101d24';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#d8f67a07';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI);ctx.fill();
+ for(const a of [.5,.8,1]){ctx.strokeStyle=a===1?'#accc8490':'#52697960';ctx.lineWidth=a===1?1.5:1;ctx.setLineDash(a===1?[]:[2,4]);ctx.beginPath();ctx.arc(x,y,r*a,0,Math.PI*2);ctx.stroke();}ctx.setLineDash([]);
+ ctx.strokeStyle='#71818d55';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x-r-12,y);ctx.lineTo(x+r+12,y);ctx.moveTo(x,y-r-7);ctx.lineTo(x,y+r+7);ctx.stroke();
+ ctx.font=`9px ${getComputedStyle(document.body).fontFamily}`;ctx.textAlign='center';ctx.fillStyle='#96acb7';ctx.fillText('forward +eₜ',x,12);ctx.fillText('brake −eₜ',x,h-7);ctx.textAlign='left';ctx.fillText('left',Math.max(8,x-r-31),y-9);ctx.textAlign='right';ctx.fillText('right',Math.min(w-8,x+r+36),y-9);
+ ctx.textAlign='left';ctx.fillStyle='#a4bba9';ctx.font='9px ui-monospace,monospace';ctx.fillText('μN',x+r*.75,y-r*.76);
+ let recent=history.filter(p=>p.t>=state.t-2.3);if(recent.length>160)recent=recent.slice(-160);
+ ctx.strokeStyle='#ccebab45';ctx.lineWidth=1.5;ctx.beginPath();recent.forEach((p,i)=>{const xx=x+r*p.l,yy=y+r*p.b;i?ctx.lineTo(xx,yy):ctx.moveTo(xx,yy);});ctx.stroke();
+ const xx=x+r*f.l,yy=y+r*f.b;ctx.setLineDash([3,3]);ctx.strokeStyle='#83a0aa50';ctx.beginPath();ctx.moveTo(xx,y);ctx.lineTo(xx,yy);ctx.moveTo(x,yy);ctx.lineTo(xx,yy);ctx.stroke();ctx.setLineDash([]);
+ arrow(ctx,x,y,0,r*f.b,C.amber,2.6);arrow(ctx,x,y,r*f.l,0,C.cyan,2.6);arrow(ctx,x,y,r*f.l,r*f.b,col,2.3);
+ ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=9;ctx.beginPath();ctx.arc(xx,yy,4.1,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#0f1b24';ctx.lineWidth=1.3;ctx.stroke();
+ ctx.fillStyle='#d7e1dd';ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fill();
+}
+let chartGeometry=null,hoverX=null;
+function drawChart(){
+ const {ctx,w,h}=fitCanvas('chartCanvas');ctx.clearRect(0,0,w,h);const l=44,r=w-43,t=22,b=h-29,pw=r-l,ph=b-t,xmax=Math.max(15,Math.ceil(state.t/10)*10),ymax=Math.max(110,Math.ceil(maxGrip*100/25)*25),smax=Math.max(40,Math.ceil(maxSpeed/20)*20);chartGeometry={l,r,t,b,xmax};
+ ctx.font='9px ui-monospace,monospace';ctx.lineWidth=1;
+ for(const val of [0,50,100]){const y=b-val/ymax*ph;ctx.strokeStyle=val===100?'#ff758055':'#72849122';ctx.setLineDash(val===100?[3,5]:[]);ctx.beginPath();ctx.moveTo(l,y);ctx.lineTo(r,y);ctx.stroke();ctx.fillStyle='#8ca1af';ctx.textAlign='right';ctx.fillText(val+'',l-7,y+3);}ctx.setLineDash([]);
+ ctx.fillStyle='#8ca1af';ctx.textAlign='left';ctx.fillText('% lever / grip',l,12);ctx.textAlign='right';ctx.fillStyle=C.cyan;ctx.fillText('km/h',r,12);
+ for(const val of [0,smax/2,smax]){ctx.textAlign='left';ctx.fillStyle='#8ca1af';ctx.fillText(val.toFixed(0),r+7,b-val/smax*ph+3);}
+ for(let i=0;i<=5;i++){const v=i*xmax/5,x=l+pw*i/5;ctx.strokeStyle='#72849113';ctx.beginPath();ctx.moveTo(x,t);ctx.lineTo(x,b);ctx.stroke();ctx.fillStyle='#8ca1af';ctx.textAlign='center';ctx.fillText((v%1? v.toFixed(1):v)+' s',x,h-10);}
+ ctx.save();ctx.beginPath();ctx.rect(l,t,pw,ph);ctx.clip();
+ const jump=Math.max(1,Math.ceil(history.length/(pw*2)));
+ function plot(field,color,scale,stepLine=false){ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.beginPath();let prev=null;for(let i=0;i<history.length;i+=jump){const z=history[i],x=l+z.t/xmax*pw,y=b+(0-z[field])*scale;if(prev){if(stepLine)ctx.lineTo(x,prev.y);ctx.lineTo(x,y);}else ctx.moveTo(x,y);prev={x,y};}const z=history[history.length-1];if(z)ctx.lineTo(l+z.t/xmax*pw,b-z[field]*scale);ctx.stroke();}
+ plot('u',C.amber,100/ymax*ph,true);plot('v',C.cyan,3.6/smax*ph);plot('grip',C.lime,100/ymax*ph);
+ if(state.status==='crashed'){const xx=l+state.t/xmax*pw;ctx.strokeStyle=C.red;ctx.setLineDash([3,4]);ctx.beginPath();ctx.moveTo(xx,t);ctx.lineTo(xx,b);ctx.stroke();ctx.setLineDash([]);}
+ if(hoverX!==null){ctx.strokeStyle='#dbe5e480';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(hoverX,t);ctx.lineTo(hoverX,b);ctx.stroke();}ctx.restore();
+ if(state.t===0){ctx.textAlign='center';ctx.fillStyle='#899fa9';ctx.font='11px system-ui';ctx.fillText('Your lever, speed, and grip history will appear here.',(l+r)/2,(t+b)/2);}
+}
+function render(now){drawStage(now);drawMap();drawCircle();drawChart();}
+function frame(now){
+ const wall=Math.max(0,Math.min(.09,(now-(lastWall||now))/1000));lastWall=now;
+ if(state.status==='running'){
+  accumulator+=wall*Number($('playback').value);let steps=0;
+  while(accumulator>=P.DT&&steps<64&&state.status==='running'){
+   if(demoActive){brake=Math.round(P.demoBrake(state,cfg,road,demoEnv)*100)/100;}
+   if(Math.abs(brake-appliedBrake)>1e-9){sample('brake_before',appliedBrake);appliedBrake=brake;sample('brake_after',appliedBrake);}
+   state=P.step(state,appliedBrake,P.DT,cfg,road);const f=P.forces(state,appliedBrake,cfg,road);maxSpeed=Math.max(maxSpeed,state.v*3.6);maxGrip=Math.max(maxGrip,f.usage);
+   if(state.status!=='running')finishAttempt(now);else if(state.t-lastSample>=.099999)sample('',appliedBrake);
+   accumulator-=P.DT;steps++;
+  }
+  dirty=true;
+ }
+ if(state.status==='crashed'&&!resultDismissed&&(reduced||now-crashWall>1750)&&$('result').hidden)showResult();
+ const animateCrash=state.status==='crashed'&&now-crashWall<3100;
+ if(now-lastUI>80||dirty&&state.status!=='running'){updateUI();lastUI=now;}
+ if(dirty||animateCrash||now-lastPaint>250){render(now);lastPaint=now;dirty=false;}
+ requestAnimationFrame(frame);
+}
+function download(name,data,type){const blob=new Blob([data],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),20000);}
+function exportCSV(){
+ const rows=history.slice();const cur=P.forces(state,appliedBrake,cfg,road);
+ if(!rows.length||Math.abs(rows[rows.length-1].t-state.t)>1e-9)rows.push({t:state.t,s:state.s,v:state.v,u:appliedBrake,b:cur.b,l:cur.l,grip:cur.usage,B:cur.B,F_l:cur.F_l,a_t:cur.aT,a_n:cur.aN,kappa:cur.kappa,N:cur.N,capacity:cur.capacity,event:'export_snapshot'});
+ const cols=['time_s','road_distance_m','speed_m_s','speed_km_h','lever_pct','brake_force_N','lateral_force_signed_N','tangential_accel_m_s2','normal_accel_m_s2','spatial_curvature_signed_1_m','surface_normal_N','friction_capacity_N','braking_utilization_pct','lateral_utilization_signed_pct','combined_grip_pct','event','seed','course_type','length_m','grade_pct','mu','mass_kg','attempt_mode','attempt_status'];
+ const safe=v=>{let s=String(v);if(/^[=+@\-\t\r]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';};
+ const lines=rows.map(z=>[z.t,z.s,z.v,z.v*3.6,z.u*100,z.B,z.F_l,z.a_t,z.a_n,z.kappa,z.N,z.capacity,z.b*100,z.l*100,z.grip*100].map(v=>Number.isFinite(v)?v.toFixed(8):'').concat([safe(z.event),safe(cfg.seed),safe(cfg.type),cfg.length,cfg.grade,cfg.mu,cfg.mass,safe(unranked?'unranked_demo_or_takeover':'manual_pause_allowed'),safe(state.status)]).join(','));
+ download('APEX_ride_'+cfg.seed.replace(/[^a-zA-Z0-9_-]/g,'_')+'.csv',[cols.join(','),...lines].join('\n'),'text/csv;charset=utf-8');toast('CSV exported: sampled motion plus every applied brake change.');
+}
+function saveChallenge(){download('APEX_challenge_'+cfg.seed.replace(/[^a-zA-Z0-9_-]/g,'_')+'.json',JSON.stringify({format:'APEX-Downhill-Challenge',version:1,engine:P.VERSION,config:cfg,rules:'Fixed centerline, constant grade, isotropic traction circle; pausing allowed.'},null,2),'application/json');}
+function openSettings(){pause();$('courseType').value=cfg.type;$('seedInput').value=cfg.seed;$('lengthInput').value=cfg.length;$('gradeInput').value=cfg.grade;$('muInput').value=cfg.mu;$('massInput').value=cfg.mass;$('settingsError').hidden=true;$('settingsDialog').showModal();}
+function openHelp(physics=false){pause();$('helpDialog').showModal();if(physics)setTimeout(()=>$('physicsSection').scrollIntoView({block:'start'}),20);else $('helpDialog').scrollTop=0;}
+$('runBtn').onclick=toggleRun;$('mobileRun').onclick=toggleRun;$('retryBtn').onclick=retry;$('resultRetry').onclick=()=>reset();$('inspectBtn').onclick=()=>{resultDismissed=true;$('result').hidden=true;dirty=true;};$('demoBtn').onclick=startDemo;
+$('settingsBtn').onclick=openSettings;$('helpBtn').onclick=()=>openHelp();$('physicsBtn').onclick=()=>openHelp(true);$('csvBtn').onclick=exportCSV;$('saveChallengeBtn').onclick=saveChallenge;
+$('randomBtn').onclick=()=>{if(!confirmReplace())return;const a=new Uint32Array(1);let s;if(window.crypto&&crypto.getRandomValues){crypto.getRandomValues(a);s=a[0].toString(36).toUpperCase();}else s=Math.floor(Math.random()*1e9).toString(36).toUpperCase();reset({...cfg,seed:'APEX-'+s});toast('New road. Same physics. A fresh local leaderboard.');};
+$('headingBtn').onclick=()=>{headingUp=!headingUp;text('headingBtn',headingUp?'↑ Heading up':'↑ North up');$('headingBtn').setAttribute('aria-pressed',String(headingUp));dirty=true;};
+$('vectorsBtn').onclick=()=>{vectorMode=(vectorMode+1)%3;text('vectorsBtn',['Vectors: aₜ / aₙ','Vectors: tire forces','Vectors: off'][vectorMode]);dirty=true;};
+$('zoomInBtn').onclick=()=>{viewAhead=P.clamp(viewAhead-20,80,280);dirty=true;};$('zoomOutBtn').onclick=()=>{viewAhead=P.clamp(viewAhead+20,80,280);dirty=true;};
+async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else toast('Use your browser’s full-screen command.');}catch(e){toast('Fullscreen was blocked by this browser or embed.');}dirty=true;}
+$('fullBtn').onclick=fullscreen;
+for(const [id,u] of [['releaseBtn',0],['brake25',.25],['brake50',.5],['brake75',.75]])$(id).onclick=()=>setBrake(u);
+for(const id of ['brakeRange','mobileBrake']){
+ const e=$(id);e.addEventListener('input',()=>setBrake(Number(e.value)/100));
+ e.addEventListener('pointerdown',()=>{sliderHeld=id;});e.addEventListener('pointerup',()=>{if($('springReturn').checked)setBrake(0);sliderHeld=null;});e.addEventListener('pointercancel',()=>{if($('springReturn').checked)setBrake(0);sliderHeld=null;});
+}
+$('springReturn').onchange=()=>{updateUI();};
+$('leverSvg').addEventListener('pointerdown',e=>{if(['finished','crashed'].includes(state.status))return;e.preventDefault();const el=$('leverSvg');el.setPointerCapture(e.pointerId);el.focus({preventScroll:true});leverDrag={id:e.pointerId,x:e.clientX,u:brake,width:el.getBoundingClientRect().width};el.classList.add('dragging');});
+$('leverSvg').addEventListener('pointermove',e=>{if(!leverDrag||leverDrag.id!==e.pointerId)return;e.preventDefault();const travel=Math.max(45,leverDrag.width*.31);setBrake(leverDrag.u+(leverDrag.x-e.clientX)/travel);});
+function leverRelease(e){if(!leverDrag||e&&leverDrag.id!==e.pointerId)return;leverDrag=null;$('leverSvg').classList.remove('dragging');if($('springReturn').checked)setBrake(0);}
+$('leverSvg').addEventListener('pointerup',leverRelease);$('leverSvg').addEventListener('pointercancel',leverRelease);$('leverSvg').addEventListener('lostpointercapture',leverRelease);
+window.addEventListener('pointerup',()=>{if(sliderHeld){if($('springReturn').checked)setBrake(0);sliderHeld=null;}});
+$('settingsForm').addEventListener('submit',e=>{e.preventDefault();try{const c=P.config({seed:$('seedInput').value,type:$('courseType').value,length:Number($('lengthInput').value),grade:Number($('gradeInput').value),mu:Number($('muInput').value),mass:Number($('massInput').value)});reset(c);$('settingsDialog').close();toast('Course applied. New attempt ready from rest.');}catch(err){text('settingsError',err.message);$('settingsError').hidden=false;}});
+for(const e of document.querySelectorAll('[data-close]'))e.onclick=()=>$(e.dataset.close).close();
+$('loadChallengeBtn').onclick=()=>{pause();$('challengeFile').click();};
+$('challengeFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>20000)throw new Error('Challenge JSON is too large (limit: 20 KB).');const v=JSON.parse(await f.text());if(v.format!=='APEX-Downhill-Challenge'||v.version!==1||v.engine!==P.VERSION)throw new Error('Use a matching APEX v1.0.0 challenge JSON.');const c=P.config(v.config);if(confirmReplace()){reset(c);toast('Challenge loaded. The course and physics match the exported settings.');}}catch(err){toast('Could not load challenge: '+err.message);}e.target.value='';};
+window.addEventListener('keydown',e=>{
+ if($('settingsDialog').open||$('helpDialog').open)return;
+ const target=e.target,tag=target&&target.tagName;if(['INPUT','TEXTAREA','SELECT'].includes(tag))return;
+ if(e.ctrlKey||e.metaKey||e.altKey)return;
+ if(e.code==='Space'){e.preventDefault();if(!e.repeat)toggleRun();}
+ else if(e.key==='ArrowUp'||e.key==='ArrowRight'){e.preventDefault();setBrake(brake+.05);}
+ else if(e.key==='ArrowDown'||e.key==='ArrowLeft'){e.preventDefault();setBrake(brake-.05);}
+ else if(e.key==='0'){e.preventDefault();setBrake(0);}
+ else if(e.key.toLowerCase()==='r'&&!e.repeat){e.preventDefault();retry();}
+ else if(e.key.toLowerCase()==='f'&&!e.repeat){e.preventDefault();fullscreen();}
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){pause();if($('springReturn').checked)setBrake(0);}lastWall=performance.now();});
+window.addEventListener('blur',()=>{if($('springReturn').checked){setBrake(0);leverDrag=null;sliderHeld=null;}pause();});
+window.addEventListener('resize',()=>dirty=true);if(window.ResizeObserver)new ResizeObserver(()=>dirty=true).observe($('stage'));
+$('chartCanvas').addEventListener('pointermove',e=>{
+ if(!chartGeometry||!history.length||state.t<=0)return;const box=$('chartCanvas').getBoundingClientRect(),x=P.clamp(e.clientX-box.left,chartGeometry.l,chartGeometry.r),t=(x-chartGeometry.l)/(chartGeometry.r-chartGeometry.l)*chartGeometry.xmax;hoverX=x;
+ let lo=0,hi=history.length-1;while(lo<hi){const m=(lo+hi+1)>>1;if(history[m].t<=t)lo=m;else hi=m-1;}const z=history[lo];text('chartTooltip',`${timeString(z.t)}  |  ${z.s.toFixed(0)} m\nLever ${(z.u*100).toFixed(0)}% · ${(z.v*3.6).toFixed(1)} km/h\nCombined grip ${(z.grip*100).toFixed(1)}%`);$('chartTooltip').style.whiteSpace='pre';$('chartTooltip').style.left=P.clamp(x-80,8,Math.max(8,box.width-230))+'px';$('chartTooltip').style.top='17px';$('chartTooltip').hidden=false;dirty=true;
+});
+$('chartCanvas').addEventListener('pointerleave',()=>{hoverX=null;$('chartTooltip').hidden=true;dirty=true;});
+// Small, explicit test/teaching API. It never bypasses the friction-limit checks.
+window.ApexLab={getState:()=>JSON.parse(JSON.stringify({...state,brake,appliedBrake,pauses,unranked,demoActive})),getConfig:()=>({...cfg}),getHistory:()=>history.map(x=>({...x})),getForces:()=>({...currentForces()}),getRoad:()=>road,setBrake:u=>setBrake(u),pause,run:toggleRun,reset:c=>reset(c||cfg),demo:startDemo,exportCSV,saveChallenge,
+ advance(seconds){if(state.status!=='running')return;let left=P.clamp(seconds,0,600);while(left>1e-9&&state.status==='running'){if(demoActive)brake=Math.round(P.demoBrake(state,cfg,road,demoEnv)*100)/100;if(Math.abs(brake-appliedBrake)>1e-9){sample('brake_before',appliedBrake);appliedBrake=brake;sample('brake_after',appliedBrake);}const h=Math.min(P.DT,left);state=P.step(state,appliedBrake,h,cfg,road);left-=h;const f=P.forces(state,appliedBrake,cfg,road);maxSpeed=Math.max(maxSpeed,state.v*3.6);maxGrip=Math.max(maxGrip,f.usage);if(state.status!=='running')finishAttempt(performance.now());else if(state.t-lastSample>=.099999)sample('',appliedBrake);}accumulator=0;updateUI();dirty=true;},
+ // Display-only settings, exposed for reproducible screenshots and classroom layouts.
+ setView:o=>{if(typeof o.headingUp==='boolean'){headingUp=o.headingUp;text('headingBtn',headingUp?'↑ Heading up':'↑ North up');$('headingBtn').setAttribute('aria-pressed',String(headingUp));}if(Number.isFinite(o.ahead))viewAhead=P.clamp(o.ahead,80,280);dirty=true;},version:P.VERSION};
+loadBook();makeScene();updateCourseText();reset();requestAnimationFrame(frame);
+})();
+
+</script>
+</body></html>

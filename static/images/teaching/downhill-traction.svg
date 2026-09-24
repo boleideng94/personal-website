@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="560" viewBox="0 0 720 560">
+ <defs>
+  <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#182c39"/><stop offset="1" stop-color="#0a1017"/></linearGradient>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#93a8b4" stroke-opacity=".06"/></pattern>
+ </defs>
+ <path fill="url(#bg)" d="M0 0h720v560H0z"/><path fill="url(#grid)" d="M0 0h720v560H0z"/>
+ <g fill="none" stroke="#425d66" stroke-opacity=".24"><path d="M0 185Q160 35 302 168T720 108"/><path d="M0 212Q160 62 302 195T720 135"/><path d="M0 239Q160 89 302 222T720 162"/><path d="M0 435Q220 510 357 378T720 388"/><path d="M0 462Q220 537 357 405T720 415"/></g>
+ <path d="M80 462L215 370C302 311 353 366 398 319C461 253 235 236 289 169C323 128 436 140 483 84" fill="none" stroke="#526a76" stroke-width="51" stroke-linecap="round"/>
+ <path d="M80 462L215 370C302 311 353 366 398 319C461 253 235 236 289 169C323 128 436 140 483 84" fill="none" stroke="#233540" stroke-width="45" stroke-linecap="round"/>
+ <path d="M80 462L215 370C302 311 353 366 398 319C461 253 235 236 289 169C323 128 436 140 483 84" fill="none" stroke="#d5e4e5" stroke-opacity=".55" stroke-width="2" stroke-dasharray="10 12"/>
+ <path d="M130 428L215 370C261 339 297 340 328 342" fill="none" stroke="#d8f67a" stroke-width="4" stroke-linecap="round"/>
+ <g transform="translate(328 341) rotate(90)"><ellipse cy="-13" rx="4" ry="11" fill="#101b22" stroke="#c7d8df" stroke-width="2"/><ellipse cy="16" rx="4" ry="11" fill="#101b22" stroke="#c7d8df" stroke-width="2"/><path d="M-9 0L0-11 9 0M0-11V17" fill="none" stroke="#d8f67a" stroke-width="4"/><ellipse cy="2" rx="8" ry="12" fill="#d8f67a"/><circle cy="-12" r="6" fill="#edf4df"/></g>
+ <g transform="translate(551 352)"><circle r="88" fill="#0d1a24" stroke="#d8f67a" stroke-width="2"/><path d="M-73 0H73M0-73V73" stroke="#40515d"/><path d="M0 0H47V45" fill="none" stroke="#93a8b4" stroke-dasharray="4 4"/><path d="M0 0H47" stroke="#72d8e7" stroke-width="4"/><path d="M47 0V45" stroke="#ffbe73" stroke-width="4"/><path d="M0 0L47 45" stroke="#d8f67a" stroke-width="3"/><circle cx="47" cy="45" r="6" fill="#d8f67a"/><text y="116" text-anchor="middle" fill="#93a8b4" font-size="11" font-family="sans-serif" letter-spacing="2">ONE GRIP LIMIT</text></g>
+ <text x="42" y="48" fill="#a7bbc6" font-family="sans-serif" font-size="12" letter-spacing="3">ONE LEVER. EVERY CORNER COUNTS.</text>
+</svg>

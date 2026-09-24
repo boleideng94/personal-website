@@ -22,3 +22,15 @@
     - Power & energy
     - Pacing strategies
   activity: Ride once at a steady 330 W, then try pushing harder on climbs and coasting downhill. Compare your finish times and watch how your energy reserve recovers.
+
+- title: Downhill Traction Game
+  label: Apex Lab
+  category: Friction & cornering
+  description: Race down a winding descent with one control—the brake lever. Balance braking and cornering within the available tire grip, and find your fastest clean run.
+  url: /teaching/downhill-traction-game/
+  image: /images/teaching/downhill-traction.svg
+  topics:
+    - Tire friction
+    - Braking forces
+    - Cornering dynamics
+  activity: Try braking before a bend, then compare with braking during the turn. Watch the traction circle to see how braking and cornering share the same grip limit.
