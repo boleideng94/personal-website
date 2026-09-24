@@ -10,3 +10,15 @@
     - Velocity changes
     - 3D visualization
   activity: Start with a circular orbit, try a prograde burn, and see how the path changes. Switch to the 3D view to explore a maneuver out of the orbital plane.
+
+- title: Cycling Pacing Game
+  label: Pacing Lab
+  category: Mechanics & energy
+  description: Take on a hilly cycling course. Control your power, manage your energy reserve, and discover how pacing changes your finish time.
+  url: /teaching/cycling-pacing-game/
+  image: /images/teaching/cycling-pacing.svg
+  topics:
+    - Forces & motion
+    - Power & energy
+    - Pacing strategies
+  activity: Ride once at a steady 330 W, then try pushing harder on climbs and coasting downhill. Compare your finish times and watch how your energy reserve recovers.
