@@ -1,0 +1,45 @@
+// Run with: node tests/gpx-core.cjs
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const vm = require('node:vm');
+const path = require('node:path');
+const dir = path.join(__dirname, '../static/teaching/cycling-pacing-game');
+const GPX = require(path.join(dir, 'gpx-core.js'));
+const html = fs.readFileSync(path.join(dir, 'index.html'), 'utf8');
+const coreScript = html.match(/<script>(\/\* Breakaway Pacing Lab — deterministic[\s\S]*?)<\/script>/)[1];
+const sandbox = {module: {exports: {}}, console};
+vm.runInNewContext(coreScript, sandbox);
+const Core = sandbox.module.exports;
+const points = Array.from({length: 2001}, (_, i) => ({lat: 33 + i * .00005, lon: -84, ele: 100 + 10 * Math.sin(i / 100)}));
+const track = GPX.prepare(points, 'Test');
+assert.ok(track.length > 11000 && track.length < 11200);
+for (const smoothing of [0, 20, 50]) {
+  const raw = GPX.crop(track, 123.4, 2123.4, smoothing);
+  const course = new Core.Course(raw.s, raw.h, raw.meta);
+  assert.equal(course.s[0], 0);
+  assert.ok(course.length >= 2000 && course.length < 2010);
+  assert.ok(course.h.every(Number.isFinite));
+  const state = Core.initial(Core.DEFAULTS);
+  Core.step(state, course, Core.DEFAULTS, 330, .025);
+  assert.ok(state.s > 0 && Number.isFinite(state.v));
+}
+const noSmooth = GPX.crop(track, 123.4, 2123.4, 0);
+assert.equal(noSmooth.h[0], GPX.at(track, 123.4).ele);
+assert.equal(noSmooth.h.at(-1), GPX.at(track, 2123.4).ele);
+assert.throws(() => GPX.crop(track, 0, 99), /between/);
+assert.throws(() => GPX.crop(track, 1000, 500), /before/);
+assert.throws(() => GPX.crop(track, NaN, 500), /before/);
+assert.throws(() => GPX.crop(track, 0, track.length + 10), /within/);
+const missing = GPX.prepare([{lat: 33, lon: -84, ele: 100}, {lat: 33.005, lon: -84, ele: NaN}, {lat: 33.01, lon: -84, ele: 110}], 'Missing');
+assert.equal(missing.filled, 1);
+assert.ok(Math.abs(missing.points[1].ele - 105) < .0001);
+assert.equal(GPX.prepare([{lat: 33, lon: -84, ele: NaN}, {lat: 33.01, lon: -84, ele: NaN}], 'No elevations'), null);
+const steep = GPX.prepare([{lat: 33, lon: -84, ele: 0}, {lat: 33.01, lon: -84, ele: 2000}], 'Bad elevation');
+assert.throws(() => GPX.crop(steep, 0, 500), /steep or noisy/);
+const long = GPX.prepare([{lat: 33, lon: -84, ele: 0}, {lat: 34, lon: -84, ele: 0}], 'Long');
+assert.throws(() => GPX.crop(long, 0, 30001), /between/);
+assert.equal(GPX.crop(long, 1000, 2000).s.at(-1), 1000);
+const dateline = GPX.prepare([{lat: 0, lon: 179.999, ele: 0}, {lat: 0, lon: -179.999, ele: 0}], 'Date line');
+assert.ok(dateline.length < 223);
+assert.ok(Math.abs(GPX.at(dateline, dateline.length / 2).lon - 180) < .00001);
+console.log('GPX processing checks passed: cropping, interpolation, limits, date line, and physics integration.');

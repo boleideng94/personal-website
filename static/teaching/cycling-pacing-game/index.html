@@ -24,7 +24,15 @@
 .rail-labels span{left:0;right:auto}
 @media(max-width:650px){.rail-labels{display:none}}
 .power-rail[aria-disabled="true"]{opacity:.4;cursor:not-allowed}.modepill.recovery{color:var(--amber);border-color:var(--amber)}
+.rider-quick-settings{display:flex;flex-wrap:wrap;align-items:end;gap:14px;margin-top:12px;padding:15px 18px;border:1px solid #43563b;border-radius:14px;background:#18251f}
+.rider-quick-settings .quick-intro{margin-right:auto;align-self:center}
+.rider-quick-settings .quick-intro strong{display:block;font-size:14px;margin-bottom:5px;color:var(--lime)}
+.rider-quick-settings label{font-size:10px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.rider-quick-settings input{width:125px;color:var(--ink);font-size:18px;font-weight:600}
+.rider-quick-settings .primary{font-size:12px;padding:12px 16px}
+@media(max-width:650px){.rider-quick-settings{gap:10px;padding:14px}.rider-quick-settings .quick-intro{width:100%}.rider-quick-settings label{flex:1;min-width:80px}.rider-quick-settings input{width:100%}.rider-quick-settings .primary{width:100%}}
 </style>
+<link rel="stylesheet" href="gpx-import.css">
 </head>
 <body>
 <div class="app">
@@ -38,8 +46,16 @@
   <div class="field short"><label for="hillSize">HILLS</label><select id="hillSize"><option value="3">Gentle · 3%</option><option value="6" selected>Rolling · 6%</option><option value="10">Steep · 10%</option><option value="12">Very steep · 12%</option></select></div>
   <div class="field seedfield"><label for="seed">SEED</label><input id="seed" value="GT-2026" maxlength="50" spellcheck="false"></div>
   <button id="generateBtn" class="secondary">Build course</button><button id="randomBtn" class="secondary" title="Generate a new seeded rolling course">↻ Random terrain</button>
+  <button id="importGpxBtn" class="secondary">Import GPX / choose segment</button>
   <div class="coursemeta" id="courseMeta"></div>
 </section>
+<form id="quickRiderForm" class="rider-quick-settings" aria-label="Your rider settings">
+ <div class="quick-intro"><strong>Your rider</strong><small>Apply changes to start a fresh trial.</small></div>
+ <label for="quickCP">CP · W<input id="quickCP" type="number" min="50" max="900" step="1" value="330" required></label>
+ <label for="quickWPrime">W′ capacity · kJ<input id="quickWPrime" type="number" min="1" max="100" step="0.1" value="34" required></label>
+ <label for="quickRiderMass">Rider weight · kg<input id="quickRiderMass" type="number" min="30" max="200" step="0.1" value="97" required></label>
+ <button type="submit" class="primary">Apply rider settings</button>
+</form>
 <div class="stats" aria-label="Live ride statistics">
   <div class="stat"><label>RACE TIME <span id="statusPill" class="status">READY</span></label><div id="timeValue">0:00.0</div><small>Pause does not count</small></div>
   <div class="stat"><label>SPEED</label><div><span id="speedValue">0.0</span><em>km/h</em></div><small id="accelValue">Starting from rest</small></div>
@@ -105,6 +121,28 @@
 <footer><span>BREAKAWAY / <span id="footerParams">CP 330 W · W′ 34 kJ · 110 kg · CdA 0.26 m²</span></span><div><button id="saveChallengeBtn" class="textbtn">Save challenge JSON</button><button id="loadChallengeBtn" class="textbtn">Load challenge</button><input type="file" id="challengeFile" accept=".json,application/json" hidden><button id="clearBoardBtn" class="textbtn muted">Clear local results</button></div></footer>
 </div>
 <div id="toast" class="toast hidden" role="status"></div>
+<dialog id="gpxDialog" aria-labelledby="gpxTitle">
+ <div class="dialoghead"><div><span class="eyebrow">YOUR RIDE, YOUR CHALLENGE</span><h2 id="gpxTitle">Choose a stretch of road</h2></div><button class="close" data-close="gpxDialog" aria-label="Close GPX importer">×</button></div>
+ <p class="gpx-intro">Open a GPX from your ride, then pick the part you want to race. Your file stays in this browser; nothing is uploaded.</p>
+ <label class="gpx-upload" for="gpxFile">Choose a GPX file <small>Track or route with elevation · up to 20 MB</small><input id="gpxFile" type="file" accept=".gpx,application/gpx+xml,application/xml,text/xml"></label>
+ <p id="gpxError" class="gpx-error" role="alert"></p>
+ <div id="gpxEditor" hidden>
+  <div class="gpx-options"><div class="field"><label for="gpxTrack">TRACK / CONTINUOUS SECTION</label><select id="gpxTrack"></select></div><div class="field"><label for="gpxSmoothing">ELEVATION SMOOTHING</label><select id="gpxSmoothing"><option value="20">Light · 20 m radius</option><option value="50">Stronger · 50 m radius</option><option value="0">None</option></select></div></div>
+  <p id="gpxNotes" class="gpx-note"></p>
+  <div class="gpx-previews">
+   <div class="gpx-map-panel"><span class="eyebrow">ROUTE OUTLINE · NORTH UP</span><svg id="gpxMap" viewBox="0 0 400 240" role="img" aria-label="Route outline with the chosen segment highlighted"></svg><p class="gpx-note">Green: selected segment. No map tiles needed.</p></div>
+   <div class="gpx-profile-panel"><span class="eyebrow">ELEVATION · DRAG A START OR FINISH MARKER</span><svg id="gpxProfile" viewBox="0 0 600 240" role="img" aria-label="Elevation profile with draggable segment boundaries"></svg><p class="gpx-note">Gray: recorded elevation. Green: selected terrain with your smoothing setting. Use the fields below for precise selection.</p></div>
+  </div>
+  <div class="gpx-crop-controls">
+   <div><label for="gpxStart">START · KM INTO THIS SECTION</label><input id="gpxStart" type="number" min="0" step="0.001"><input id="gpxStartSlider" type="range" min="0" step="1" aria-label="Segment start distance"></div>
+   <div><label for="gpxEnd">FINISH · KM INTO THIS SECTION</label><input id="gpxEnd" type="number" min="0" step="0.001"><input id="gpxEndSlider" type="range" min="0" step="1" aria-label="Segment finish distance"></div>
+  </div>
+  <div class="gpx-summary" id="gpxSummary" role="status"></div>
+  <p class="gpx-note">Choose 100 m–30 km. Elevation is resampled every 10 m; smoothing reduces GPS noise. The game uses this terrain with your chosen power, starting from rest—not your recorded speed or effort.</p>
+  <p class="gpx-note">Applying a segment starts a new trial. To keep the course, use “Save challenge JSON” after importing; that file contains terrain, not GPS coordinates.</p>
+ </div>
+ <div class="dialogactions"><button id="gpxCancel" class="quiet" data-close="gpxDialog">Cancel</button><button id="gpxApply" class="primary" disabled>Use this segment</button></div>
+</dialog>
 <dialog id="settingsDialog">
  <form id="settingsForm"><div class="dialoghead"><div><span class="eyebrow">EXPERIMENT SETTINGS</span><h2>Rider, physics & game rules</h2></div><button type="button" class="close" data-close="settingsDialog" aria-label="Close settings">×</button></div>
  <p class="muted">Applying settings starts a new trial. Times are compared only when every physics setting and game rule matches.</p>
@@ -317,7 +355,7 @@
 });
 </script>
 <script>/* Breakaway Pacing Lab — interface and vector-rendered game scene.
-   No external scripts, fonts, images, telemetry or network dependencies. */
+   No third-party scripts, fonts, images, telemetry or network dependencies. */
 (function(){
 'use strict';
 const C=window.CyclingCore,$=id=>document.getElementById(id),clamp=C.clamp;
@@ -345,7 +383,9 @@ function pause(){running=false;accumulator=0;updateUI();}
 function freshTrial(){running=false;state=C.initial(config);target=config.cp;trace=[];eventLog=[];nextSample=.25;accumulator=0;savedFinish=false;preview=null;simulationError=false;record(true);$('trialName').value='Trial '+(matching().length+1);$('finishDialog').close();updateBoard();updateUI();render();}
 function setCourse(next){course=next;plan=Array(80).fill(config.cp);planEnabled=false;$('planEnabled').checked=false;ghostChoice='cp';$('ghostSelect').value='cp';calculateBaseline();freshTrial();syncCourseUI();}
 function syncCourseUI(){const known=['recorded','rolling','punchy','pass','flat','descent'];const kind=course.meta.kind;
+ $('quickCP').value=config.cp;$('quickWPrime').value=config.wPrime/1000;$('quickRiderMass').value=config.riderMass;
  if(!known.includes(kind)&&!$('courseType').querySelector('[value="custom"]')){const o=document.createElement('option');o.value='custom';o.textContent='Loaded custom course';$('courseType').append(o);}
+ if($('courseType').querySelector('[value="custom"]'))$('courseType').querySelector('[value="custom"]').textContent=kind==='gpx'?'Your GPX segment':'Loaded custom course';
  $('courseType').value=known.includes(kind)?kind:'custom';$('seed').value=course.meta.seed||'GT-2026';
  if(known.includes(kind)&&kind!=='recorded')$('courseLength').value=String(course.length);
  toggleCourseFields();$('courseTitle').textContent=course.meta.name;$('courseCode').textContent='COURSE '+course.id.toUpperCase();
@@ -523,7 +563,10 @@ function saveChallenge(){download('Breakaway_challenge_'+course.id+'.json',JSON.
 async function loadChallenge(file){if(!file)return;try{if(file.size>3000000)throw new Error('Challenge file exceeds 3 MB.');const d=JSON.parse(await file.text());if(d.format!=='breakaway-challenge'||d.version!==1)throw new Error('Not a compatible Breakaway challenge.');const cfg=C.validateConfig(d.config),r=new C.Course(d.course?.s,d.course?.h,d.course?.meta);if(!Array.isArray(d.plan)||d.plan.length!==80||!d.plan.every(p=>Number.isFinite(p)&&p>=0&&p<=1000))throw new Error('The power plan must have 80 finite values from 0–1000 W.');if(!askDiscard())return;config=cfg;setCourse(r);plan=d.plan.map(Math.round);planEnabled=!!d.planEnabled;$('planEnabled').checked=planEnabled;record(true);updateUI();render();notify('Challenge loaded: same terrain, physics, game rules and power plan.');}catch(e){notify('Could not load challenge: '+e.message,true);}finally{$('challengeFile').value='';}}
 function showSettings(){pause();fillSettings(config);$('settingsDialog').showModal();}
 function fillSettings(c){for(const el of $('settingsForm').elements)if(el.name&&c[el.name]!==undefined)el.value=el.name==='wPrime'?c.wPrime/1000:el.name==='efficiency'?c.efficiency*100:c[el.name];}
-$('settingsForm').onsubmit=e=>{e.preventDefault();try{const c={...config};for(const el of $('settingsForm').elements)if(el.name)c[el.name]=['recoveryModel','depletionMode'].includes(el.name)?el.value:Number(el.value);c.wPrime*=1000;c.efficiency/=100;const good=C.validateConfig(c);if(!askDiscard())return;config=good;plan=Array(80).fill(config.cp);planEnabled=false;$('planEnabled').checked=false;calculateBaseline();freshTrial();syncCourseUI();$('settingsDialog').close();notify('Settings applied. A fresh leaderboard category keeps comparisons fair.');}catch(err){notify(err.message,true);}};
+function applyRiderSettings(c){const good=C.validateConfig(c);if(!askDiscard())return false;pause();config=good;plan=Array(80).fill(config.cp);planEnabled=false;$('planEnabled').checked=false;calculateBaseline();freshTrial();syncCourseUI();notify('Rider settings applied. Your new trial starts with a full W′ reserve.');return true;}
+$('settingsForm').onsubmit=e=>{e.preventDefault();try{const c={...config};for(const el of $('settingsForm').elements)if(el.name)c[el.name]=['recoveryModel','depletionMode'].includes(el.name)?el.value:Number(el.value);c.wPrime*=1000;c.efficiency/=100;if(applyRiderSettings(c))$('settingsDialog').close();}catch(err){notify(err.message,true);}};
+$('quickRiderForm').addEventListener('focusin',()=>{if(running)pause();});
+$('quickRiderForm').onsubmit=e=>{e.preventDefault();try{applyRiderSettings({...config,cp:Number($('quickCP').value),wPrime:Number($('quickWPrime').value)*1000,riderMass:Number($('quickRiderMass').value)});}catch(err){notify(err.message,true);}};
 $('settingsBtn').onclick=showSettings;$('restoreDefaultsBtn').onclick=()=>fillSettings(C.DEFAULTS);
 $('helpBtn').onclick=()=>{pause();$('helpDialog').showModal();};for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();
 $('courseType').onchange=toggleCourseFields;$('generateBtn').onclick=()=>buildCourse(false);$('randomBtn').onclick=()=>buildCourse(true);
@@ -556,7 +599,9 @@ function frame(now){const dt=lastFrame?Math.min(.15,(now-lastFrame)/1000):0;last
 }
 loadBoard();calculateBaseline();freshTrial();syncCourseUI();setChart('power');requestAnimationFrame(frame);
 // Introspection for reproducible tests; not a tamper-proof online competition.
-window.Breakaway={core:C,get state(){return state;},get config(){return config;},get course(){return course;},get trace(){return trace;},get events(){return eventLog;},get board(){return board;},get baseline(){return baseline;},get plan(){return plan;},get running(){return running;},get preview(){return preview;},setPower,pause,advance:advanceSeconds,newTrial:freshTrial,setCourse,previewPlan,render,updateUI};
+window.Breakaway={core:C,get state(){return state;},get config(){return config;},get course(){return course;},get trace(){return trace;},get events(){return eventLog;},get board(){return board;},get baseline(){return baseline;},get plan(){return plan;},get running(){return running;},get preview(){return preview;},setPower,pause,advance:advanceSeconds,newTrial:freshTrial,setCourse,previewPlan,render,updateUI,importCourse(next){if(!askDiscard())return false;setCourse(next);notify('Your GPX segment is ready. Press Ride to begin.');return true;}};
 })();
 </script>
+<script src="gpx-core.js"></script>
+<script src="gpx-import.js"></script>
 </body></html>

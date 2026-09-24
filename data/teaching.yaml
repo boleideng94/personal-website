@@ -14,7 +14,7 @@
 - title: Cycling Pacing Game
   label: Pacing Lab
   category: Mechanics & energy
-  description: Take on a hilly cycling course. Control your power, manage your energy reserve, and discover how pacing changes your finish time.
+  description: Take on a hilly cycling course—or import your own GPX and choose a segment. Control your power, manage your energy reserve, and discover how pacing changes your finish time.
   url: /teaching/cycling-pacing-game/
   image: /images/teaching/cycling-pacing.svg
   topics:
