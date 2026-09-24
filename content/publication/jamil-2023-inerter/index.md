@@ -36,5 +36,5 @@ publication_types:
 - '2'
 abstract: 'We reveal the unique and fundamental advantage of inerter-based elastic metamaterials by a comparative study among different configurations. When the embedded inerter is connected to the matrix material on both ends, the metamaterial shows definite superiority in forming a band gap in the ultra-low frequency - equivalently the ultra-long wavelength - regime, where the unit cell size can be four or more orders of magnitude smaller than the operating wavelength. In addition, our parametric studies in both one and two dimensions pave the way towards designing next-generation metamaterials for structural vibration mitigation.'
 publication: '*Extreme Mechanics Letters*'
-doi: https://doi.org/10.1016/j.eml.2022.101847
+doi: 10.1016/j.eml.2022.101847
 ---

@@ -50,5 +50,5 @@ existing toughness enhancement mechanisms that were traditionally discovered thr
 inverts traditional scientific approaches, and is applicable to a wide range of research problems beyond
 composites, including polymer chemistry, fluid dynamics, meteorology, and robotics.'
 publication: '*ArXiv*'
-doi: https://doi.org/10.48550/arXiv.2302.01078
+doi: 10.48550/arXiv.2302.01078
 ---

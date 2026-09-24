@@ -38,5 +38,5 @@ publication_types:
 - '2'
 abstract: 'The conflict between stiffness and toughness is a fundamental problem in engineering materials design. However, the systematic discovery of microstructured composites with optimal stiffness-toughness trade-offs has never been demonstrated, hindered by the discrepancies between simulation and reality and the lack of data-efficient exploration of the entire Pareto front. We introduce a generalizable pipeline that integrates physical experiments, numerical simulations, and artificial neural networks to address both challenges. Without any prescribed expert knowledge of material design, our approach implements a nested-loop proposal-validation workflow to bridge the simulation-to-reality gap and find microstructured composites that are stiff and tough with high sample efficiency. Further analysis of Pareto-optimal designs allows us to automatically identify existing toughness enhancement mechanisms, which were …'
 publication: '*Science Advances*'
-doi: https://doi.org/10.1126/sciadv.adk4284
+doi: 10.1126/sciadv.adk4284
 ---

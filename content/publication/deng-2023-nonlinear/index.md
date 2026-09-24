@@ -38,5 +38,5 @@ publication_types:
 - '2'
 abstract: 'In this Letter, we investigate the propagation of nonlinear pulses along the free surface of flexible metamaterials based on the rotating squares mechanism. While these metamaterials have previously been shown to support the propagation of elastic vector solitons through their bulk, here, we demonstrate that they can also support the stable propagation of nonlinear pulses along their free surface. Furthermore, we show that the stability of these surface pulses is higher when they minimally interact with the linear dispersive surface modes. Finally, we provide guidelines to select geometries that minimize these interactions.'
 publication: '*Applied Physics Letters*'
-doi: https://doi.org/10.1063/5.0135375
+doi: 10.1063/5.0135375
 ---

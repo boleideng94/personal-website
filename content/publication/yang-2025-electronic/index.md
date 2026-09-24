@@ -40,5 +40,5 @@ publication_types:
 - '2'
 abstract: 'Communication among particle robots is crucial for developing swarm intelligence. Current particle robots rely entirely on electronic communication systems, requiring a sensor to receive signals, a transducer to send signals, a processor to process them, and a battery to power the system. In this work, an alternative, electronics‐free communication strategy for particle robots is introduced via physical contact between their architected tentacles. Instead of relying on a central controller, the communication protocols are embodied in the geometrical outlines of these tentacles and can be further tuned with external vibrations. Separated particles can interlock under external pressure to form stable clusters resembling “solids,” or vaporize into “gas” by spontaneously repelling one another. Surrogate simulation tools have been developed to guide the design of these robots, enabling the inverse design of particle geometries …'
 publication: '*Advanced Intelligent Systems*'
-doi: https://doi.org/10.1002/aisy.202500151
+doi: 10.1002/aisy.202500151
 ---

@@ -33,5 +33,5 @@ publication_types:
 - '5'
 abstract: 'The imperative for incorporating greener materials into the aerospace industry necessitates addressing significant challenges associated with the microstructural variability exhibited by recycled and sustainable feedstocks. In this study, we propose an integrated methodology that combines experimental investigations, finite element analysis, and artificial intelligence to develop sustainable composites with consistent properties. Our approach utilizes a pipeline comprising an automated mechanical tester, a finite element method simulator, and a convolutional neural network predictor to identify and optimize fabrication parameters for achieving desired mechanical characteristics in composites. By employing a nested-loop pipeline, our methodology improves sample efficiency, accuracy, and effectively bridges the gap between simulations and real-world performance. This unique methodology offers a promising …'
 publication: '*AIAA SCITECH 2024 Forum*'
-doi: https://doi.org/10.2514/6.2024-0041
+doi: 10.2514/6.2024-0041
 ---

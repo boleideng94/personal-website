@@ -34,5 +34,8 @@ publication_types:
 - '2'
 abstract: 'We present a loop-opening model that accounts for the molecular details of the intrinsic fracture energy for fracturing polymer networks. This model includes not only the energy released from the scission of bridging chains but also the subsequent energy released from the network continuum. Scission of a bridging chain releases the cross-links and opens the corresponding topological loop. The released cross-links will be caught by the opened loop to reach a new force-balanced state. The amount of energy released from the network continuum is limited by the stretchability of the opened loop. Based on this loop-opening process, we suggest that the intrinsic fracture energy per broken chain approximately scales with the product of the fracture force and the contour length of the opened loop. This model predicts an intrinsic fracture energy that aligns well with various experimental data on the fracture of polymer …'
 publication: '*Macromolecules*'
-doi: https://doi.org/10.1021/acs.macromol.4c00308
+doi: 10.1021/acs.macromol.4c00308
+url_pdf: "https://arxiv.org/pdf/2401.16607"
 ---
+
+The PDF link provides the arXiv preprint of this article.
