@@ -55,6 +55,7 @@
  <label for="quickCP">CP · W<input id="quickCP" type="number" min="50" max="900" step="1" value="330" required></label>
  <label for="quickWPrime">W′ capacity · kJ<input id="quickWPrime" type="number" min="1" max="100" step="0.1" value="34" required></label>
  <label for="quickRiderMass">Rider weight · kg<input id="quickRiderMass" type="number" min="30" max="200" step="0.1" value="97" required></label>
+ <label for="quickCdA">CdA · m²<input id="quickCdA" type="number" min="0.10" max="0.8" step="0.01" value="0.31" title="Aerodynamic drag area. Lower values reduce air resistance." required></label>
  <button type="submit" class="primary">Apply rider settings</button>
 </form>
 <div class="stats" aria-label="Live ride statistics">
@@ -119,7 +120,7 @@
   <p id="planSummary" class="plan-summary">The preview is a simulation of this plan, not an optimized solution. Previews do not enter the leaderboard.</p>
  </div>
 </details>
-<footer><span>BREAKAWAY / <span id="footerParams">CP 330 W · W′ 34 kJ · 110 kg · CdA 0.26 m²</span></span><div><button id="saveChallengeBtn" class="textbtn">Save challenge JSON</button><button id="loadChallengeBtn" class="textbtn">Load challenge</button><input type="file" id="challengeFile" accept=".json,application/json" hidden><button id="clearBoardBtn" class="textbtn muted">Clear local results</button></div></footer>
+<footer><span>BREAKAWAY / <span id="footerParams">CP 330 W · W′ 34 kJ · 110 kg · CdA 0.31 m²</span></span><div><button id="saveChallengeBtn" class="textbtn">Save challenge JSON</button><button id="loadChallengeBtn" class="textbtn">Load challenge</button><input type="file" id="challengeFile" accept=".json,application/json" hidden><button id="clearBoardBtn" class="textbtn muted">Clear local results</button></div></footer>
 </div>
 <div id="toast" class="toast hidden" role="status"></div>
 <dialog id="gpxDialog" aria-labelledby="gpxTitle">
@@ -163,8 +164,8 @@
   <label>Unlock at<select name="restartFraction"><option value="0.2">20% W′ restored</option><option value="0.5">50% W′ restored</option></select></label>
   <label class="wide">At zero W′<select name="depletionMode"><option value="coast" selected>No pedaling; coast & recover (default)</option><option value="stop">Stop & recover · optional game penalty</option></select><small>The clock keeps running and power resumes at 330 W at the unlock threshold. Neither rule is a physiological law.</small></label>
  </div>
- <p class="small muted">Maximum target power is fixed at 1,000 W. All trials start at zero speed with a full battery. The original MATLAB defaults are 97 + 13 kg, CdA 0.26, Crr 0.004, ρ 1.20 and 100% drivetrain efficiency.</p>
- <div class="dialogactions"><button type="button" id="restoreDefaultsBtn" class="quiet">Restore original defaults</button><button type="submit" class="primary">Apply & start new trial</button></div>
+ <p class="small muted">Maximum target power is fixed at 1,000 W. All trials start at zero speed with a full battery. The default rider uses 97 + 13 kg, CdA 0.31 m², Crr 0.004, ρ 1.20 and 100% drivetrain efficiency.</p>
+ <div class="dialogactions"><button type="button" id="restoreDefaultsBtn" class="quiet">Restore defaults</button><button type="submit" class="primary">Apply & start new trial</button></div>
  </form>
 </dialog>
 <dialog id="helpDialog" class="helpdialog">
@@ -203,7 +204,7 @@
   'use strict';
   const VERSION = '1.0.0';
   const DEFAULTS = Object.freeze({cp:330,wPrime:34000,pMax:1000,riderMass:97,bikeMass:13,
-    cda:0.26,crr:0.004,rho:1.20,g:9.80665,efficiency:1,forceMax:600,wind:0,
+    cda:0.31,crr:0.004,rho:1.20,g:9.80665,efficiency:1,forceMax:600,wind:0,
     recoveryModel:'differential',tauScale:1,restartFraction:0.50,depletionMode:'coast'});
   const clamp = (x,a,b) => Math.max(a,Math.min(b,x));
   function hash(text) { let n=2166136261; for(let i=0;i<text.length;i++) {n^=text.charCodeAt(i);n=Math.imul(n,16777619);} return (n>>>0).toString(16).padStart(8,'0'); }
@@ -387,7 +388,7 @@ function freshTrial(){running=false;state=C.initial(config);target=config.cp;tra
 function setCourse(next){course=next;plan=Array(80).fill(config.cp);planEnabled=false;$('planEnabled').checked=false;ghostChoice='cp';$('ghostSelect').value='cp';calculateBaseline();freshTrial();syncCourseUI();}
 function syncCourseUI(){const known=['recorded','stone-mountain-u','rolling','punchy','pass','flat','descent'];const kind=course.meta.kind;
  $('stoneCourseNote').hidden=kind!=='stone-mountain-u';
- $('quickCP').value=config.cp;$('quickWPrime').value=config.wPrime/1000;$('quickRiderMass').value=config.riderMass;
+ $('quickCP').value=config.cp;$('quickWPrime').value=config.wPrime/1000;$('quickRiderMass').value=config.riderMass;$('quickCdA').value=config.cda;
  if(!known.includes(kind)&&!$('courseType').querySelector('[value="custom"]')){const o=document.createElement('option');o.value='custom';o.textContent='Loaded custom course';$('courseType').append(o);}
  if($('courseType').querySelector('[value="custom"]'))$('courseType').querySelector('[value="custom"]').textContent=kind==='gpx'?'Your GPX segment':'Loaded custom course';
  $('courseType').value=known.includes(kind)?kind:'custom';$('seed').value=course.meta.seed||'GT-2026';
@@ -570,7 +571,7 @@ function fillSettings(c){for(const el of $('settingsForm').elements)if(el.name&&
 function applyRiderSettings(c){const good=C.validateConfig(c);if(!askDiscard())return false;pause();config=good;plan=Array(80).fill(config.cp);planEnabled=false;$('planEnabled').checked=false;calculateBaseline();freshTrial();syncCourseUI();notify('Rider settings applied. Your new trial starts with a full W′ reserve.');return true;}
 $('settingsForm').onsubmit=e=>{e.preventDefault();try{const c={...config};for(const el of $('settingsForm').elements)if(el.name)c[el.name]=['recoveryModel','depletionMode'].includes(el.name)?el.value:Number(el.value);c.wPrime*=1000;c.efficiency/=100;if(applyRiderSettings(c))$('settingsDialog').close();}catch(err){notify(err.message,true);}};
 $('quickRiderForm').addEventListener('focusin',()=>{if(running)pause();});
-$('quickRiderForm').onsubmit=e=>{e.preventDefault();try{applyRiderSettings({...config,cp:Number($('quickCP').value),wPrime:Number($('quickWPrime').value)*1000,riderMass:Number($('quickRiderMass').value)});}catch(err){notify(err.message,true);}};
+$('quickRiderForm').onsubmit=e=>{e.preventDefault();try{applyRiderSettings({...config,cp:Number($('quickCP').value),wPrime:Number($('quickWPrime').value)*1000,riderMass:Number($('quickRiderMass').value),cda:Number($('quickCdA').value)});}catch(err){notify(err.message,true);}};
 $('settingsBtn').onclick=showSettings;$('restoreDefaultsBtn').onclick=()=>fillSettings(C.DEFAULTS);
 $('helpBtn').onclick=()=>{pause();$('helpDialog').showModal();};for(const b of document.querySelectorAll('[data-close]'))b.onclick=()=>$(b.dataset.close).close();
 $('courseType').onchange=toggleCourseFields;$('generateBtn').onclick=()=>buildCourse(false);$('randomBtn').onclick=()=>buildCourse(true);
