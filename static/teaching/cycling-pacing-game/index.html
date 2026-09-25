@@ -41,7 +41,7 @@
   <div class="head-actions"><span class="offline"><i></i> Runs entirely in your browser</span><button id="settingsBtn" class="quiet">Rider & rules</button><button id="helpBtn" class="quiet">How it works <span aria-hidden="true">↗</span></button></div>
 </header>
 <section class="coursebar" aria-label="Course setup">
-  <div class="field coursefield"><label for="courseType">THE COURSE</label><select id="courseType"><option value="recorded">Your recorded road · 7.60 km</option><option value="rolling">Rolling hills</option><option value="punchy">Punchy hills</option><option value="pass">Mountain pass</option><option value="flat">Flat time trial</option><option value="descent">Downhill lab</option></select></div>
+  <div class="field coursefield"><label for="courseType">THE COURSE</label><select id="courseType"><option value="stone-mountain-u" selected>Stone Mountain U · 11.66 km</option><option value="recorded">Your recorded road · 7.60 km</option><option value="rolling">Rolling hills</option><option value="punchy">Punchy hills</option><option value="pass">Mountain pass</option><option value="flat">Flat time trial</option><option value="descent">Downhill lab</option></select></div>
   <div class="field short"><label for="courseLength">LENGTH</label><select id="courseLength"><option value="1000">1 km</option><option value="3000">3 km</option><option value="5000" selected>5 km</option><option value="8000">8 km</option><option value="10000">10 km</option></select></div>
   <div class="field short"><label for="hillSize">HILLS</label><select id="hillSize"><option value="3">Gentle · 3%</option><option value="6" selected>Rolling · 6%</option><option value="10">Steep · 10%</option><option value="12">Very steep · 12%</option></select></div>
   <div class="field seedfield"><label for="seed">SEED</label><input id="seed" value="GT-2026" maxlength="50" spellcheck="false"></div>
@@ -49,6 +49,7 @@
   <button id="importGpxBtn" class="secondary">Import GPX / choose segment</button>
   <div class="coursemeta" id="courseMeta"></div>
 </section>
+<p id="stoneCourseNote" class="small muted" style="margin:10px 4px;line-height:1.6" hidden>Stone Mountain U · GPX-derived loop with approximate segment boundaries and smoothed elevation. Distance and climbing reflect the recorded ride and may differ from the <a href="https://www.strava.com/segments/644775" target="_blank" rel="noopener">Strava segment</a>.</p>
 <form id="quickRiderForm" class="rider-quick-settings" aria-label="Your rider settings">
  <div class="quick-intro"><strong>Your rider</strong><small>Apply changes to start a fresh trial.</small></div>
  <label for="quickCP">CP · W<input id="quickCP" type="number" min="50" max="900" step="1" value="330" required></label>
@@ -59,13 +60,13 @@
 <div class="stats" aria-label="Live ride statistics">
   <div class="stat"><label>RACE TIME <span id="statusPill" class="status">READY</span></label><div id="timeValue">0:00.0</div><small>Pause does not count</small></div>
   <div class="stat"><label>SPEED</label><div><span id="speedValue">0.0</span><em>km/h</em></div><small id="accelValue">Starting from rest</small></div>
-  <div class="stat"><label>DISTANCE</label><div><span id="distanceValue">0.00</span><em id="totalValue">/ 7.60 km</em></div><small id="remainingValue">7.60 km to go</small></div>
-  <div class="stat"><label>ROAD GRADE</label><div><span id="gradeValue">0.0</span><em>%</em></div><small id="elevationValue">303 m elevation</small></div>
+  <div class="stat"><label>DISTANCE</label><div><span id="distanceValue">0.00</span><em id="totalValue">/ 11.66 km</em></div><small id="remainingValue">11.66 km to go</small></div>
+  <div class="stat"><label>ROAD GRADE</label><div><span id="gradeValue">0.0</span><em>%</em></div><small id="elevationValue">284 m elevation</small></div>
   <div class="stat"><label id="ghostLabel">VS STEADY CP</label><div id="deltaValue">—</div><small id="ghostMeta">The ghost starts beside you</small></div>
 </div>
 <main class="main-grid">
 <section class="card ride-card">
- <div class="cardhead"><div><span class="eyebrow">THE ROAD AHEAD</span><h2 id="courseTitle">Your recorded road</h2></div><div class="segmented" aria-label="Camera view"><button id="followBtn" class="selected">Follow rider</button><button id="wholeBtn">Whole course</button></div></div>
+ <div class="cardhead"><div><span class="eyebrow">THE ROAD AHEAD</span><h2 id="courseTitle">Stone Mountain U</h2></div><div class="segmented" aria-label="Camera view"><button id="followBtn" class="selected">Follow rider</button><button id="wholeBtn">Whole course</button></div></div>
  <div class="scene-wrap"><canvas id="scene" aria-label="Animated cyclist moving along the terrain"></canvas>
    <div class="scenechips"><span id="riderChip">YOU · 330 W target</span><span id="ghostChip" class="ghostchip">◌ Steady CP ghost</span></div>
    <div id="sceneMessage" class="scene-message"><b>Power is your only accelerator.</b><span>Drag the power control, then press Ride.</span></div>
@@ -180,7 +181,7 @@
  <p>The road coordinate is <b>distance along the road</b>, not horizontal distance. Elevation uses shape-preserving cubic interpolation, with its derivative used for the slope. A 600 N default drive-force limit removes the power/speed singularity at rest. During the first moments of a launch, actual power is lower than requested; both mechanical work and W′ use <b>actual output</b>. At 100% drivetrain efficiency this matches the wheel-power convention of your MATLAB demo. With η &lt; 1, CP and W′ are interpreted at the upstream power-meter location.</p>
  <p>Motion and battery are integrated with fixed 0.025 s fourth-order Runge–Kutta steps. Depletion, unlock and finish events are resolved within a step. This is a forward-only point-mass model: no gear/cadence dynamics, wheel inertia, cornering, traction slip or drafting. Coasting to zero on a hill means stopping, not rolling backward. The scene exaggerates elevation and the bicycle size for visibility.</p>
  <h3>Two ways to compare strategies</h3><p><b>Manual:</b> pause at any point and choose the next power. The telemetry records actual power, W′ and speed versus time. <b>Planner:</b> expand “Draw your power plan” and paint an 80-block target profile versus distance. Preview computes its finish without entering the leaderboard; enabling the plan lets you watch it ride. The climb/recover preset is a heuristic, not an optimizer. Every preview starts from rest at the beginning.</p>
- <h3>Your supplied terrain</h3><p>The 7.60 km course comes from <code>matlab-cycling/terrain.csv</code>: 1,521 smoothed elevation samples from your uploaded archive, with no latitude or longitude included. Rider defaults are retained from <code>cycling_demo.m</code>. The game is not a replay of your measured ride: it starts from rest, adds W′ limits, and uses your chosen power. The MATLAB file declared a 600 N force cap without actually applying it; this game applies the cap.</p>
+ <h3>Your supplied terrain</h3><p>The default Stone Mountain U course is a GPX-derived 11.66 km loop, resampled at approximately 10 m with light elevation smoothing. Its segment boundaries are approximate; distance and climbing may differ from Strava. The original recorded road remains available in the course menu.</p><p>The 7.60 km course comes from <code>matlab-cycling/terrain.csv</code>: 1,521 smoothed elevation samples from your uploaded archive, with no latitude or longitude included. Rider defaults are retained from <code>cycling_demo.m</code>. The game is not a replay of your measured ride: it starts from rest, adds W′ limits, and uses your chosen power. The MATLAB file declared a 600 N force cap without actually applying it; this game applies the cap.</p>
  <h3>Sources</h3>
  <p><a href="https://pubmed.ncbi.nlm.nih.gov/28121252/" target="_blank" rel="noopener noreferrer">Martin et al. (1998), Validation of a Mathematical Model for Road Cycling Power.</a><br><a href="https://pubmed.ncbi.nlm.nih.gov/22382171/" target="_blank" rel="noopener noreferrer">Skiba et al. (2012), Modeling the Expenditure and Reconstitution of Work Capacity above Critical Power.</a><br><a href="https://pubmed.ncbi.nlm.nih.gov/25425258/" target="_blank" rel="noopener noreferrer">Skiba et al. (2015), Intramuscular Determinants of the Ability to Recover Work Capacity above Critical Power.</a><br><a href="https://link.springer.com/article/10.1007/s00421-025-05912-0" target="_blank" rel="noopener noreferrer">Welburn et al. (2026 issue; online 2025), W′ Reconstitution Modelling During Intermittent Exercise Performed to Task Failure. Equations 3–6 and individualization limitations.</a><br><a href="https://pubmed.ncbi.nlm.nih.gov/33787532/" target="_blank" rel="noopener noreferrer">Caen et al. (2021), W′ Recovery Kinetics after Exhaustion: A Two-Phase Exponential Process Influenced by Aerobic Fitness.</a></p>
  <h3>Offline and on your website</h3><p>This file contains its own code and terrain. It makes no network requests during play. Upload the HTML to a static website to publish it. Save a challenge JSON to share the exact course, physics and power plan. Results stay in this browser’s local storage where supported; CSV downloads let students submit trials. Browser storage can be cleared or blocked, so export important results.</p>
@@ -354,6 +355,7 @@
   return {VERSION,DEFAULTS,clamp,hash,random,validateConfig,Course,makeCourse,tau,batteryRate,batteryAfter,recoverySeconds,forces,initial,rk4,step,sample,simulate,signature};
 });
 </script>
+<script src="stone-mountain-u.js"></script>
 <script>/* Breakaway Pacing Lab — interface and vector-rendered game scene.
    No third-party scripts, fonts, images, telemetry or network dependencies. */
 (function(){
@@ -361,7 +363,8 @@
 const C=window.CyclingCore,$=id=>document.getElementById(id),clamp=C.clamp;
 const colors={lime:'#cffb78',cyan:'#65d9e8',amber:'#ffcd7a',red:'#ff877a',ghost:'#c9bcff',ink:'#ecf2f1',muted:'#91a4ad',grid:'#2a3a43'};
 const recorded=JSON.parse($('routeData').textContent),STORE='breakaway-trials-v1';
-let config=C.validateConfig(C.DEFAULTS),course=new C.Course(recorded.s,recorded.h,recorded.meta),state=C.initial(config);
+const builtInCourses={recorded,'stone-mountain-u':window.STONE_MOUNTAIN_U};
+let config=C.validateConfig(C.DEFAULTS),course=new C.Course(builtInCourses['stone-mountain-u'].s,builtInCourses['stone-mountain-u'].h,builtInCourses['stone-mountain-u'].meta),state=C.initial(config);
 let running=false,target=config.cp,trace=[],eventLog=[],nextSample=0.25,accumulator=0,lastFrame=0,lastPaint=0;
 let view='follow',chartTab='power',plan=Array(80).fill(config.cp),planEnabled=false,baseline=null,ghostChoice='cp';
 let board=[],savedFinish=false,hoverTime=null,toastTimer=null,preview=null,simulationError=false;
@@ -382,20 +385,21 @@ function askDiscard(){return state.t<0.01||state.finished||confirm('Start a new 
 function pause(){running=false;accumulator=0;updateUI();}
 function freshTrial(){running=false;state=C.initial(config);target=config.cp;trace=[];eventLog=[];nextSample=.25;accumulator=0;savedFinish=false;preview=null;simulationError=false;record(true);$('trialName').value='Trial '+(matching().length+1);$('finishDialog').close();updateBoard();updateUI();render();}
 function setCourse(next){course=next;plan=Array(80).fill(config.cp);planEnabled=false;$('planEnabled').checked=false;ghostChoice='cp';$('ghostSelect').value='cp';calculateBaseline();freshTrial();syncCourseUI();}
-function syncCourseUI(){const known=['recorded','rolling','punchy','pass','flat','descent'];const kind=course.meta.kind;
+function syncCourseUI(){const known=['recorded','stone-mountain-u','rolling','punchy','pass','flat','descent'];const kind=course.meta.kind;
+ $('stoneCourseNote').hidden=kind!=='stone-mountain-u';
  $('quickCP').value=config.cp;$('quickWPrime').value=config.wPrime/1000;$('quickRiderMass').value=config.riderMass;
  if(!known.includes(kind)&&!$('courseType').querySelector('[value="custom"]')){const o=document.createElement('option');o.value='custom';o.textContent='Loaded custom course';$('courseType').append(o);}
  if($('courseType').querySelector('[value="custom"]'))$('courseType').querySelector('[value="custom"]').textContent=kind==='gpx'?'Your GPX segment':'Loaded custom course';
  $('courseType').value=known.includes(kind)?kind:'custom';$('seed').value=course.meta.seed||'GT-2026';
- if(known.includes(kind)&&kind!=='recorded')$('courseLength').value=String(course.length);
+ if(known.includes(kind)&&!builtInCourses[kind])$('courseLength').value=String(course.length);
  toggleCourseFields();$('courseTitle').textContent=course.meta.name;$('courseCode').textContent='COURSE '+course.id.toUpperCase();
  $('courseMeta').innerHTML=`<b>${(course.length/1000).toFixed(2)} km</b> · ↑ ${Math.round(course.ascent)} m<br>↓ ${Math.round(course.descent)} m · start from rest`;
  $('footerParams').textContent=`CP ${config.cp} W · W′ ${config.wPrime/1000} kJ · ${config.riderMass+config.bikeMass} kg · CdA ${config.cda.toFixed(2)} m²`;
 }
-function toggleCourseFields(){const rec=$('courseType').value==='recorded'||$('courseType').value==='custom';for(const id of ['courseLength','hillSize','seed'])$(id).disabled=rec;$('generateBtn').textContent=rec?'Reload course':'Build course';}
+function toggleCourseFields(){const rec=!!builtInCourses[$('courseType').value]||$('courseType').value==='custom';for(const id of ['courseLength','hillSize','seed'])$(id).disabled=rec;$('generateBtn').textContent=rec?'Load course':'Build course';}
 function buildCourse(randomize=false){if(!askDiscard())return;let kind=$('courseType').value;
- if(randomize){if(kind==='recorded'||kind==='custom'||kind==='flat'||kind==='descent')kind='rolling';$('courseType').value=kind;$('seed').value='RIDE-'+Math.random().toString(36).slice(2,8).toUpperCase();}
- try{const next=kind==='recorded'?new C.Course(recorded.s,recorded.h,recorded.meta):kind==='custom'?new C.Course(course.s,course.h,course.meta):C.makeCourse(kind,Number($('courseLength').value)||5000,$('seed').value||'GT-2026',Number($('hillSize').value));setCourse(next);notify('Course ready. Completed times stay grouped by the same course and rules.');}catch(e){notify(e.message,true);}}
+ if(randomize){if(builtInCourses[kind]||kind==='custom'||kind==='flat'||kind==='descent')kind='rolling';$('courseType').value=kind;$('seed').value='RIDE-'+Math.random().toString(36).slice(2,8).toUpperCase();}
+ try{const saved=builtInCourses[kind];const next=saved?new C.Course(saved.s,saved.h,saved.meta):kind==='custom'?new C.Course(course.s,course.h,course.meta):C.makeCourse(kind,Number($('courseLength').value)||5000,$('seed').value||'GT-2026',Number($('hillSize').value));setCourse(next);notify('Course ready. Completed times stay grouped by the same course and rules.');}catch(e){notify(e.message,true);}}
 function setPower(p,manual=true){if(state.locked)return;p=Number(p);if(!Number.isFinite(p))return;target=Math.round(clamp(p,0,1000));if(manual&&planEnabled){planEnabled=false;$('planEnabled').checked=false;notify('Manual control: the power plan is now off.');}record(true);updateUI();render();}
 function startPause(){if(simulationError)return;if(state.finished){notify('This trial has finished. Choose New trial to ride again.');return;}running=!running;accumulator=0;lastFrame=performance.now();updateUI();render();}
 function simTick(dt){if(state.finished)return;const p=desired(),events=C.step(state,course,config,state.locked?330:p,dt);
