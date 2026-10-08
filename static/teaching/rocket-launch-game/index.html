@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An offline, interactive rocket-launch game about momentum, propellant budgets and achieving a real unpowered orbit.">
+<title>IGNITION — Rocket & Momentum Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#080f1b;--panel:#111c2a;--panel2:#152233;--line:#28374a;--muted:#8fa4bd;--ink:#f1f6ff;--mint:#69e8bb;--gold:#ffbf76;--blue:#88c8ff;--red:#ff7e89;--radius:15px}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0%,#152439 0,transparent 48%),var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums}button,input,select{font:inherit}button,select,input{color:var(--ink)}button{cursor:pointer;background:#1a2a3e;border:1px solid #33445c;border-radius:8px;padding:9px 12px;font-weight:650;transition:background .15s,border-color .15s,transform .15s}button:hover:not(:disabled){background:#263d55;border-color:#71859c}button:active:not(:disabled){transform:translateY(1px)}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,canvas:focus-visible{outline:2px solid var(--gold);outline-offset:3px}.primary{background:var(--mint);border-color:var(--mint);color:#073529}.primary:hover:not(:disabled){background:#97f5d4;border-color:#97f5d4}.warm{color:#221503;background:var(--gold);border-color:var(--gold)}.warm:hover:not(:disabled){background:#ffdaac;border-color:#ffdaac}.ghost{background:transparent}.small{padding:6px 9px;font-size:12px}.danger{color:var(--red)}.full{width:100%}.row{display:flex;gap:8px;align-items:center}.between{justify-content:space-between}.wrap{flex-wrap:wrap}.muted{color:var(--muted)}.tiny{font-size:11px;line-height:1.5}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.accent{color:var(--mint)}.gold{color:var(--gold)}.label{font-size:10px;font-weight:750;color:var(--muted);letter-spacing:1.1px;text-transform:uppercase}.num{font-weight:750;font-size:23px;letter-spacing:-.6px}.tag{font-size:10px;letter-spacing:.8px;border:1px solid #354458;border-radius:30px;padding:5px 9px;color:#b1c5db}.hidden{display:none!important}h1,h2,h3,p{margin:0}h2{font-size:17px;letter-spacing:-.35px}h3{font-size:15px}a{color:var(--blue)}
+header{max-width:1800px;margin:auto;padding:20px 26px 15px;display:flex;justify-content:space-between;align-items:center;gap:20px}.brand{display:flex;gap:13px;align-items:center}.emblem{width:43px;height:43px;border:1px solid #6b5747;border-radius:50%;position:relative;background:radial-gradient(circle,#ffca871a,transparent)}.emblem:before{content:"";position:absolute;width:17px;height:24px;left:12px;top:7px;clip-path:polygon(50% 0,85% 45%,85% 85%,15% 85%,15% 45%);background:linear-gradient(110deg,#ffe3bc,#ffac60)}.emblem:after{content:"";width:3px;height:10px;background:var(--gold);position:absolute;left:19px;top:28px;border-radius:100%;box-shadow:0 0 12px var(--gold)}.wordmark{font-weight:850;font-size:23px;letter-spacing:4px;line-height:1.15}.subtitle{font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.6px}.shell{max-width:1800px;margin:auto;padding:0 22px 24px}.brief{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 14px;padding:12px 16px;border:1px solid var(--line);background:#152232a3;border-radius:11px}.brief p{font-size:12px;color:#c3d1e2}.steps{display:flex;gap:19px;white-space:nowrap;color:#c0d1df;font-size:11px;font-weight:700}.steps span b{color:var(--gold);margin-right:5px}.workspace{display:grid;grid-template-columns:275px minmax(360px,1fr) 277px;gap:13px;align-items:stretch}.panel{border:1px solid var(--line);background:linear-gradient(135deg,#142132,#101b29);border-radius:var(--radius);overflow:hidden}.side{padding:17px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.index{font-size:11px;letter-spacing:1px;color:var(--gold)}.fuel-options{display:grid;gap:7px}.fuel-card{width:100%;display:flex;align-items:center;gap:10px;text-align:left;padding:10px;border-color:#2b3c50;background:#101c2a}.fuel-card.active{background:#1b3b37;border-color:#67c5a7}.fuel-icon{width:37px;height:37px;display:grid;place-items:center;flex:none;border-radius:9px;background:#ffffff0a;font:700 12px ui-monospace,monospace;border:1px solid #ffffff16}.fuel-name{font-size:12px}.fuel-detail{font-size:10px;color:var(--muted);font-weight:450;margin-top:2px}.fuel-card .check{margin-left:auto;font-size:16px;color:var(--mint)}.mass-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:16px 0 13px}label.field{display:block;font-size:11px;color:var(--muted)}input[type=number],select{width:100%;border:1px solid #35475b;border-radius:7px;padding:7px 8px;background:#0c1725;min-width:0}label.field input,label.field select{margin-top:5px}input[type=range]{width:100%;height:24px;accent-color:var(--mint);cursor:pointer;margin:5px 0;touch-action:none}input[type=checkbox]{accent-color:var(--mint)}.fill-label{display:flex;align-items:center;justify-content:space-between;font-size:12px}.fill-number{display:flex;gap:5px;align-items:baseline;color:var(--mint);font-weight:700}.fill-number input{width:65px;text-align:right;color:var(--mint)}.metrics2{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:7px}.statbox{padding:9px 10px;background:#0a16248c;border-radius:8px;border:1px solid #233348}.statbox .stat-number{font-size:17px;font-weight:700;margin-top:1px;padding:2px 0;background:transparent;border:0;border-bottom:1px dashed #679a9277;border-radius:0;color:var(--mint)}.statbox strong{font-size:17px;font-weight:700;display:block;margin-top:3px}.dv-strip{margin:11px 0;padding:9px 10px;border:1px solid #38453e;border-radius:8px;background:#3e4b201c;font-size:11px;line-height:1.6}.dv-strip .value{color:var(--gold);font-weight:750}.construction-note{margin-top:8px;color:var(--muted);font-size:10px;line-height:1.5}.goal-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}details{margin-top:12px;border-top:1px solid var(--line);padding-top:11px}summary{cursor:pointer;font-size:12px;color:#c5d6e7}.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.build-actions{display:grid;gap:7px;margin-top:14px}.ledger{padding:10px 11px;background:#192c2b;border:1px solid #294840;border-radius:9px;margin-top:12px}.ledger .row{font-size:11px;margin:3px 0}.ledger strong{font-size:16px;color:var(--mint)}.build-error{font-size:11px;color:var(--red);margin-top:8px;min-height:16px}
+.stage{position:relative;min-height:720px;background:#070f1b;overflow:hidden}.stage>canvas{display:block;width:100%;height:100%;position:absolute;inset:0;touch-action:none}.hud{position:absolute;left:16px;right:16px;top:15px;pointer-events:none}.hud-top{display:flex;justify-content:space-between;align-items:center;font-size:10px;letter-spacing:1px}.phase{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid #576c8055;border-radius:6px;background:#0b172dc2;color:#d5e9ff}.phase i{width:5px;height:5px;border-radius:50%;background:var(--mint);box-shadow:0 0 8px #69e8bb}.time-read{color:#c1d6e9;font-size:12px;text-shadow:0 2px 6px #050a13}.hud-stats{display:grid;grid-template-columns:repeat(4,1fr);margin-top:14px;padding:11px 0;border-top:1px solid #52668055;border-bottom:1px solid #52668055;background:linear-gradient(90deg,#09162544,transparent)}.hud-stat{padding-left:12px;border-left:1px solid #52668044}.hud-stat:first-child{padding-left:0;border:0}.hud-stat span{display:block;font-size:9px;color:#a6bacf;letter-spacing:.7px;text-transform:uppercase}.hud-stat strong{font-size:18px;font-weight:650;letter-spacing:-.4px}.hud-stat em{font-size:10px;font-style:normal;font-weight:450;color:#c1d6e9}.camera-tools{position:absolute;top:128px;left:14px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}.camera-tools button{background:#0b172cd9;border-color:#40567488;font-size:10px;padding:5px 8px;backdrop-filter:blur(8px)}.camera-tools button.active{border-color:#a5c0d4;color:var(--mint)}.scene-note{position:absolute;left:15px;bottom:12px;font-size:9px;color:#7f97b3;max-width:60%;pointer-events:none}.global-map{position:absolute;left:15px;bottom:39px;width:150px;height:167px;border:1px solid #536b8066;border-radius:11px;background:#091525df;backdrop-filter:blur(8px);overflow:hidden}.global-map canvas{width:100%;height:140px;display:block}.global-map .label{padding:8px 10px 0;font-size:9px}.engine-window{position:absolute;bottom:35px;right:14px;width:188px;background:linear-gradient(150deg,#182c41e8,#0a1728ed);border:1px solid #516b8380;border-radius:13px;backdrop-filter:blur(10px);box-shadow:0 8px 40px #03091566}.engine-head{padding:10px 11px 0;display:flex;justify-content:space-between;align-items:center}.engine-head .label{font-size:9px}.engine-window canvas{width:100%;height:196px;display:block}.engine-math{padding:0 11px 10px;font-size:10px}.engine-math .row{margin-bottom:4px}.engine-math .formula{color:#d4e6f4;font-size:12px;font-weight:650;margin-bottom:6px;border-bottom:1px solid #3d546955;padding-bottom:7px}.coach{position:absolute;top:177px;left:15px;max-width:290px;border-left:2px solid var(--gold);padding:8px 11px;background:linear-gradient(90deg,#111e30e6,#111e3055);border-radius:0 8px 8px 0;font-size:11px;color:#d6e4ef;pointer-events:none}.coach strong{display:block;color:var(--gold);font-size:12px;margin-bottom:3px}.coach p{line-height:1.6}.mission-banner{position:absolute;left:15px;right:15px;top:255px;padding:17px;border:1px solid #69e8bb99;background:#0c252eee;backdrop-filter:blur(12px);border-radius:12px;box-shadow:0 10px 60px #0008;z-index:4}.mission-banner h3{color:var(--mint);font-size:20px}.mission-banner p{font-size:12px;color:#c5dbe6;margin:8px 0 12px}.mission-banner.failed{border-color:#ff7e8988;background:#281d29ee}.mission-banner.failed h3{color:var(--red)}.close-banner{position:absolute;top:8px;right:10px;border:0;background:transparent;padding:3px 6px}
+.control-main{display:grid;grid-template-columns:1fr auto;gap:7px;margin-bottom:12px}.flight-control label{font-size:11px;color:#b2c6dc}.throttle-block{margin:16px 0 12px;padding-top:13px;border-top:1px solid var(--line)}.big-pct{font-size:25px;font-weight:750;color:var(--gold);letter-spacing:-1px}.throttle-range{accent-color:var(--gold)!important}.flow-line{display:grid;grid-template-columns:1fr 82px;gap:8px;align-items:center;margin-bottom:8px}.flow-line span{font-size:10px;color:var(--muted)}.flow-line input{font-size:12px}.live-force{display:flex;justify-content:space-between;font-size:11px;color:#cbd8e6}.live-force b{font-weight:650;color:var(--mint)}.time-group{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin-top:8px}.time-group button{flex:1;padding:5px 0;font-size:10px;min-width:28px}.time-group button.active{border-color:var(--mint);background:#1d3c3b;color:var(--mint)}.time-caption{font-size:10px;color:var(--muted);margin-top:6px;min-height:15px}.steering{border-top:1px solid var(--line);padding-top:12px;margin-top:13px}.steering-top{display:flex;align-items:center;justify-content:space-between}.pitch-field{width:74px!important;font-size:12px;padding:5px!important}.nav-wrap{display:flex;justify-content:center;position:relative}.nav-wrap canvas{width:204px;height:181px;display:block;cursor:crosshair;touch-action:none}.nav-meta{font-size:10px;color:var(--muted);text-align:center;margin-top:-2px}.presets{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}.presets button{font-size:11px;padding:7px 4px}.presets button.active{border-color:var(--gold);color:var(--gold)}.orbit-card{margin-top:15px;padding:11px;border:1px solid #2d4156;border-radius:9px;background:#0c1827}.orbit-card .row{font-size:11px;margin:6px 0}.orbit-track{height:5px;background:#293b4c;border-radius:3px;overflow:hidden;margin:9px 0}.orbit-track>div{width:0;height:100%;background:var(--mint);transition:width .15s}.key-hint{font-size:10px;color:var(--muted);line-height:1.8;margin-top:12px}.keycap{border:1px solid #405167;background:#0a1724;border-radius:3px;font-size:9px;padding:1px 4px;color:#a5b9cd}.engine-toggle{margin-top:9px;font-size:10px;color:var(--muted)}
+.recorder{margin-top:14px}.tabs{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:10px 15px;gap:12px}.tab-buttons{display:flex;gap:5px}.tab-buttons button{border:0;background:transparent;color:var(--muted);font-size:12px}.tab-buttons button.active{background:#24374b;color:var(--ink)}.tab-body{padding:15px 18px}.plot-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}.plot-top select{width:auto;font-size:12px}.plot-legend{font-size:11px;display:flex;gap:18px}.swatch{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;background:var(--mint)}.swatch.gold{background:var(--gold)}#telemetry{width:100%;height:180px;display:block}.plot-caption{font-size:10px;color:var(--muted);margin-top:5px}.table-scroll{overflow:auto}table{border-collapse:collapse;width:100%;white-space:nowrap;font-size:12px}th{text-align:left;color:var(--muted);font-size:10px;letter-spacing:.5px;padding:10px;border-bottom:1px solid var(--line)}td{padding:11px 10px;border-bottom:1px solid #223347}.empty-table{padding:28px;text-align:center;color:var(--muted);font-size:12px}.lesson{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px}.lesson h3{margin-bottom:10px}.lesson p{font-size:12px;color:#b8c9dc;line-height:1.75;margin-bottom:10px}.equation{padding:14px;background:#0a1726;border:1px solid var(--line);border-radius:8px;font:14px/1.9 ui-monospace,monospace;color:#e0effb;margin:10px 0}.source-list{font-size:11px;line-height:1.8}.source-list a{display:block;margin-bottom:4px}.footer{margin-top:13px;color:#8296ad;font-size:10px;display:flex;justify-content:space-between;gap:15px}.footer button{font-size:10px;padding:0;border:0;background:none;color:#b5c9de}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:11px 18px;border:1px solid #5e766f;border-radius:10px;background:#172d33f2;backdrop-filter:blur(10px);font-size:12px;max-width:min(90vw,600px);box-shadow:0 10px 40px #0006;z-index:20;pointer-events:none}.modal-backdrop{position:fixed;inset:0;z-index:30;background:#020710bd;display:grid;place-items:center;padding:22px;backdrop-filter:blur(9px)}.modal{width:min(800px,100%);max-height:90vh;overflow:auto;padding:27px;border:1px solid #496075;background:linear-gradient(140deg,#182b40,#101b2a);border-radius:18px;box-shadow:0 30px 150px #000a}.modal h2{font-size:24px;color:var(--gold);margin-bottom:9px}.modal p{font-size:13px;color:#c3d1e0;margin:10px 0}.help-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:22px}.help-grid h3{color:var(--mint)}.help-grid p{font-size:12px;line-height:1.8}.price-note{padding:10px;background:#44302144;border:1px solid #72533866;border-radius:8px}.study-prompt{font-size:12px;color:#c9d8e6;padding:11px 13px;background:#16283a;border-radius:8px;margin-top:15px}
+@media(min-width:1550px){.workspace{grid-template-columns:296px minmax(400px,1fr) 296px}.stage{min-height:735px}.side{padding:20px}.engine-window{width:210px}.engine-window canvas{height:215px}}
+@media(max-width:1180px){.workspace{grid-template-columns:242px minmax(310px,1fr) 245px;gap:10px}.shell{padding:0 12px 20px}.side{padding:13px}.hud-stat strong{font-size:15px}.hud-stat{padding-left:7px}.hud{left:12px;right:12px}.engine-window{width:162px;right:10px}.engine-window canvas{height:180px}.global-map{width:122px;height:148px;left:10px}.global-map canvas{height:125px}.coach{max-width:255px}.brief{padding:10px 12px}.steps{gap:10px}.stage{min-height:715px}}
+@media(max-width:980px){.workspace{grid-template-columns:minmax(0,1fr) 265px}.build-panel{grid-column:1/-1}.build-content{display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:20px}.fuel-options{margin-top:2px}.section-head{margin-bottom:8px}.mass-row{margin:0 0 10px}.build-actions{margin-top:10px}.construction-note{font-size:9px}.stage{min-height:675px}.hud-stat strong{font-size:18px}.steps{display:none}.engine-window{width:170px}.lesson{grid-template-columns:1fr 1fr}.lesson>div:last-child{grid-column:1/-1}.wordmark{font-size:21px}header{padding:18px 16px}.brief p{font-size:12px}}
+@media(max-width:650px){header{padding:13px 13px;gap:10px}.wordmark{font-size:18px;letter-spacing:3px}.emblem{width:36px;height:36px;flex:none}.emblem:before{left:9px;top:5px}.emblem:after{left:16px;top:26px}.subtitle{font-size:9px}.header-actions .tag,.header-actions #fullscreen{display:none}.brand{gap:9px}.workspace{display:flex;flex-direction:column}.build-content{display:block}.build-panel{order:1}.stage{order:2;min-height:620px}.flight-control{order:3}.build-panel .mass-row{margin-top:12px}.fuel-options{grid-template-columns:repeat(3,1fr);gap:6px}.fuel-card{display:block;padding:9px 7px}.fuel-icon{margin-bottom:6px;width:31px;height:31px}.fuel-name{font-size:11px}.fuel-detail{font-size:9px}.fuel-card .check{display:none}.mass-row,.goal-grid{gap:12px}.metrics2{margin-top:10px}.build-error:empty{display:none}.build-actions{grid-template-columns:1fr 1fr}.ledger{margin-top:10px}.control-main{grid-template-columns:1fr 1fr}.flight-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}.steering{margin:0;padding:0;border:0}.throttle-block{margin-top:8px}.nav-wrap canvas{width:175px;height:161px}.nav-meta{font-size:9px}.presets{gap:4px}.presets button{font-size:10px}.orbit-card{margin-top:12px}.nav-wrap{overflow:hidden}.tabs{align-items:flex-start;flex-direction:column;padding:9px}.tab-buttons{gap:0}.tab-buttons button{font-size:11px;padding:8px}.tabs .export-buttons{align-self:flex-end}.tab-body{padding:12px}.lesson,.help-grid{grid-template-columns:1fr}.lesson>div:last-child{grid-column:auto}.hud-stats{margin-top:12px}.hud-stat strong{font-size:16px}.hud-stat span{font-size:8px}.hud-stat{padding-left:7px}.hud-top{font-size:9px}.hud{left:12px;right:12px}.camera-tools{top:120px;left:12px}.coach{top:162px;max-width:235px}.engine-window{bottom:35px;width:167px;right:11px}.global-map{width:129px;left:11px}.engine-window canvas{height:175px}.engine-math{font-size:9px}.scene-note{font-size:8px;max-width:90%}.footer{flex-direction:column;gap:7px}.plot-top{align-items:flex-start;flex-direction:column;gap:9px}.brief{margin-bottom:10px}.brief p{font-size:11px}.price-note{font-size:10px}.mission-banner{top:235px}.modal{padding:21px}.modal h2{font-size:22px}.num{font-size:20px}#telemetry{height:150px}}
+
+/* Compact desktop controls keep the rocket, throttle, and steering visible together. */
+@media(min-width:981px){
+ .workspace{grid-template-columns:292px minmax(310px,1fr) 285px}.side{padding:15px}.section-head{margin-bottom:10px}
+ .fuel-card{padding:8px 9px}.fuel-options{gap:6px}.fuel-icon{width:32px;height:32px}.construction-note{font-size:9px;line-height:1.45}
+ .mass-row{margin:12px 0 9px}.statbox{padding:7px 9px}.statbox strong{font-size:16px}.metrics2{margin-top:5px}
+ .dv-strip{padding:7px 9px;margin:9px 0;font-size:11px}.dv-strip .tiny{font-size:9px;line-height:1.5}
+ .goal-grid{margin-top:8px}.ledger{padding:8px 9px;margin-top:9px}.ledger .row{margin:2px 0}.ledger strong{font-size:15px}
+ .build-actions{margin-top:11px;gap:6px}.build-actions button{font-size:12px;padding:8px}.build-error:empty{display:none}
+ .throttle-block{margin:10px 0 8px;padding-top:9px}.throttle-block .tiny{font-size:9px;line-height:1.5}.throttle-block .big-pct{font-size:23px}
+ .flow-line input{padding:4px 6px;font-size:11px}.flow-line{margin-bottom:6px}.time-caption{font-size:9px}.time-group{margin-top:6px}
+ .steering{margin-top:9px;padding-top:9px}.nav-wrap canvas{width:186px;height:151px}.nav-meta{font-size:9px}.presets{margin-top:7px;gap:5px}.presets button{padding:5px;font-size:10px}
+ .orbit-card{padding:9px;margin-top:11px}.orbit-card .row{font-size:10px;margin:4px 0}.orbit-card .tiny{font-size:9px;line-height:1.5}
+ .key-hint{font-size:9px;line-height:1.75;margin-top:9px}.flight-control .small.full{margin-top:8px!important;padding:5px;font-size:10px}
+ .control-main{margin-bottom:9px}.control-main button{font-size:12px;padding:8px}.stage{min-height:720px}
+}
+@media(min-width:1550px){.workspace{grid-template-columns:305px minmax(400px,1fr) 292px}}
+@media(min-width:981px) and (max-width:1180px){.workspace{grid-template-columns:248px minmax(280px,1fr) 248px}.side{padding:12px}}
+
+@media(prefers-reduced-motion:reduce){button{transition:none}.orbit-track>div{transition:none}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="emblem" aria-hidden="true"></div><div><h1 class="wordmark">IGNITION</h1><div class="subtitle">ROCKET & MOMENTUM LAB</div></div></div>
+ <div class="row header-actions"><span class="tag">EARTH · VACUUM · 2D</span><button class="small ghost" id="helpOpen">How to fly</button><button class="small ghost" id="fullscreen">Full screen ↗</button></div>
+</header>
+<main class="shell">
+ <div class="brief"><p>Put your payload into an <strong>unpowered orbit</strong>. Spend less propellant. Keep Earth out of the flight path.</p><div class="steps"><span><b>01</b> FILL</span><span><b>02</b> FLY</span><span><b>03</b> COAST</span></div></div>
+ <div class="workspace">
+  <section class="panel side build-panel" aria-label="Rocket configuration">
+   <div class="section-head"><h2>Build your rocket</h2><span class="index">01 / PRE-FLIGHT</span></div>
+   <div class="build-content">
+    <div>
+     <div class="fuel-options" role="group" aria-label="Propellant combination">
+      <button class="fuel-card" data-fuel="kerolox"><span class="fuel-icon gold">RP-1</span><div><div class="fuel-name">Kerosene + LOX</div><div class="fuel-detail">330 s Isp · 3.24 km/s exhaust</div></div><span class="check"></span></button>
+      <button class="fuel-card active" data-fuel="methalox"><span class="fuel-icon accent">CH₄</span><div><div class="fuel-name">Methane + LOX</div><div class="fuel-detail">370 s Isp · 3.63 km/s exhaust</div></div><span class="check">✓</span></button>
+      <button class="fuel-card" data-fuel="hydrolox"><span class="fuel-icon" style="color:var(--blue)">H₂</span><div><div class="fuel-name">Hydrogen + LOX</div><div class="fuel-detail">450 s Isp · 4.41 km/s exhaust</div></div><span class="check"></span></button>
+     </div>
+     <p class="construction-note">LOX = liquid oxygen, carried on board. Fixed-Isp teaching presets; not exact engine replicas.</p>
+    </div>
+    <div>
+     <div class="mass-row"><label class="field">Empty rocket · kg<input id="dry" type="number" min="0.1" max="1000" step="0.1" value="1"></label><label class="field">Payload · kg<input id="payload" type="number" min="0" max="1000" step="0.1" value="1"></label></div>
+     <div class="fill-label"><span>Propellant fraction <span class="muted">by mass</span></span><span class="fill-number"><input id="fractionNumber" type="number" min="5" max="99.5" step="0.1" value="95" aria-label="Propellant mass percent">%</span></div>
+     <input id="fraction" type="range" min="5" max="99.5" step="0.1" value="95" aria-label="Propellant fraction of initial total mass">
+     <div class="metrics2"><div class="statbox"><span class="label">Propellant · kg</span><input id="propMass" class="stat-number" type="number" min="0.001" step="0.1" value="38" aria-label="Total propellant loading in kilograms"></div><div class="statbox"><span class="label">Launch mass</span><strong id="wetMass">40.00 kg</strong></div></div>
+     <div class="dv-strip">Ideal Δv <span class="value mono" id="idealDV">10.870 km/s</span><div class="tiny muted">Not achieved speed: gravity and steering matter.</div></div>
+     <div class="goal-grid"><label class="field">Target height · km<input id="target" type="number" min="1" max="100000" step="10" value="200"></label><label class="field">Mission goal<select id="goal"><option value="any">Any safe orbit</option><option value="target">Near-circular target</option></select></label></div>
+    </div>
+    <div>
+     <details id="advanced"><summary>Engine, prices & mission rules</summary><div class="details-grid">
+       <label class="field">Initial max T/W<input id="twr" type="number" min="0.25" max="10" step="0.25" value="3"></label><label class="field">Min. perigee · km<input id="safe" type="number" min="0.1" max="50000" step="10" value="100"></label>
+       <label class="field">RP-1 · $/kg<input id="priceK" type="number" min="0" max="1000" step="0.1" value="2.5"></label><label class="field">Methane · $/kg<input id="priceM" type="number" min="0" max="1000" step="0.1" value="1"></label>
+       <label class="field">Hydrogen · $/kg<input id="priceH" type="number" min="0" max="1000" step="0.1" value="6"></label><label class="field">LOX · $/kg<input id="priceO" type="number" min="0" max="1000" step="0.05" value="0.2"></label>
+      </div><p class="construction-note price-note">Prices are editable teaching assumptions, not market quotes. Cost includes fuel + oxygen only: no vehicle, tankage, liquefaction, launch service or operations costs.</p><p class="construction-note">Dry vehicle mass does not grow with tank size. Engine maximum thrust is sized to the chosen initial T/W, then stays fixed. This is an idealized point-mass rocket, not a buildable 1 kg launcher.</p>
+     </details>
+     <div class="ledger"><div class="row between"><span>Teaching-price purchase</span><strong id="loadedCost">$14.36</strong></div><div class="row between"><span class="muted">Consumed so far</span><span id="burnedCost">$0.00</span></div><div class="row between"><span class="muted">Purchase / kg payload</span><b id="perKg">$14.36</b></div></div>
+     <div class="build-actions"><button class="warm full" id="fillBtn">Fill rocket & prepare launch</button><button class="ghost full" id="demoBtn">Watch a guided launch ↗</button></div>
+     <div class="build-error" id="buildError" role="status"></div>
+    </div>
+   </div>
+  </section>
+  <section class="panel stage" id="stage" aria-label="Live rocket and orbital view">
+   <canvas id="scene" tabindex="0" aria-label="Rocket trajectory. Drag from the rocket to aim thrust; scroll to zoom."></canvas>
+   <div class="hud"><div class="hud-top"><span class="phase"><i></i><span id="phase">PRE-FLIGHT</span></span><span class="time-read mono" id="clock">T+ 00:00.0</span></div><div class="hud-stats">
+     <div class="hud-stat"><span>Altitude</span><strong id="hudAlt">0 <em>m</em></strong></div><div class="hud-stat"><span>Speed</span><strong id="hudSpeed">0 <em>m/s</em></strong></div><div class="hud-stat"><span>Perigee</span><strong id="hudPeri">—</strong></div><div class="hud-stat"><span>Propellant left</span><strong id="hudFuel">—</strong></div>
+   </div></div>
+   <div class="camera-tools"><button id="cameraAuto" class="active">Auto zoom</button><button id="cameraEarth">Earth & orbit</button><button id="cameraChase">Follow</button><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut" aria-label="Zoom out">−</button></div>
+   <div class="coach" id="coach"><strong id="coachTitle">Your orbit starts here.</strong><p id="coachText">Choose a propellant and mass fraction, then fill the glass rocket.</p></div>
+   <div id="missionBanner" class="mission-banner hidden" role="status"><button class="close-banner" id="dismissBanner" aria-label="Dismiss result">×</button><h3 id="resultTitle">Orbit secured.</h3><p id="resultText"></p><div class="row wrap"><button class="primary small" id="watchOrbit">Watch it coast</button><button class="small ghost" id="retryBanner">Try a cheaper load</button></div></div>
+   <div class="global-map"><div class="label">Global tracking</div><canvas id="minimap" aria-label="Earth overview map"></canvas></div>
+   <div class="engine-window" id="engineWindow"><div class="engine-head"><span class="label">Inside the engine</span><span class="tiny accent" id="engineState">EMPTY</span></div><canvas id="engine" aria-label="Enlarged glass rocket, fuel and oxidizer flow, and exhaust"></canvas><div class="engine-math"><div class="formula mono">T = q vₑ <span class="muted">·</span> ṁ = −q</div><div class="row between"><span class="muted">Exhaust, relative to rocket</span><span id="exhaustSpeed">3.63 km/s</span></div><div class="row between"><span class="muted">Rocket mass</span><span id="liveMass">2.00 kg</span></div><div class="tiny muted">Slow-motion schematic; not to scale.<br>Tank fill indicates mass, not volume.</div></div></div>
+   <div class="scene-note">Earth & trajectories share a scale. Rocket and exhaust are enlarged. Dashed path = engine-off prediction.</div>
+  </section>
+  <section class="panel side flight-control" aria-label="Flight controls">
+   <div class="section-head"><h2>Flight control</h2><span class="index">02 / FLY</span></div>
+   <div class="control-main"><button class="primary" id="runBtn" disabled>Ignite & launch</button><button class="ghost danger" id="cutBtn" disabled>Cut engine</button></div>
+   <div class="flight-layout"><div>
+     <span class="label">Simulation speed</span><div class="time-group" id="warps"><button class="active" data-warp="1">1×</button><button data-warp="5">5×</button><button data-warp="20">20×</button><button data-warp="100">100×</button><button data-warp="500">500×</button><button data-warp="2000">2k×</button></div><div class="time-caption" id="timeCaption">Paused time never burns propellant.</div>
+     <div class="throttle-block"><div class="row between"><label for="throttle">Propellant ejection rate</label><span class="big-pct" id="throttlePct">100<span style="font-size:13px">%</span></span></div><input class="throttle-range" id="throttle" type="range" min="0" max="100" step="0.1" value="100" aria-label="Throttle percent"><div class="flow-line"><span>Total fuel + oxygen · kg/s</span><input type="number" id="flowInput" min="0" step="0.001" value="0" aria-label="Total propellant mass flow kg/s"></div><div class="live-force"><span>Thrust <b id="thrust">0 N</b></span><span>T/W <b id="liveTWR">0.00</b></span></div><p class="tiny muted" style="margin-top:6px">Flow changes thrust, not exhaust speed.</p></div>
+   </div><div class="steering"><div class="steering-top"><label for="pitch">Thrust direction</label><input class="pitch-field" id="pitch" type="number" min="-180" max="180" step="1" value="0" aria-label="Degrees clockwise from local vertical"></div><div class="nav-wrap"><canvas id="nav" tabindex="0" aria-label="Steering dial: drag arrow. 0 degrees is up, 90 degrees is along the horizon."></canvas></div><div class="nav-meta">0° = local up · 90° = local horizon</div><div class="presets"><button data-preset="up">↑ Vertical</button><button data-preset="horizon">→ Horizon</button><button data-preset="prograde">⊕ Prograde</button><button data-preset="retrograde">⊖ Retrograde</button></div></div></div>
+   <div class="orbit-card"><div class="row between"><span class="label">Engine-off orbit check</span><span class="tiny accent" id="orbitVerdict">NOT YET</span></div><div class="row between"><span class="muted">Lowest point · perigee</span><b id="periRead">Inside Earth</b></div><div class="row between"><span class="muted">Highest point · apogee</span><b id="apoRead">0 km</b></div><div class="row between"><span class="muted">Circular speed here</span><b id="circularSpeed">7.910 km/s</b></div><div class="orbit-track"><div id="coastProgress"></div></div><p class="tiny muted" id="orbitInstruction">Clear the safe altitude for the entire orbit, switch the engine off, and coast for 30 simulated seconds.</p></div>
+   <div class="key-hint"><span class="keycap">SPACE</span> Pause / run &nbsp; <span class="keycap">X</span> Cut engine<br><span class="keycap">↑ ↓</span> Throttle &nbsp; <span class="keycap">← →</span> Direction &nbsp; <span class="keycap">R</span> Rebuild</div><label class="engine-toggle"><input id="showVectors" type="checkbox" checked> Show thrust & velocity vectors</label>
+   <button class="small ghost full" id="retryBtn" style="margin-top:12px">Reset / rebuild rocket</button>
+  </section>
+ </div>
+ <section class="panel recorder">
+  <div class="tabs"><div class="tab-buttons" role="tablist"><button class="active" data-tab="flight">Flight recorder</button><button data-tab="missions">Mission log <span id="logCount" class="muted">0</span></button><button data-tab="physics">The physics</button></div><div class="row export-buttons"><button class="small ghost" id="exportCSV">Export flight CSV</button><button class="small ghost" id="saveChallenge">Save challenge</button><button class="small ghost" id="loadChallenge">Load</button><input type="file" id="challengeFile" accept=".json,application/json" hidden></div></div>
+  <div class="tab-body" id="tab-flight"><div class="plot-top"><div><span class="label">Every burn tells a story</span><div class="plot-legend" style="margin-top:5px"><span><i class="swatch"></i><span id="legend1">Propellant left · kg</span></span><span><i class="swatch gold"></i><span id="legend2">Mass flow · kg/s</span></span></div></div><select id="plotMetric" aria-label="Telemetry chart"><option value="fuel">Propellant & mass flow</option><option value="flight">Altitude & speed</option><option value="controls">Throttle & steering</option></select></div><canvas id="telemetry" aria-label="Flight telemetry versus simulated time"></canvas><div class="plot-caption" id="plotCaption">Launch to begin recording. Pause changes the controls, not the past. Export retains the recorded samples.</div></div>
+  <div class="tab-body hidden" id="tab-missions"><div class="row between wrap"><p class="tiny muted">Local browser records. Matching challenge settings only; fuel and loading may differ. Guided runs are marked, never ranked.</p><div class="row"><button id="exportLog" class="small ghost">Export log</button><button id="clearLog" class="small ghost danger">Clear log</button></div></div><div class="table-scroll"><table><thead><tr><th>RESULT</th><th>PROPELLANT</th><th>LOAD / USED</th><th>PURCHASE</th><th>$/kg PAYLOAD</th><th>PERIGEE × APOGEE</th><th>TIME</th><th>MODE</th></tr></thead><tbody id="missionRows"></tbody></table></div><p class="empty-table" id="emptyLog">No matching flights yet. Your first verified orbit will appear here.</p><p class="study-prompt">Class challenge: select <b>Near-circular target</b> for an apples-to-apples cost competition. Can you lower the loading fraction and still reach the same orbit?</p></div>
+  <div class="tab-body hidden" id="tab-physics"><div class="lesson"><div><h3>Momentum, carried away.</h3><p>Here q ≥ 0 is the combined fuel-and-oxygen mass ejection rate. The rocket loses mass; exhaust leaves opposite the commanded thrust direction n̂. Gravity is an external force, so rocket + exhaust momentum is not constant in Earth's field.</p><div class="equation">ṁ = −q<br>T = q vₑ<br>vₑ = Isp · g₀<br>r̈ = −μr/|r|³ + (qvₑ/m)n̂</div><p>In the Earth frame, the idealized exhaust velocity is v<sub>rocket</sub> − vₑ n̂. A constant exhaust speed relative to the rocket is not a constant exhaust velocity relative to Earth.</p></div><div><h3>High is not the same as in orbit.</h3><p>We compute the engine-off osculating orbit from position and velocity. Success requires a bound ellipse with its <b>entire orbit</b> above your safe altitude, followed by 30 seconds with no thrust. A vertical launch into space can still fall straight back.</p><div class="equation">Δv<sub>ideal</sub> = vₑ ln(m₀/m<sub>dry+payload</sub>)<br>v<sub>circular</sub> = √(μ/r)</div><p>The optional target challenge requires both perigee and apogee within ±max(5 km, 5% of target altitude). A no-drag safe altitude is a classroom rule, not an atmospheric-lifetime prediction. After certification, continue coasting to watch the orbit.</p></div><div><h3>What this model leaves out.</h3><p>A nonrotating, spherical Earth; 2D translation; no drag, atmosphere, staging, Moon/Sun gravity, tank-mass scaling or rotational dynamics. Thrust direction changes instantly. The launch pad holds the rocket until its upward thrust exceeds its weight. Fuel burned on the pad still costs money.</p><p>Isp and mixture ratios are fixed teaching presets: 330 s / 2.6 (RP-1), 370 s / 3.5 (methane), and 450 s / 6 (hydrogen). Exhaust is an <b>effective</b> velocity; nozzle and ambient-pressure effects are absorbed into Isp. Tank/exhaust graphics are schematic, not a combustion simulation.</p><div class="source-list"><a href="https://www.grc.nasa.gov/www/k-12/airplane/specimp.html" target="_blank" rel="noopener">NASA Glenn — specific impulse & effective exhaust velocity</a><a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/ideal-rocket-equation/" target="_blank" rel="noopener">NASA Glenn — ideal rocket equation</a><a href="https://ssd.jpl.nasa.gov/astro_par.html" target="_blank" rel="noopener">JPL — Earth's gravitational parameter</a><a href="https://ssd.jpl.nasa.gov/planets/phys_par.html" target="_blank" rel="noopener">JPL — mean Earth radius (rounded here to 6,371 km)</a><a href="https://www.l3harris.com/all-capabilities/rs-25-engine" target="_blank" rel="noopener">RS-25 example — hydrogen/LOX, 452 s vacuum Isp, O/F 6</a><a href="https://ntrs.nasa.gov/citations/20090004695" target="_blank" rel="noopener">NASA — methane/oxygen propulsion research</a></div></div></div></div>
+ </section>
+ <div class="footer"><span>IGNITION · Prof. Bolei Deng's mechanics lab · v1.0 · Runs entirely in your browser. No network required.</span><span id="storageStatus">Editable teaching prices · Fuel + oxygen only · Sources under “The physics”.</span></div>
+</main>
+<div class="toast hidden" id="toast" role="status"></div>
+<div class="modal-backdrop hidden" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle"><div class="modal"><div class="row between"><span class="label">FLIGHT SCHOOL / 90 SECONDS</span><button id="helpClose" class="small ghost">Close ✕</button></div><h2 id="helpTitle" style="margin-top:16px">Altitude is the beginning.<br>Sideways speed makes an orbit.</h2><p>Your rocket starts at rest on a nonrotating Earth. Choose its propellant, budget its mass, and steer a continuous, finite-duration burn.</p><div class="help-grid"><div><h3>1. Fill the glass rocket.</h3><p>The fraction is propellant ÷ total launch mass, <b>including payload</b>. A 1 kg empty vehicle + 1 kg payload at 95% needs 38 kg of propellant, not 1.9 kg. Fuel and oxygen are consumed together.</p><h3>2. Lift off, then turn.</h3><p>Start pointed up with enough throttle to overcome gravity. Gradually tip toward 90° to build sideways velocity. Use the dial or drag from the rocket. “Prograde” follows your velocity; “Horizon” follows the local tangent.</p></div><div><h3>3. Get the entire path above Earth.</h3><p>The dashed line predicts your <b>engine-off</b> path. Perigee is its lowest point. Raising apogee alone is not enough: watch perigee, then cut the engine with <b>X</b> and coast for 30 simulated seconds.</p><h3>4. Retry for a lower cost.</h3><p>The score is the cost of <b>all propellant purchased</b> per kg of payload, not just what you burned. Try a lighter load or another fuel. Use the target goal to compare the same destination.</p></div></div><p class="price-note">The guided launch uses exactly the same finite-thrust physics. It is a demonstration, not an optimal strategy or a ranked flight. It works with the default 95% load and 200 km target for all three propellants; unusual designs can run out of fuel.</p><div class="row wrap" style="margin-top:20px"><button class="warm" id="helpDemo">Watch guided launch</button><button class="ghost" id="helpPlay">I'll fly manually</button></div></div></div>
+<script>
+/* IGNITION physics kernel — SI units throughout. No rendering or browser dependencies. */
+(function(root){
+'use strict';
+const MU=3.98600435507e14, R=6371000, G0=9.80665, GS=MU/(R*R), VERSION='1.0.0';
+const FUELS={
+ kerolox:{id:'kerolox',name:'Kerosene + LOX',short:'RP-1',fuelName:'RP-1 kerosene',isp:330,of:2.6,price:2.5,color:'#ffbf76'},
+ methalox:{id:'methalox',name:'Methane + LOX',short:'CH₄',fuelName:'Liquid methane',isp:370,of:3.5,price:1,color:'#69e8bb'},
+ hydrolox:{id:'hydrolox',name:'Hydrogen + LOX',short:'H₂',fuelName:'Liquid hydrogen',isp:450,of:6,price:6,color:'#88c8ff'}
+};
+const clamp=(a,l,h)=>Math.max(l,Math.min(h,a));
+function config(input={}){
+ const c=Object.assign({fuel:'methalox',dry:1,payload:1,fraction:.95,twr:3,target:200e3,safe:100e3,goal:'any',loxPrice:.2,prices:{kerolox:2.5,methalox:1,hydrolox:6}},input);
+ if(!FUELS[c.fuel])throw Error('Unknown propellant.');
+ for(const [k,lo,hi]of [['dry',.1,1000],['payload',0,1000],['fraction',.05,.995],['twr',.25,10],['target',1000,1e8],['safe',100,5e7],['loxPrice',0,1000]]){
+  if(!Number.isFinite(c[k])||c[k]<lo||c[k]>hi)throw Error(`Invalid ${k}: expected ${lo}…${hi}.`);
+ }
+ c.prices=Object.assign({kerolox:2.5,methalox:1,hydrolox:6},c.prices);
+ for(const v of Object.values(c.prices))if(!Number.isFinite(v)||v<0||v>1000)throw Error('Prices must be between 0 and 1000 USD/kg.');
+ if(c.target<c.safe)throw Error('Target altitude must be at least the minimum safe altitude.');
+ c.goal=c.goal==='target'?'target':'any';
+ const f=FUELS[c.fuel];
+ c.dead=c.dry+c.payload;c.wet=c.dead/(1-c.fraction);c.prop=c.wet-c.dead;c.ve=f.isp*G0;
+ c.maxThrust=c.wet*GS*c.twr;c.maxFlow=c.maxThrust/c.ve;
+ c.unitPrice=(c.prices[c.fuel]+f.of*c.loxPrice)/(1+f.of);
+ c.loadedCost=c.prop*c.unitPrice;c.idealDV=c.ve*Math.log(c.wet/c.dead);
+ return c;
+}
+function initial(c){return {x:0,y:R,vx:0,vy:0,p:c.prop,t:0,pad:true,crashed:false,coast:0,qualified:false,orbitCoast:0,burned:0,dv:0,peakH:0};}
+function orbital(s,mu=MU,rEarth=R){
+ const r=Math.hypot(s.x,s.y),v2=s.vx*s.vx+s.vy*s.vy,vr=(s.x*s.vx+s.y*s.vy)/r;
+ const vt=(s.y*s.vx-s.x*s.vy)/r,h=s.x*s.vy-s.y*s.vx,E=v2/2-mu/r;
+ const ex=((v2-mu/r)*s.x-r*vr*s.vx)/mu,ey=((v2-mu/r)*s.y-r*vr*s.vy)/mu;
+ const e=Math.hypot(ex,ey),p=h*h/mu,rp=p/(1+e),bound=E<0,a=bound?-mu/(2*E):Infinity;
+ const ra=bound?2*a-rp:Infinity,period=bound?2*Math.PI*Math.sqrt(a*a*a/mu):Infinity;
+ return {r,h,E,e,ex,ey,p,a,rp,ra,peri:rp-rEarth,apo:ra-rEarth,vr,vt,speed:Math.sqrt(v2),alt:r-rEarth,bound,period,vc:Math.sqrt(mu/r)};
+}
+function direction(s,u={pitch:0,mode:'pitch'}){
+ const r=Math.hypot(s.x,s.y),rx=s.x/r,ry=s.y/r;
+ if(u.mode==='inertial'&&Number.isFinite(u.angle))return [Math.cos(u.angle),Math.sin(u.angle)];
+ const v=Math.hypot(s.vx,s.vy);
+ if((u.mode==='prograde'||u.mode==='retrograde')&&v>1){const sign=u.mode==='prograde'?1:-1;return [sign*s.vx/v,sign*s.vy/v];}
+ const p=(Number.isFinite(u.pitch)?u.pitch:0)*Math.PI/180;
+ return [rx*Math.cos(p)+ry*Math.sin(p),ry*Math.cos(p)-rx*Math.sin(p)];
+}
+function pitchFromDirection(s,n){const r=Math.hypot(s.x,s.y);return Math.atan2((s.y*n[0]-s.x*n[1])/r,(s.x*n[0]+s.y*n[1])/r)*180/Math.PI;}
+// One RK4 step with exact stage mass and a constant mass flow. A burn step never crosses dry mass.
+function integrate(s,c,u,dt,q,mu=MU){
+ const m=c.dead+s.p;
+ function deriv(x,y,vx,vy,t){
+  const r=Math.hypot(x,y),grav=mu/(r*r*r),n=direction({x,y,vx,vy},u),acc=q*c.ve/(m-q*t);
+  return [vx,vy,-grav*x+acc*n[0],-grav*y+acc*n[1]];
+ }
+ const y=[s.x,s.y,s.vx,s.vy],k1=deriv(...y,0),y2=y.map((v,i)=>v+dt*k1[i]/2),k2=deriv(...y2,dt/2);
+ const y3=y.map((v,i)=>v+dt*k2[i]/2),k3=deriv(...y3,dt/2),y4=y.map((v,i)=>v+dt*k3[i]),k4=deriv(...y4,dt);
+ const z=y.map((v,i)=>v+dt*(k1[i]+2*k2[i]+2*k3[i]+k4[i])/6);
+ return Object.assign({},s,{x:z[0],y:z[1],vx:z[2],vy:z[3],p:(s.p-q*dt<1e-10?0:s.p-q*dt),t:s.t+dt});
+}
+function rates(s,c,u){
+ const q=s.p>1e-11?clamp(Number(u.throttle)||0,0,1)*c.maxFlow:0,n=direction(s,u),m=c.dead+s.p,o=orbital(s);
+ return {q,thrust:q*c.ve,n,acc:q*c.ve/m,twr:q*c.ve/(m*MU/o.r**2),gravity:MU/o.r**2,m,remainingDV:c.ve*Math.log(m/c.dead),burnedCost:(c.prop-s.p)*c.unitPrice};
+}
+function qualifies(o,c){
+ const tol=Math.max(5000,.05*c.target);
+ return o.bound&&o.peri>=c.safe&&(c.goal!=='target'||(Math.abs(o.peri-c.target)<=tol&&Math.abs(o.apo-c.target)<=tol));
+}
+function step(s,c,u,requestedDt){
+ if(s.crashed||requestedDt<=0)return s;
+ let dt=requestedDt,throttle=clamp(Number(u.throttle)||0,0,1),q=s.p>1e-11?throttle*c.maxFlow:0;
+ // UI also limits steps; these caps make direct calls safe and split fuel exhaustion exactly.
+ dt=Math.min(dt,q>0?.2:2,q>0?.003*(c.dead+s.p)/q:2,q>0?s.p/q:2);
+ if(dt<1e-10){s=Object.assign({},s,{p:0});return step(s,c,Object.assign({},u,{throttle:0}),requestedDt);}
+ let a=s;
+ if(s.pad){
+  const n=direction(s,u),vertical=q*c.ve*n[1];
+  const wait=q>0&&n[1]>0?Math.max(0,((c.dead+s.p)-vertical/GS)/q):Infinity;
+  if(wait>=dt){
+   a=Object.assign({},s,{t:s.t+dt,p:Math.max(0,s.p-q*dt)});
+   a.burned=c.prop-a.p;a.dv=c.ve*Math.log(c.wet/(c.dead+a.p));return a;
+  }
+  if(wait>1e-9){a=Object.assign({},s,{t:s.t+wait,p:s.p-q*wait});dt-=wait;}
+  a=Object.assign({},a,{pad:false,y:R+1e-6});
+ }
+ let b=integrate(a,c,u,dt,q);
+ if(Math.hypot(b.x,b.y)<R){
+  let lo=0,hi=dt;
+  for(let j=0;j<40;j++){const mid=(lo+hi)/2,z=integrate(a,c,u,mid,q);if(Math.hypot(z.x,z.y)>=R)lo=mid;else hi=mid;}
+  b=integrate(a,c,u,(lo+hi)/2,q);const rr=Math.hypot(b.x,b.y);b.x*=R/rr;b.y*=R/rr;b.crashed=true;
+ }
+ b.burned=c.prop-b.p;b.dv=c.ve*Math.log(c.wet/(c.dead+b.p));b.peakH=Math.max(a.peakH||0,Math.hypot(b.x,b.y)-R);
+ const o=orbital(b);const elapsed=b.t-a.t;
+ b.coast=q===0?a.coast+elapsed:0;
+ b.orbitCoast=q===0&&qualifies(o,c)?a.orbitCoast+elapsed:0;
+ b.qualified=b.orbitCoast>=30;
+ return b;
+}
+function coastPath(s,segments=360){
+ const o=orbital(s),out=[];
+ if(Math.abs(o.h)<1e7){return out;}
+ let ex=o.e>1e-8?o.ex/o.e:s.x/o.r,ey=o.e>1e-8?o.ey/o.e:s.y/o.r;
+ let f=Math.atan2(s.y*ex-s.x*ey,s.x*ex+s.y*ey),sgn=Math.sign(o.h)||1;
+ const max=o.bound?Math.PI*2:Math.PI*1.99;
+ for(let i=0;i<=segments;i++){
+  const a=f+sgn*max*i/segments,den=1+o.e*Math.cos(a);if(den<=1e-5)break;
+  const rr=o.p/den;if(rr<R&&i>0)break;if(rr>R*100)break;
+  out.push([rr*(ex*Math.cos(a)-ey*Math.sin(a)),rr*(ey*Math.cos(a)+ex*Math.sin(a))]);
+ }
+ return out;
+}
+// Guidance uses the same finite-thrust equations and finite propellant supply as manual play.
+function guidance(s,c,opts={}){
+ const o=orbital(s),m=c.dead+s.p,amax=c.maxThrust/m,dh=R+c.target-o.r;
+ const tauR=opts.tauR||30,tauT=opts.tauT||20,vUp=opts.vUp||600,k=opts.k||.01;
+ const vrref=clamp(k*dh,-vUp,vUp);
+ let ar=(vrref-o.vr)/tauR+MU/o.r**2-o.vt**2/o.r;
+ let at=(Math.sqrt(MU/(R+c.target))-o.vt)/tauT+o.vr*o.vt/o.r;
+ // Prioritize the radial acceleration needed to climb; use the remaining thrust for orbital speed.
+ ar=clamp(ar,-amax,amax);const tangentBudget=Math.sqrt(Math.max(0,amax*amax-ar*ar));
+ at=clamp(at,-tangentBudget,tangentBudget);
+ const mag=Math.hypot(ar,at),pitch=Math.atan2(at,ar)*180/Math.PI;
+ if(Math.abs(dh)<800&&Math.abs(o.vr)<2&&Math.abs(o.vt-o.vc)<1.5&&o.peri>=c.safe){return {throttle:0,pitch:90,mode:'pitch',done:true};}
+ return {throttle:clamp(mag/amax,0,1),pitch,mode:'pitch',done:false};
+}
+const api={MU,R,G0,GS,VERSION,FUELS,clamp,config,initial,orbital,direction,pitchFromDirection,integrate,rates,step,qualifies,coastPath,guidance};
+if(typeof module!=='undefined'&&module.exports)module.exports=api;else root.RocketCore=api;
+})(typeof globalThis!=='undefined'?globalThis:this);
+
+</script>
+<script>
+/* IGNITION interface: plain Canvas 2D + native controls, no external assets or dependencies. */
+'use strict';
+const C=RocketCore,$=id=>document.getElementById(id),$$=s=>[...document.querySelectorAll(s)];
+let selectedFuel='methalox',cfg=C.config(),state=C.initial(cfg),u={throttle:1,pitch:0,mode:'pitch'};
+let ready=false,running=false,filling=false,fillProgress=0,started=false,assisted=false,guide=false,guideDone=false,recorded=false;
+let warp=1,actualWarp=1,records=[],samples=[],track=[],lastSample=-Infinity,lastTrack=-Infinity,decimated=false;
+let cameraMode='auto',camera={x:0,y:C.R+500,scale:3,initialized:false},sceneRocket={x:0,y:0},sceneSize={w:600,h:720};
+let simDebt=0,anim=0,lastFrame=0,lastHud=0,toastTimer=0,activeTab='flight',plotHover=null,burnSeq=0,lastBurn=false;
+let storageOK=true,trajectory=[],lastPredictTime=-1e9,lastPredictWall=0,flightId='',lastLogSnapshot=null;
+const PALETTE={mint:'#69e8bb',gold:'#ffbf76',blue:'#88c8ff',red:'#ff7e89',muted:'#8fa4bd',ink:'#f1f6ff'};
+const storeKey='ignition_missions_v1';
+const nf=(v,d=1)=>Number.isFinite(v)?v.toLocaleString('en-US',{maximumFractionDigits:d,minimumFractionDigits:d}):'—';
+const money=v=>Number.isFinite(v)?'$'+nf(v,2):'—';
+const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+function clock(t){let h=Math.floor(t/3600),m=Math.floor(t/60)%60,s=t%60;return (h?h+':':'')+String(m).padStart(2,'0')+':'+s.toFixed(1).padStart(4,'0');}
+function shortDistance(m){if(!Number.isFinite(m))return'Unbound';return Math.abs(m)<1000?nf(m,0)+' m':nf(m/1000,Math.abs(m)>1e7?0:1)+' km';}
+function hudUnit(v,unit){return nf(v,v<10?2:v<100?1:0)+' <em>'+unit+'</em>';}
+function toast(text){$('toast').textContent=text;$('toast').classList.remove('hidden');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.add('hidden'),4200);}
+function getForm(){return C.config({fuel:selectedFuel,dry:Number($('dry').value),payload:Number($('payload').value),fraction:Number($('fractionNumber').value)/100,target:Number($('target').value)*1000,safe:Number($('safe').value)*1000,goal:$('goal').value,twr:Number($('twr').value),loxPrice:Number($('priceO').value),prices:{kerolox:Number($('priceK').value),methalox:Number($('priceM').value),hydrolox:Number($('priceH').value)}});}
+function syncForm(c){selectedFuel=c.fuel;for(const[k,v]of Object.entries({dry:c.dry,payload:c.payload,fraction:c.fraction*100,fractionNumber:c.fraction*100,target:c.target/1000,safe:c.safe/1000,goal:c.goal,twr:c.twr,priceK:c.prices.kerolox,priceM:c.prices.methalox,priceH:c.prices.hydrolox,priceO:c.loxPrice}))$(k).value=v;updateBuild();}
+function updateBuild(){
+ if(started||filling)return;
+ try{
+  cfg=getForm();state=C.initial(cfg);ready=false;fillProgress=0;u={throttle:Number($('throttle').value)/100,pitch:Number($('pitch').value)||0,mode:'pitch'};
+  $('buildError').textContent='';$('fillBtn').disabled=false;$('demoBtn').disabled=false;
+  if(document.activeElement!==$('propMass'))$('propMass').value=cfg.prop.toFixed(3);$('wetMass').textContent=nf(cfg.wet,2)+' kg';$('idealDV').textContent=nf(cfg.idealDV/1000,3)+' km/s';
+  $('loadedCost').textContent=money(cfg.loadedCost);$('burnedCost').textContent=money(0);$('perKg').textContent=cfg.payload>0?money(cfg.loadedCost/cfg.payload):'No payload';
+  $('flowInput').max=cfg.maxFlow;$('flowInput').step=cfg.maxFlow<.1?.0001:.001;$('flowInput').value=(cfg.maxFlow*u.throttle).toFixed(4);
+  $('runBtn').disabled=true;$('cutBtn').disabled=true;$('fillBtn').textContent='Fill rocket & prepare launch';
+  $$('.fuel-card').forEach(b=>{b.classList.toggle('active',b.dataset.fuel===selectedFuel);b.querySelector('.check').textContent=b.dataset.fuel===selectedFuel?'✓':'';b.setAttribute('aria-pressed',b.dataset.fuel===selectedFuel);});
+  $('exhaustSpeed').textContent=nf(cfg.ve/1000,2)+' km/s';refreshMissions();renderHUD();
+ }catch(e){$('buildError').textContent=e.message;$('fillBtn').disabled=true;$('demoBtn').disabled=true;}
+}
+function lockBuild(locked){
+ $$('.build-panel input,.build-panel select,.fuel-card').forEach(el=>el.disabled=locked);
+ $('fillBtn').disabled=locked;$('demoBtn').disabled=filling;
+}
+function freshFlight(){
+ state=C.initial(cfg);samples=[];track=[];lastSample=lastTrack=-Infinity;decimated=false;lastPredictTime=-1e9;trajectory=[];started=false;recorded=false;guideDone=false;
+ flightId=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);burnSeq=0;lastBurn=false;lastLogSnapshot=null;
+ cameraMode='auto';camera.initialized=false;simDebt=0;$('missionBanner').classList.add('hidden');$('watchOrbit').classList.remove('hidden');
+}
+function fillRocket(withDemo=false){
+ if(filling)return;
+ if(started){resetRocket(false);}
+ try{cfg=getForm();}catch(e){toast(e.message);return;}
+ freshFlight();ready=false;running=false;filling=true;fillProgress=0;assisted=withDemo;guide=withDemo;u={throttle:1,pitch:0,mode:'pitch'};
+ $('throttle').value=100;$('pitch').value=0;$('fillBtn').textContent='Filling fuel + oxygen…';lockBuild(true);$('runBtn').disabled=true;$('cutBtn').disabled=true;
+ $('demoBtn').textContent=withDemo?'Guided flight selected':'Watch a guided launch ↗';renderHUD();
+}
+function finishFill(){
+ filling=false;ready=true;fillProgress=1;lockBuild(true);$('fillBtn').textContent='Tanks loaded · ready';$('runBtn').disabled=false;$('cutBtn').disabled=false;$('demoBtn').disabled=false;
+ $('flowInput').value=(cfg.maxFlow*u.throttle).toFixed(4);renderHUD();if(guide){setWarp(20);runToggle();}
+}
+function runToggle(){
+ if(!ready||filling||state.crashed)return;
+ if(!started){started=true;recordSample(true);recordTrack(true);}
+ running=!running;simDebt=0;
+ if(running)$('missionBanner').classList.add('hidden');renderHUD();
+}
+function resetRocket(notify=true){
+ if(started&&!recorded&&state.t>0)saveResult('Aborted');
+ running=false;ready=false;filling=false;started=false;guide=false;assisted=false;fillProgress=0;u={throttle:1,pitch:0,mode:'pitch'};
+ $('throttle').value=100;$('pitch').value=0;$('runBtn').textContent='Ignite & launch';$('demoBtn').textContent='Watch a guided launch ↗';
+ lockBuild(false);freshFlight();updateBuild();if(notify)toast('Ready to rebuild. Choose a lighter load or a different propellant.');
+}
+function setWarp(w){warp=w;simDebt=0;$$('[data-warp]').forEach(b=>b.classList.toggle('active',Number(b.dataset.warp)===warp));}
+function takeControl(){if(guide){guide=false;$('demoBtn').textContent='Guided run · now manual';toast('You have control. This remains an assisted, unranked flight.');}}
+function setThrottle(v,manual=true){if(manual)takeControl();u.throttle=C.clamp(v,0,1);$('throttle').value=(u.throttle*100).toFixed(1);$('flowInput').value=(u.throttle*cfg.maxFlow).toFixed(4);renderHUD();}
+function setPitch(deg,manual=true){if(manual)takeControl();u.mode='pitch';u.pitch=C.clamp(deg,-180,180);$('pitch').value=u.pitch.toFixed(1);renderHUD();}
+function setPreset(mode){takeControl();if(mode==='up'||mode==='horizon'){u.mode='pitch';u.pitch=mode==='up'?0:90;}else u.mode=mode;renderHUD();}
+function challengeKey(c){return JSON.stringify({version:C.VERSION,dry:c.dry,payload:c.payload,twr:c.twr,target:c.target,safe:c.safe,goal:c.goal,prices:c.prices,loxPrice:c.loxPrice});}
+function safeRecord(r){try{return r&&typeof r.id==='string'&&typeof r.result==='string'&&Number.isFinite(r.t)&&Number.isFinite(r.used)&&r.used>=0&&Number.isFinite(r.peri)&&typeof r.assisted==='boolean'&&(C.config(r.cfg),true);}catch{return false;}}
+try{let data=JSON.parse(localStorage.getItem(storeKey)||'[]');records=Array.isArray(data)?data.filter(safeRecord).slice(0,150):[];}catch{storageOK=false;}
+function persist(){try{localStorage.setItem(storeKey,JSON.stringify(records));}catch{storageOK=false;$('storageStatus').textContent='Browser storage unavailable. Export records to keep them.';}}
+function saveResult(result){
+ if(recorded)return;recorded=true;const o=C.orbital(state);const r={id:flightId,result,assisted,cfg:JSON.parse(JSON.stringify(cfg)),t:state.t,used:cfg.prop-state.p,peri:o.peri,apo:Number.isFinite(o.apo)?o.apo:null,remaining:state.p,dv:state.dv,date:new Date().toISOString()};
+ records.unshift(r);records=records.slice(0,150);lastLogSnapshot=r;persist();refreshMissions();
+}
+function refreshMissions(){
+ $('logCount').textContent=records.length;
+ const list=records.filter(r=>challengeKey(C.config(r.cfg))===challengeKey(cfg));
+ list.sort((a,b)=>{
+  const ar=a.result==='Orbit'&&!a.assisted,br=b.result==='Orbit'&&!b.assisted;
+  if(ar!==br)return Number(br)-Number(ar);if(ar&&br)return C.config(a.cfg).loadedCost-C.config(b.cfg).loadedCost;return b.date.localeCompare(a.date);
+ });
+ $('emptyLog').classList.toggle('hidden',list.length>0);
+ $('missionRows').innerHTML=list.map((r,i)=>{const rc=C.config(r.cfg),success=r.result==='Orbit',rank=success&&!r.assisted;return `<tr><td class="${success?'accent':r.result==='Impact'?'danger':'muted'}">${rank?'◆ ':''}${esc(r.result)}</td><td>${esc(C.FUELS[rc.fuel].name)}</td><td>${nf(rc.prop,2)} / ${nf(r.used,2)} kg</td><td>${money(rc.loadedCost)}</td><td>${rc.payload>0?money(rc.loadedCost/rc.payload):'—'}</td><td>${r.peri<0?'Inside Earth':nf(r.peri/1000,1)+' km'} × ${r.apo===null?'Escape':nf(r.apo/1000,1)+' km'}</td><td>${clock(r.t)}</td><td class="${r.assisted?'muted':'accent'}">${r.assisted?'Guided / assisted':'Manual'}</td></tr>`;}).join('');
+}
+function orbitSuccess(){
+ running=false;simDebt=0;saveResult('Orbit');const o=C.orbital(state);cameraMode='earth';
+ $('missionBanner').classList.remove('hidden','failed');$('resultTitle').textContent='Orbit secured.';
+ $('resultText').textContent=`${nf(o.peri/1000,1)} × ${nf(o.apo/1000,1)} km, verified with the engine off. Propellant purchase: ${money(cfg.loadedCost)}${cfg.payload>0?' ('+money(cfg.loadedCost/cfg.payload)+'/kg payload)':''}. ${assisted?'Guided demonstration · unranked.':'Mission saved.'}`;
+ $('watchOrbit').classList.remove('hidden');$('watchOrbit').textContent='Watch it coast';$('retryBanner').textContent='Try a cheaper load';
+ recordSample(true);renderHUD();
+}
+function impact(){
+ running=false;simDebt=0;saveResult('Impact');guide=false;
+ $('missionBanner').classList.remove('hidden');$('missionBanner').classList.add('failed');$('resultTitle').textContent='Earth was in the way.';
+ $('resultText').textContent=`Surface impact at T+ ${clock(state.t)}. The payload did not reach a safe orbit. Highest altitude: ${shortDistance(state.peakH)}. Try building sideways speed before falling back.`;
+ $('watchOrbit').classList.add('hidden');$('retryBanner').textContent='Rebuild & try again';recordSample(true);renderHUD();
+}
+function recordSample(force=false){
+ if(!force&&state.t-lastSample<(u.throttle>0?.5:2))return;
+ const o=C.orbital(state),rt=C.rates(state,cfg,u);
+ samples.push({t:state.t,x:state.x,y:state.y,vx:state.vx,vy:state.vy,alt:o.alt,speed:o.speed,vr:o.vr,vt:o.vt,propellant:state.p,mass:rt.m,flow:rt.q,thrust:rt.thrust,throttle:state.p>0?u.throttle:0,pitch:C.pitchFromDirection(state,rt.n),peri:o.peri,apo:Number.isFinite(o.apo)?o.apo:null,cost:rt.burnedCost,dv:state.dv});lastSample=state.t;
+ if(samples.length>24000){samples=samples.filter((_,i)=>i%2===0);decimated=true;}
+}
+function recordTrack(force=false){
+ const burn=state.p>0&&u.throttle>.000001;
+ if(burn!==lastBurn){burnSeq++;force=true;lastBurn=burn;}
+ if(!force&&state.t-lastTrack<(burn?.7:4))return;
+ track.push({x:state.x,y:state.y,t:state.t,burn,seq:burnSeq});lastTrack=state.t;
+ if(track.length>16000)track=track.filter((_,i)=>i%2===0);
+}
+function advance(total){
+ let remain=total,steps=0;
+ while(remain>1e-7&&steps<1800&&running){
+  if(guide){
+   if(!guideDone){u=C.guidance(state,cfg);if(u.done){guideDone=true;u.throttle=0;}}
+   else u={throttle:0,pitch:90,mode:'pitch'};
+  }
+  if(state.p<=1e-10){u.throttle=0;if(guide)guideDone=true;}
+  const old=state,next=C.step(state,cfg,u,remain),dt=next.t-old.t;state=next;
+  if(dt<=0){running=false;toast('Simulation stopped: no forward time step.');break;}
+  remain-=dt;steps++;recordSample();recordTrack();
+  if(state.crashed){impact();break;}
+  if(state.qualified&&!recorded){orbitSuccess();break;}
+  if(state.pad&&state.p===0){running=false;saveResult('No liftoff');toast('The tanks emptied on the pad. Upward thrust must exceed the rocket’s weight.');break;}
+  if(Math.hypot(state.x,state.y)>C.R*100){running=false;saveResult('Escaped');toast('Left the 100-Earth-radius display domain. Escape is not a bound orbit.');break;}
+ }
+ return Math.max(0,remain);
+}
+function renderHUD(){
+ const o=C.orbital(state),rt=C.rates(state,cfg,u),isLoaded=ready||started,frac=isLoaded?state.p/cfg.prop:filling?fillProgress:0;
+ $('clock').textContent='T+ '+clock(state.t);
+ $('hudAlt').innerHTML=o.alt<1000?hudUnit(Math.max(0,o.alt),'m'):hudUnit(o.alt/1000,'km');
+ $('hudSpeed').innerHTML=o.speed<1000?hudUnit(o.speed,'m/s'):hudUnit(o.speed/1000,'km/s');
+ $('hudPeri').innerHTML=!started?'—':o.peri<0?'<span style="font-size:12px">Inside Earth</span>':hudUnit(o.peri/1000,'km');
+ $('hudFuel').innerHTML=isLoaded?hudUnit(frac*100,'%'):filling?hudUnit(fillProgress*100,'%'):'—';
+ $('throttlePct').innerHTML=nf(u.throttle*100,u.throttle*100%1>.05?1:0)+'<span style="font-size:13px">%</span>';
+ if(document.activeElement!==$('flowInput'))$('flowInput').value=(cfg.maxFlow*u.throttle).toFixed(4);
+ if(document.activeElement!==$('throttle'))$('throttle').value=u.throttle*100;
+ const pitch=C.pitchFromDirection(state,rt.n);if(document.activeElement!==$('pitch'))$('pitch').value=pitch.toFixed(1);
+ $('thrust').textContent=nf(isLoaded?rt.thrust:0,1)+' N';$('liveTWR').textContent=nf(isLoaded?rt.twr:0,2);
+ $('liveMass').textContent=nf(cfg.dead+(isLoaded?state.p:cfg.prop*frac),2)+' kg';
+ $('engineState').textContent=filling?'FILLING':!isLoaded?'EMPTY':state.p===0?'EMPTY':!running?'PAUSED':rt.q>0?'FIRING':'COAST';
+ $('burnedCost').textContent=money(isLoaded?rt.burnedCost:0);
+ $('periRead').textContent=o.peri<0?'Inside Earth':shortDistance(o.peri);
+ $('apoRead').textContent=shortDistance(o.apo);
+ $('circularSpeed').textContent=nf(o.vc/1000,3)+' km/s';
+ const qual=C.qualifies(o,cfg);$('coastProgress').style.width=C.clamp(state.orbitCoast/30*100,0,100)+'%';
+ $('orbitVerdict').textContent=state.crashed?'IMPACT':!o.bound?'ESCAPE':state.qualified?'VERIFIED':qual?'COAST TO VERIFY':'NOT YET';
+ $('orbitInstruction').textContent=qual?u.throttle>0?'Orbit geometry is valid. Cut the engine to begin the 30-second coast check.':`${nf(Math.min(30,state.orbitCoast),1)} / 30 s engine-off verification. ${cfg.goal==='target'?'Target altitude tolerance is satisfied.':'The entire ellipse clears the safe altitude.'}`:`Need perigee ≥ ${shortDistance(cfg.safe)} and a bound orbit${cfg.goal==='target'?' near '+shortDistance(cfg.target):''}. Then coast for 30 s.`;
+ $('phase').textContent=filling?'LOADING PROPELLANT':!ready?'PRE-FLIGHT':state.crashed?'SURFACE IMPACT':!started?'READY ON PAD':!running?'PAUSED':guide?'GUIDED FLIGHT':state.pad?'ON PAD':rt.q>0?'POWERED FLIGHT':state.qualified?'IN ORBIT':'COASTING';
+ $('runBtn').textContent=!started?'Ignite & launch':running?'Ⅱ Stop':'▶ Resume';$('runBtn').disabled=!ready||filling||state.crashed;
+ $('cutBtn').disabled=!ready||filling||state.crashed;
+ const cap=running&&rt.q>0&&warp>100;actualWarp=cap?100:warp;
+ $('timeCaption').textContent=cap?`${warp}× requested · limited to 100× while burning.`:!running?'Stop freezes time, position, velocity and mass.':`Running at ${warp}× · ${guide?'guidance is active.':'you have control.'}`;
+ $$('.presets button').forEach(b=>b.classList.toggle('active',(b.dataset.preset===u.mode)||(u.mode==='pitch'&&((u.pitch===0&&b.dataset.preset==='up')||(u.pitch===90&&b.dataset.preset==='horizon')))));
+ for(const[k,mode]of [['cameraAuto','auto'],['cameraEarth','earth'],['cameraChase','chase']])$(k).classList.toggle('active',cameraMode===mode);
+ let title,text;
+ if(filling){title='Loading both propellants…';text=`${nf(cfg.prop/(1+C.FUELS[cfg.fuel].of),2)} kg fuel + ${nf(cfg.prop*C.FUELS[cfg.fuel].of/(1+C.FUELS[cfg.fuel].of),2)} kg oxygen. Nothing is ejected until ignition.`;}
+ else if(!ready){title='Your orbit starts here.';text='Choose a propellant and mass fraction, then fill the glass rocket.';}
+ else if(!started){title='All tanks loaded.';text='Start pointed up. After liftoff, tip toward the horizon to build the sideways speed that makes an orbit.';}
+ else if(state.crashed){title='A high arc is not an orbit.';text='The predicted path still met the Earth. Rebuild and try a different burn.';}
+ else if(guide&&!guideDone){title=o.speed>7000?'Guidance: trim the orbit.':'Guidance: climb, then turn.';text='Watch the throttle and steering dial. This controller uses real, finite burns from the same fuel tank. Touch a control to take over.';}
+ else if(!o.bound){title='Escape is not orbit.';text='Energy is positive. A retrograde burn can reduce speed and make the trajectory bound again.';}
+ else if(qual){title=rt.q>0?'The orbit is ready. Cut the engine.':state.qualified?'Orbit secured. No thrust needed.':'Coasting to verify…';text=rt.q>0?'Press X or set flow to zero. The dashed ellipse now stays above the safe altitude.':'Gravity bends the path continuously. With no drag in this model, this ellipse remains an orbit.';}
+ else if(state.pad){title='Not enough upward thrust.';text='The pad is holding the rocket. Fuel still burns: point up and raise the throttle until upward thrust exceeds weight.';}
+ else if(o.vr<-100&&o.peri<0){title='Descending toward Earth.';text='You need enough sideways speed to raise perigee. Altitude alone cannot save a suborbital trajectory.';}
+ else if(o.apo>cfg.target*1.05&&o.peri<cfg.safe){title='You have height. Now build speed.';text='Aim closer to the horizon. Watch the lowest point of the dashed path rise toward the safe altitude.';}
+ else if(!state.p){title='No propellant left.';text='The rocket will coast. Without a safe, bound orbit, it will return to Earth or escape.';}
+ else{title='Climb, then gradually tip over.';text='The amber arrow is thrust; blue is velocity. The dashed line is where you would go with the engine off now.';}
+ $('coachTitle').textContent=title;$('coachText').textContent=text;
+ if(guide)$('demoBtn').textContent='Guidance active · touch a control to take over';
+ if(!storageOK)$('storageStatus').textContent='Browser storage unavailable. Export records to keep them.';
+}
+function setupCanvas(id){
+ const el=$(id),box=el.getBoundingClientRect(),dpr=Math.min(window.devicePixelRatio||1,2),w=Math.max(1,box.width),h=Math.max(1,box.height);
+ if(el.width!==Math.round(w*dpr)||el.height!==Math.round(h*dpr)){el.width=Math.round(w*dpr);el.height=Math.round(h*dpr);}
+ const ctx=el.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.lineCap='round';ctx.lineJoin='round';return {ctx,w,h};
+}
+function line(ctx,x1,y1,x2,y2,color,width=1){ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();}
+function round(ctx,x,y,w,h,r,fill,stroke){ctx.beginPath();ctx.roundRect(x,y,w,h,r);if(fill){ctx.fillStyle=fill;ctx.fill();}if(stroke){ctx.strokeStyle=stroke;ctx.stroke();}}
+function arrow(ctx,x,y,dx,dy,color,width=2,label=null){const len=Math.hypot(dx,dy);if(len<1)return;const ux=dx/len,uy=dy/len;line(ctx,x,y,x+dx,y+dy,color,width);ctx.beginPath();ctx.moveTo(x+dx,y+dy);ctx.lineTo(x+dx-ux*7-uy*4,y+dy-uy*7+ux*4);ctx.lineTo(x+dx-ux*7+uy*4,y+dy-uy*7-ux*4);ctx.closePath();ctx.fillStyle=color;ctx.fill();if(label){ctx.font='11px -apple-system, sans-serif';ctx.fillText(label,x+dx+6,y+dy-7);}}
+function screen(x,y){return {x:(x-camera.x)/camera.scale+sceneSize.w/2,y:(camera.y-y)/camera.scale+sceneSize.h/2};}
+function unscreen(x,y){return {x:camera.x+(x-sceneSize.w/2)*camera.scale,y:camera.y-(y-sceneSize.h/2)*camera.scale};}
+function updateCamera(w,h,dt){
+ sceneSize={w,h};let cx=state.x,cy=state.y,scale;
+ const o=C.orbital(state);
+ if(cameraMode==='earth'){
+  let minx=-C.R,maxx=C.R,miny=-C.R,maxy=C.R;
+  const points=[...trajectory,...track.map(p=>[p.x,p.y]),[state.x,state.y]];
+  for(const p of points){minx=Math.min(minx,p[0]);maxx=Math.max(maxx,p[0]);miny=Math.min(miny,p[1]);maxy=Math.max(maxy,p[1]);}
+  const extent=Math.max(maxx-minx,maxy-miny);if(extent>C.R*30){minx=Math.min(-C.R,state.x);maxx=Math.max(C.R,state.x);miny=Math.min(-C.R,state.y);maxy=Math.max(C.R,state.y);}
+  scale=Math.max((maxx-minx)/(w*.79),(maxy-miny)/(h*.60));cx=(maxx+minx)/2;cy=(maxy+miny)/2+scale*10;
+ }else if(cameraMode==='chase'){
+  scale=Math.max(4,Math.min(12000,Math.max(2000,o.alt*.6)/Math.min(w,h)));cy+=scale*25;
+ }else if(cameraMode==='auto'){
+  const ang=Math.abs(Math.atan2(state.x,state.y)),z=C.clamp(Math.max((o.alt-150000)/850000,(ang-.12)/.5,(C.qualifies(o,cfg)?1:0)),0,1),blend=z*z*(3-2*z);
+  // Fit the flown path into the clear part of the viewport, not behind the engine inset.
+  let minx=Math.min(0,state.x),maxx=Math.max(0,state.x),miny=Math.min(C.R,state.y),maxy=Math.max(C.R+1800,state.y);
+  for(const p of track){minx=Math.min(minx,p.x);maxx=Math.max(maxx,p.x);miny=Math.min(miny,p.y);maxy=Math.max(maxy,p.y);}
+  const localScale=Math.max(2,(maxx-minx)/(w*.55),(maxy-miny)/(h*.40));
+  const lx=(minx+maxx)/2+localScale*w*.08,ly=(miny+maxy)/2-localScale*h*.05;
+  const earthScale=Math.max(C.R*2.6/w,C.R*2.6/(h*.68));
+  scale=localScale*(1-blend)+earthScale*blend;cx=lx*(1-blend);cy=ly*(1-blend)+earthScale*40*blend;
+ }else return;
+ scale=C.clamp(scale,.15,C.R*1e3);
+ if(!camera.initialized){camera={x:cx,y:cy,scale,initialized:true};}
+ else{const f=1-Math.exp(-dt*4);camera.x+=(cx-camera.x)*f;camera.y+=(cy-camera.y)*f;camera.scale=Math.exp(Math.log(camera.scale)+(Math.log(scale)-Math.log(camera.scale))*f);}
+}
+function updatePrediction(wall){
+ if(!started||state.pad||state.crashed){trajectory=[];return;}
+ if(wall-lastPredictWall<.16&&Math.abs(state.t-lastPredictTime)<10)return;
+ if(Math.abs(state.t-lastPredictTime)<.05)return;
+ lastPredictWall=wall;lastPredictTime=state.t;trajectory=C.coastPath(state,420);
+ if(trajectory.length<2){
+  let z={...state};trajectory=[[z.x,z.y]];
+  for(let i=0;i<240;i++){let dt=Math.max(.2,Math.min(20,Math.abs(C.orbital(z).vr)/C.GS/40));z=C.integrate(z,cfg,{throttle:0,pitch:0,mode:'pitch'},dt,0);if(Math.hypot(z.x,z.y)<C.R)break;trajectory.push([z.x,z.y]);}
+ }
+}
+const stars=Array.from({length:130},(_,i)=>({x:((i*1619+73)%1009)/1009,y:((i*i*71+613)%997)/997,r:.35+(i%5)*.16,a:.12+(i%7)*.065}));
+function drawEarth(ctx,w,h){
+ const e=screen(0,0),r=C.R/camera.scale;
+ ctx.save();
+ if(r>w*5&&e.y>h){
+  const gradient=ctx.createLinearGradient(0,h*.6,0,h);gradient.addColorStop(0,'#284958');gradient.addColorStop(1,'#152f3b');
+  ctx.beginPath();
+  for(let px=-10;px<=w+10;px+=8){let wx=camera.x+(px-w/2)*camera.scale;const wy=Math.sqrt(Math.max(0,C.R*C.R-wx*wx));const sy=screen(wx,wy).y;px===-10?ctx.moveTo(px,sy):ctx.lineTo(px,sy);}
+  ctx.lineTo(w+10,h+10);ctx.lineTo(-10,h+10);ctx.closePath();ctx.fillStyle=gradient;ctx.fill();
+  ctx.strokeStyle='#91bad966';ctx.lineWidth=1.5;ctx.beginPath();for(let px=-10;px<=w+10;px+=8){const wx=camera.x+(px-w/2)*camera.scale,wy=Math.sqrt(Math.max(0,C.R*C.R-wx*wx)),sy=screen(wx,wy).y;px===-10?ctx.moveTo(px,sy):ctx.lineTo(px,sy);}ctx.stroke();
+ }else{
+  if(r>1){ctx.shadowColor='#689ec666';ctx.shadowBlur=25;ctx.beginPath();ctx.arc(e.x,e.y,r,0,2*Math.PI);const grad=ctx.createRadialGradient(e.x-r*.36,e.y-r*.47,r*.05,e.x+r*.3,e.y+r*.12,r*1.45);grad.addColorStop(0,'#456e86');grad.addColorStop(.4,'#21475d');grad.addColorStop(.8,'#102534');grad.addColorStop(1,'#080f1c');ctx.fillStyle=grad;ctx.fill();ctx.shadowBlur=0;ctx.strokeStyle='#83b6d780';ctx.lineWidth=1.2;ctx.stroke();}
+  if(r>45&&r<5000){
+   ctx.save();ctx.beginPath();ctx.arc(e.x,e.y,r-.5,0,2*Math.PI);ctx.clip();ctx.translate(e.x,e.y);ctx.scale(r,r);
+   const lands=[[-.76,-.22,-.69,-.49,-.36,-.66,-.16,-.49,-.23,-.2,-.44,-.02,-.49,.28,-.66,.11],[-.38,.24,-.21,.11,-.06,.28,-.05,.57,-.2,.81,-.31,.56],[.07,-.49,.33,-.64,.59,-.47,.77,-.39,.92,-.12,.53,-.05,.33,-.2,.27,-.04,.1,-.14],[.2,-.04,.46,-.01,.51,.28,.35,.52,.18,.39,.06,.12],[.63,.39,.79,.33,.91,.5,.69,.67,.56,.54]];
+   ctx.fillStyle='#4c796a55';ctx.strokeStyle='#8bbaa322';ctx.lineWidth=.006;
+   for(let a of lands){ctx.beginPath();ctx.moveTo(a[0],a[1]);for(let j=2;j<a.length;j+=2)ctx.lineTo(a[j],a[j+1]);ctx.closePath();ctx.fill();ctx.stroke();}
+   ctx.strokeStyle='#abd4dd0d';ctx.lineWidth=.005;for(let k of[-.6,-.3,0,.3,.6]){ctx.beginPath();ctx.ellipse(0,k,Math.sqrt(1-k*k),.09,0,0,Math.PI*2);ctx.stroke();}ctx.restore();
+  }
+ }
+ ctx.restore();
+ // Optional target and safety rings are world-scale, not orbit predictions.
+ if(camera.scale>700){for(const [height,col,dash]of[[cfg.safe,'#69e8bb25',[3,5]],[cfg.target,'#ffbf7650',[5,8]]]){ctx.setLineDash(dash);ctx.strokeStyle=col;ctx.lineWidth=1;ctx.beginPath();ctx.arc(e.x,e.y,(C.R+height)/camera.scale,0,2*Math.PI);ctx.stroke();}ctx.setLineDash([]);}
+}
+function drawRocket(ctx,x,y,size,rot,fill,throttle,t,color,inspect=false){
+ ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.scale(size,size);
+ const flame=throttle>0;
+ if(flame){
+  const len=42+throttle*125;const jitter=1+.075*Math.sin(t*33);
+  ctx.save();ctx.globalCompositeOperation='lighter';const glow=ctx.createRadialGradient(0,64,2,0,95,75);glow.addColorStop(0,'#ff9e5659');glow.addColorStop(1,'#ff9e5600');ctx.fillStyle=glow;ctx.fillRect(-85,40,170,len+40);
+  ctx.beginPath();ctx.moveTo(-12,48);ctx.bezierCurveTo(-20,90,-7,100,Math.sin(t*29)*3,55+len*jitter);ctx.bezierCurveTo(13,100,19,80,12,48);const fg=ctx.createLinearGradient(0,48,0,58+len);fg.addColorStop(0,'#a7dbff');fg.addColorStop(.17,'#fff6d9');fg.addColorStop(.5,'#ffb266cc');fg.addColorStop(1,'#ff6b4400');ctx.fillStyle=fg;ctx.fill();
+  for(let i=0;i<24;i++){const z=(t*(.75+throttle*2)+i/24)%1;const spread=(5+z*24);const px=Math.sin(i*22.27)*spread;ctx.globalAlpha=(1-z)*.7;ctx.fillStyle=i%3===0?'#ffe7b9':'#8ecfff';ctx.beginPath();ctx.arc(px,58+z*len*1.2,1.1+z,0,Math.PI*2);ctx.fill();}ctx.restore();
+ }
+ // Silvery fins, a transparent pressure shell, two separate reservoirs, and an enlarged nozzle.
+ const metal=ctx.createLinearGradient(-32,0,32,0);metal.addColorStop(0,'#34546b');metal.addColorStop(.25,'#d5e5ee');metal.addColorStop(.48,'#788f9f');metal.addColorStop(.7,'#f1f4f5');metal.addColorStop(1,'#4d657b');
+ for(const sign of[-1,1]){ctx.beginPath();ctx.moveTo(sign*19,7);ctx.lineTo(sign*37,38);ctx.lineTo(sign*36,54);ctx.lineTo(sign*17,36);ctx.closePath();ctx.fillStyle=metal;ctx.fill();ctx.strokeStyle='#c6e3f266';ctx.lineWidth=1;ctx.stroke();}
+ ctx.beginPath();ctx.moveTo(-21,30);ctx.lineTo(-21,-61);ctx.quadraticCurveTo(-20,-84,0,-103);ctx.quadraticCurveTo(20,-84,21,-61);ctx.lineTo(21,30);ctx.quadraticCurveTo(19,40,0,40);ctx.quadraticCurveTo(-19,40,-21,30);const glass=ctx.createLinearGradient(-23,0,25,0);glass.addColorStop(0,'#acd6ee77');glass.addColorStop(.2,'#ccecff22');glass.addColorStop(.52,'#163d5211');glass.addColorStop(.86,'#cdf0ff44');glass.addColorStop(1,'#d5f2ffaa');ctx.fillStyle=glass;ctx.fill();ctx.strokeStyle='#b8e0f2aa';ctx.lineWidth=1.5;ctx.stroke();
+ // Tiny payload: dry mass is never drained.
+ round(ctx,-9,-76,18,14,3,'#b4c6ce','#e6f5fc');line(ctx,-6,-70,6,-70,'#647d94',1);
+ const level=C.clamp(fill,0,1),base=14,top=-51,height=65;
+ for(const [tx,tc]of[[-16,color],[2,'#88c8ff']]){
+  ctx.save();ctx.beginPath();ctx.roundRect(tx,top,14,height,4);ctx.clip();ctx.fillStyle='#00142366';ctx.fillRect(tx,top,14,height);
+  const fy=base-height*level;const liquid=ctx.createLinearGradient(tx,0,tx+14,0);liquid.addColorStop(0,tc+'66');liquid.addColorStop(.65,tc+'cc');liquid.addColorStop(1,tc+'88');ctx.fillStyle=liquid;
+  ctx.beginPath();ctx.moveTo(tx,base+2);ctx.lineTo(tx,fy);for(let i=0;i<=14;i+=2)ctx.lineTo(tx+i,fy+Math.sin(t*2.6+i*.32+tx)*Math.min(1.7,level*4));ctx.lineTo(tx+14,base+2);ctx.closePath();ctx.fill();
+  if(level>0&&throttle>0){for(let i=0;i<6;i++){const z=(t*throttle*.6+i/6)%1;ctx.fillStyle='#effeff99';ctx.beginPath();ctx.arc(tx+7+Math.sin(i*3.2)*3,base-z*height*level,.8,0,Math.PI*2);ctx.fill();}}
+  ctx.restore();round(ctx,tx,top,14,height,4,null,'#ccecff66');line(ctx,tx+2,top+4,tx+2,base-4,'#f1ffff55',1);
+  line(ctx,tx+7,16,tx+7,22,tc+'aa',2);line(ctx,tx+7,22,0,31,tc+'aa',2);
+  if(throttle>0&&level>0)for(let j=0;j<4;j++){const z=(t*(1+throttle*2)+j/4)%1;ctx.fillStyle=tc;ctx.beginPath();ctx.arc((tx+7)*(1-z),17+z*14,1.4,0,Math.PI*2);ctx.fill();}
+ }
+ round(ctx,-22,-59,44,5,2,metal);round(ctx,-21,19,42,5,2,metal);
+ ctx.beginPath();ctx.moveTo(-6,30);ctx.lineTo(-13,49);ctx.quadraticCurveTo(0,54,13,49);ctx.lineTo(6,30);ctx.closePath();ctx.fillStyle=metal;ctx.fill();ctx.strokeStyle='#d0e4ef';ctx.lineWidth=1;ctx.stroke();
+ ctx.fillStyle=throttle>0?'#e5f4ff':'#0b1b29';ctx.beginPath();ctx.ellipse(0,49,11,2.4,0,0,2*Math.PI);ctx.fill();
+ line(ctx,-16,-60,-16,-75,'#ffffff88',1.7);
+ ctx.restore();
+}
+function drawScene(dt,wall){
+ const {ctx,w,h}=setupCanvas('scene');updatePrediction(wall);updateCamera(w,h,dt);
+ const o=C.orbital(state),groundBlend=1-C.clamp(o.alt/160000,0,1);
+ const bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#07101f');bg.addColorStop(.55,groundBlend>.1?'#193148':'#0a1727');bg.addColorStop(1,groundBlend>.1?'#587584':'#152d40');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
+ for(const s of stars){ctx.globalAlpha=s.a*(1-groundBlend*.55);ctx.fillStyle='#d7e8ff';ctx.beginPath();ctx.arc(s.x*w,s.y*h*.88,s.r,0,2*Math.PI);ctx.fill();}ctx.globalAlpha=1;
+ // Fine mission grid, deliberately quiet behind the scenery.
+ ctx.strokeStyle='#b5d6ee05';ctx.lineWidth=1;for(let x=0;x<w;x+=64)line(ctx,x,0,x,h,'#b5d6ee05');for(let y=0;y<h;y+=64)line(ctx,0,y,w,y,'#b5d6ee05');
+ drawEarth(ctx,w,h);
+ if(trajectory.length>1){ctx.save();ctx.setLineDash([5,7]);ctx.lineWidth=1.35;ctx.strokeStyle=o.peri>=cfg.safe?'#a8dfffa0':'#a8dfff77';ctx.beginPath();trajectory.forEach((p,i)=>{const q=screen(p[0],p[1]);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.stroke();ctx.restore();}
+ // Retain the actually flown path, with color distinguishing finite burns from coast arcs.
+ if(track.length>1){ctx.lineWidth=2.25;for(let i=1;i<track.length;i++){const a=screen(track[i-1].x,track[i-1].y),b=screen(track[i].x,track[i].y);line(ctx,a.x,a.y,b.x,b.y,track[i].burn?'#ffbf76cc':'#69e8bbaa',2.1);}}
+ const launch=screen(0,C.R);
+ if(camera.scale<600){
+  const plw=Math.min(110,Math.max(22,140/camera.scale));round(ctx,launch.x-plw/2,launch.y,plw,8,2,'#7a8b92','#bac5cd44');
+  if(camera.scale<30){line(ctx,launch.x-35,launch.y-90,launch.x-35,launch.y,'#aec1cd66',4);line(ctx,launch.x-36,launch.y-84,launch.x-8,launch.y-84,'#aec1cd88',3);for(let i=0;i<5;i++){line(ctx,launch.x-39,launch.y-8-i*16,launch.x-31,launch.y-24-i*16,'#bdced044');}line(ctx,launch.x-38,launch.y-4,launch.x-38,launch.y-91,'#d9e4e655');}
+  if(filling){line(ctx,launch.x-80,launch.y-3,launch.x-28,launch.y-3,C.FUELS[cfg.fuel].color,3);line(ctx,launch.x-28,launch.y-3,launch.x-13,launch.y-35,C.FUELS[cfg.fuel].color,3);for(let i=0;i<8;i++){let z=(anim*.6+i/8)%1;ctx.fillStyle='#ecfff6';ctx.beginPath();ctx.arc(launch.x-80+z*56,launch.y-3,1.4,0,Math.PI*2);ctx.fill();}}
+ }
+ const p=screen(state.x,state.y),n=C.direction(state,u),rsize=cameraMode==='earth'||camera.scale>20000?.28:.48,offset=50*rsize;
+ const rx=p.x+n[0]*offset,ry=p.y-n[1]*offset;
+ sceneRocket={x:rx,y:ry};
+ const coachBox=$('coach').getBoundingClientRect(),stageBox=$('stage').getBoundingClientRect();
+ const obscures=rx>coachBox.left-stageBox.left-30&&rx<coachBox.right-stageBox.left+30&&ry>coachBox.top-stageBox.top-40&&ry<coachBox.bottom-stageBox.top+40;
+ $('coach').style.opacity=obscures&&started?'.15':'1';
+ const engineBox=$('engineWindow').getBoundingClientRect();
+ const behindEngine=rx>engineBox.left-stageBox.left-25&&rx<engineBox.right-stageBox.left+25&&ry>engineBox.top-stageBox.top-35&&ry<engineBox.bottom-stageBox.top+35;
+ $('engineWindow').style.opacity=behindEngine&&started?'.12':'1';
+ const fill=filling?fillProgress:ready?state.p/cfg.prop:0,visualThrottle=running&&!state.crashed&&ready&&state.p>0?u.throttle:0;
+ if(!state.crashed){
+  ctx.save();ctx.shadowColor='#8adcf366';ctx.shadowBlur=17;drawRocket(ctx,rx,ry,rsize,Math.atan2(n[0],n[1]),fill,visualThrottle,anim,C.FUELS[cfg.fuel].color);ctx.restore();
+  if($('showVectors').checked&&ready){
+   if(u.throttle>0&&state.p>0)arrow(ctx,rx,ry,n[0]*(47+32*u.throttle),-n[1]*(47+32*u.throttle),PALETTE.gold,1.7,'T');
+   if(o.speed>5){const k=55/o.speed;arrow(ctx,rx,ry,state.vx*k,-state.vy*k,PALETTE.blue,1.6,'v');}
+  }
+  if(ready&&!started){ctx.fillStyle='#dae8f6';ctx.font='11px -apple-system,sans-serif';ctx.fillText('READY TO IGNITE',rx-47,ry-64);}
+ }else{
+  const glow=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,48);glow.addColorStop(0,'#ffe5bdaa');glow.addColorStop(.2,'#ff9d7255');glow.addColorStop(1,'#ff846600');ctx.fillStyle=glow;ctx.fillRect(p.x-50,p.y-50,100,100);ctx.strokeStyle=PALETTE.red;ctx.lineWidth=2;line(ctx,p.x-7,p.y-7,p.x+7,p.y+7,PALETTE.red,2);line(ctx,p.x-7,p.y+7,p.x+7,p.y-7,PALETTE.red,2);
+ }
+ // Useful world-scale bar (its position avoids the two inset panels).
+ const desired=camera.scale*65,power=10**Math.floor(Math.log10(desired)),ticks=[1,2,5,10],bar=ticks.find(v=>v*power>=desired)*power;
+ let bx=Math.max(178,w*.41),by=h-52;if(w<430){bx=16;by=h-226;}
+ line(ctx,bx,by,bx+bar/camera.scale,by,'#a8c3d3aa',1);line(ctx,bx,by-3,bx,by+3,'#a8c3d3aa');line(ctx,bx+bar/camera.scale,by-3,bx+bar/camera.scale,by+3,'#a8c3d3aa');ctx.fillStyle='#a8c3d3';ctx.font='9px ui-monospace, monospace';ctx.fillText(shortDistance(bar),bx,by-7);
+ if(camera.scale>10000){ctx.fillStyle='#99b6c5';ctx.font='10px -apple-system,sans-serif';ctx.fillText('Burn / coast trail · dashed = engine off',16,h-222);}
+}
+function drawEngine(){
+ const {ctx,w,h}=setupCanvas('engine');ctx.clearRect(0,0,w,h);const fill=filling?fillProgress:ready?state.p/cfg.prop:0,th=ready&&running&&!state.crashed&&state.p>0?u.throttle:0,scale=.71;
+ drawRocket(ctx,w*.5,h*.55,scale,0,fill,th,anim,C.FUELS[cfg.fuel].color,true);
+ ctx.font='9px ui-monospace,monospace';ctx.textAlign='left';ctx.fillStyle=C.FUELS[cfg.fuel].color;ctx.fillText(C.FUELS[cfg.fuel].short,10,h*.37);line(ctx,11,h*.39,w*.5-15,h*.39,C.FUELS[cfg.fuel].color+'88');
+ ctx.textAlign='right';ctx.fillStyle=PALETTE.blue;ctx.fillText('LOX',w-10,h*.37);line(ctx,w*.5+15,h*.39,w-11,h*.39,'#88c8ff88');
+ const fuelMass=cfg.prop/(1+C.FUELS[cfg.fuel].of)*fill,oxMass=fuelMass*C.FUELS[cfg.fuel].of;
+ ctx.font='8px ui-monospace,monospace';ctx.fillStyle='#adc5d5';ctx.textAlign='left';ctx.fillText(nf(fuelMass,2)+' kg',10,h*.47);ctx.textAlign='right';ctx.fillText(nf(oxMass,2)+' kg',w-10,h*.47);
+ if(th>0){arrow(ctx,w-24,h*.69,0,27,PALETTE.gold,1.3);ctx.font='8px -apple-system,sans-serif';ctx.fillStyle=PALETTE.gold;ctx.textAlign='right';ctx.fillText('exhaust',w-12,h*.92);}
+ ctx.textAlign='left';
+}
+function drawMinimap(){
+ const {ctx,w,h}=setupCanvas('minimap');ctx.clearRect(0,0,w,h);const scale=Math.max(C.R*1.24,Math.hypot(state.x,state.y)*1.12),r=Math.min(w,h)*.40,cx=w/2,cy=h/2;
+ const map=(x,y)=>[cx+x/scale*r,cy-y/scale*r];
+ const gr=ctx.createRadialGradient(cx-r*.25,cy-r*.3,1,cx,cy,r);gr.addColorStop(0,'#375a72');gr.addColorStop(1,'#132a3b');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(cx,cy,C.R/scale*r,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#7291a755';ctx.stroke();
+ ctx.lineWidth=1;ctx.strokeStyle='#95ccef77';ctx.setLineDash([2,3]);ctx.beginPath();trajectory.forEach((p,i)=>{const q=map(...p);i?ctx.lineTo(...q):ctx.moveTo(...q);});ctx.stroke();ctx.setLineDash([]);
+ if(track.length){ctx.strokeStyle=PALETTE.gold;ctx.lineWidth=1.2;ctx.beginPath();track.forEach((p,i)=>{const q=map(p.x,p.y);i?ctx.lineTo(...q):ctx.moveTo(...q);});ctx.stroke();}
+ const p=map(state.x,state.y);ctx.shadowBlur=8;ctx.shadowColor=PALETTE.mint;ctx.fillStyle=state.crashed?PALETTE.red:PALETTE.mint;ctx.beginPath();ctx.arc(...p,2.7,0,2*Math.PI);ctx.fill();ctx.shadowBlur=0;const launch=map(0,C.R);ctx.fillStyle='#fff6c4';ctx.fillRect(launch[0]-1,launch[1]-1,2,2);
+}
+function drawNav(){
+ const {ctx,w,h}=setupCanvas('nav');ctx.clearRect(0,0,w,h);const cx=w/2,cy=h/2+3,r=Math.min(w*.39,h*.405);
+ ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.clip();const bg=ctx.createLinearGradient(cx,cy-r,cx,cy+r);bg.addColorStop(0,'#183c58');bg.addColorStop(.499,'#2b5870');bg.addColorStop(.5,'#5b4a3f');bg.addColorStop(1,'#302c2c');ctx.fillStyle=bg;ctx.fillRect(cx-r,cy-r,r*2,r*2);line(ctx,cx-r,cy,cx+r,cy,'#becfdfaa',1);
+ for(const d of[-30,-15,15,30]){let y=cy-Math.sin(d*Math.PI/180)*r;line(ctx,cx-18, y,cx+18,y,'#d6e0e733',1);}
+ ctx.restore();ctx.strokeStyle='#748c9c77';ctx.lineWidth=1.2;ctx.beginPath();ctx.arc(cx,cy,r,0,2*Math.PI);ctx.stroke();
+ for(let a=-180;a<180;a+=15){let sa=Math.sin(a*Math.PI/180),ca=Math.cos(a*Math.PI/180);line(ctx,cx+sa*(r-4),cy-ca*(r-4),cx+sa*(r+(a%45===0?4:1)),cy-ca*(r+(a%45===0?4:1)),'#b7ced077');}
+ ctx.textAlign='center';ctx.font='9px -apple-system,sans-serif';ctx.fillStyle='#b4ccde';ctx.fillText('UP 0°',cx,cy-r-9);ctx.fillText('180°',cx,cy+r+14);ctx.textAlign='left';ctx.fillText('90°',cx+r+5,cy+4);ctx.textAlign='right';ctx.fillText('−90°',cx-r-5,cy+4);
+ const rt=C.rates(state,cfg,u),p=C.pitchFromDirection(state,rt.n)*Math.PI/180;
+ const o=C.orbital(state);if(o.speed>1){const vdir=Math.atan2(o.vt,o.vr);arrow(ctx,cx,cy,Math.sin(vdir)*r*.69,-Math.cos(vdir)*r*.69,PALETTE.blue,1.5);}
+ arrow(ctx,cx,cy,Math.sin(p)*r*.9,-Math.cos(p)*r*.9,PALETTE.gold,2.5);ctx.fillStyle='#f5e7ce';ctx.beginPath();ctx.arc(cx,cy,3,0,2*Math.PI);ctx.fill();ctx.textAlign='left';
+}
+function drawPlot(){
+ if(activeTab!=='flight')return;const {ctx,w,h}=setupCanvas('telemetry');ctx.clearRect(0,0,w,h);const metric=$('plotMetric').value;
+ const spec=metric==='fuel'?{a:'propellant',b:'flow',la:'Propellant left · kg',lb:'Mass flow · kg/s',am:cfg.prop,bm:cfg.maxFlow,amin:0,bmin:0}:metric==='flight'?{a:'alt',b:'speed',la:'Altitude · km',lb:'Speed · km/s',am:Math.max(10000,...samples.map(x=>x.alt))/1000,bm:Math.max(1000,...samples.map(x=>x.speed))/1000,amin:0,bmin:0,as:.001,bs:.001}:{a:'throttle',b:'pitch',la:'Throttle · %',lb:'Direction · ° from up',am:100,bm:180,amin:0,bmin:-180,as:100};
+ $('legend1').textContent=spec.la;$('legend2').textContent=spec.lb;
+ const x0=52,x1=w-54,y0=14,y1=h-27,tmax=Math.max(30,state.t),topY=v=>y1-(v-spec.amin)/(spec.am-spec.amin)*(y1-y0),botY=v=>y1-(v-spec.bmin)/(spec.bm-spec.bmin)*(y1-y0);
+ ctx.font='10px ui-monospace,monospace';
+ for(let i=0;i<=4;i++){const y=y1-i/4*(y1-y0);line(ctx,x0,y,x1,y,'#9baec318');ctx.textAlign='right';ctx.fillStyle=PALETTE.mint;ctx.fillText(nf(spec.amin+i/4*(spec.am-spec.amin),spec.am<10?2:0),x0-9,y+3);ctx.textAlign='left';ctx.fillStyle=PALETTE.gold;ctx.fillText(nf(spec.bmin+i/4*(spec.bm-spec.bmin),spec.bm<10?2:0),x1+9,y+3);}
+ ctx.textAlign='center';ctx.fillStyle='#8fa4bd';for(let i=0;i<=5;i++){const t=tmax*i/5,x=x0+(x1-x0)*i/5;ctx.fillText(nf(t/60,tmax<180?1:0)+' min',x,h-7);}
+ if(samples.length>1){
+  ctx.save();ctx.beginPath();ctx.rect(x0,y0-3,x1-x0,y1-y0+6);ctx.clip();
+  for(const[k,color,ys,mult]of [[spec.a,PALETTE.mint,topY,spec.as||1],[spec.b,PALETTE.gold,botY,spec.bs||1]]){ctx.beginPath();const stride=Math.max(1,Math.floor(samples.length/(w*2)));for(let i=0;i<samples.length;i+=stride){const d=samples[i],x=x0+d.t/tmax*(x1-x0),y=ys(d[k]*mult);i?ctx.lineTo(x,y):ctx.moveTo(x,y);}const last=samples.at(-1);ctx.lineTo(x0+last.t/tmax*(x1-x0),ys(last[k]*mult));ctx.strokeStyle=color;ctx.lineWidth=1.8;ctx.stroke();}
+  ctx.restore();
+ }
+ if(plotHover!==null&&samples.length){const t=C.clamp((plotHover-x0)/(x1-x0),0,1)*tmax;let lo=0,hi=samples.length-1;while(lo<hi){let mid=(lo+hi)>>1;if(samples[mid].t<t)lo=mid+1;else hi=mid;}const s=samples[lo],x=x0+s.t/tmax*(x1-x0);line(ctx,x,y0,x,y1,'#dbe7f8aa',1);$('plotCaption').textContent=`T+ ${clock(s.t)} · altitude ${shortDistance(s.alt)} · speed ${nf(s.speed,1)} m/s · propellant ${nf(s.propellant,3)} kg · flow ${nf(s.flow,4)} kg/s · direction ${nf(s.pitch,1)}°`;}
+ else $('plotCaption').textContent=samples.length?`${samples.length.toLocaleString()} samples · solid mint and amber use separate labeled axes · ${decimated?'Older samples have been uniformly thinned for long missions.':'CSV includes time, position, velocity, mass, mass flow, thrust, steering, orbit elements and cost.'}`:'Launch to begin recording. Stop freezes physics; moving the controls previews the next command.';
+}
+function chooseTab(name){activeTab=name;$$('[data-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.tab===name);b.setAttribute('aria-selected',b.dataset.tab===name);});for(const n of ['flight','missions','physics'])$('tab-'+n).classList.toggle('hidden',n!==name);if(name==='missions')refreshMissions();if(name==='flight')drawPlot();}
+function download(text,name,mime='application/json'){const blob=new Blob([text],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),3000);}
+function exportCSV(){if(!samples.length){toast('Launch first to record a flight.');return;}const keys=['t','x','y','vx','vy','alt','speed','vr','vt','propellant','mass','flow','thrust','throttle','pitch','peri','apo','cost','dv'];const units=['time_s','x_m','y_m','vx_m_s','vy_m_s','altitude_m','speed_m_s','radial_speed_m_s','tangential_speed_m_s','propellant_remaining_kg','rocket_plus_payload_plus_propellant_kg','total_mass_flow_kg_s','thrust_N','throttle_0_to_1','pitch_deg_clockwise_from_local_up','perigee_altitude_m','apogee_altitude_m','consumed_propellant_cost_USD','ideal_delivered_delta_v_m_s'];let text=units.join(',')+'\n'+samples.map(s=>keys.map(k=>s[k]===null?'':Number.isFinite(s[k])?s[k].toPrecision(12):'').join(',')).join('\n');download(text,'IGNITION_flight_'+flightId+'.csv','text/csv');}
+function saveChallenge(){let c;try{c=started?cfg:getForm();}catch(e){toast(e.message);return;}const doc={format:'IGNITION-challenge',version:1,created:new Date().toISOString(),configuration:c,description:'A complete launch design and mission rule set. All price inputs are classroom assumptions, not market quotes.'};download(JSON.stringify(doc,null,2),'IGNITION_challenge.json');}
+async function loadChallenge(file){try{if(!file)return;if(file.size>1e6)throw Error('Challenge file is too large.');const doc=JSON.parse(await file.text());if(doc.format!=='IGNITION-challenge'||doc.version!==1)throw Error('This is not a supported IGNITION challenge.');const c=C.config(doc.configuration);resetRocket(false);syncForm(c);toast('Challenge loaded. Fill the rocket when ready.');}catch(e){toast('Could not load challenge: '+e.message);}finally{$('challengeFile').value='';}}
+function showHelp(){if(running){running=false;simDebt=0;renderHUD();}$('helpModal').classList.remove('hidden');$('helpClose').focus();}
+function closeHelp(){$('helpModal').classList.add('hidden');$('helpOpen').focus();}
+// Inputs are deterministic commands. No control edits alter elapsed time or state retroactively.
+$$('.fuel-card').forEach(b=>b.addEventListener('click',()=>{selectedFuel=b.dataset.fuel;updateBuild();}));
+for(const id of ['dry','payload','target','safe','goal','twr','priceK','priceM','priceH','priceO'])$(id).addEventListener('input',updateBuild);
+$('fraction').addEventListener('input',()=>{$('fractionNumber').value=$('fraction').value;updateBuild();});
+$('fractionNumber').addEventListener('input',()=>{$('fraction').value=$('fractionNumber').value;updateBuild();});
+$('propMass').addEventListener('change',()=>{const p=Number($('propMass').value),dead=Number($('dry').value)+Number($('payload').value);if(!Number.isFinite(p)||p<=0){$('buildError').textContent='Enter a positive propellant mass.';$('fillBtn').disabled=true;$('demoBtn').disabled=true;return;}const frac=100*p/(p+dead);$('fraction').value=frac;$('fractionNumber').value=frac.toFixed(6);updateBuild();});
+$('fillBtn').addEventListener('click',()=>fillRocket(false));$('demoBtn').addEventListener('click',()=>{if(guide){takeControl();renderHUD();}else fillRocket(true);});
+$('runBtn').addEventListener('click',runToggle);$('cutBtn').addEventListener('click',()=>setThrottle(0));$('retryBtn').addEventListener('click',()=>resetRocket());$('retryBanner').addEventListener('click',()=>resetRocket());
+$('throttle').addEventListener('input',()=>setThrottle(Number($('throttle').value)/100));
+$('flowInput').addEventListener('change',()=>{const v=Number($('flowInput').value);if(Number.isFinite(v))setThrottle(v/cfg.maxFlow);});
+$('pitch').addEventListener('change',()=>{const v=Number($('pitch').value);if(Number.isFinite(v))setPitch(v);});
+$$('[data-preset]').forEach(b=>b.addEventListener('click',()=>setPreset(b.dataset.preset)));$$('[data-warp]').forEach(b=>b.addEventListener('click',()=>{setWarp(Number(b.dataset.warp));renderHUD();}));
+$('dismissBanner').addEventListener('click',()=>$('missionBanner').classList.add('hidden'));
+$('watchOrbit').addEventListener('click',()=>{$('missionBanner').classList.add('hidden');u.throttle=0;guide=false;setWarp(500);cameraMode='earth';running=true;simDebt=0;renderHUD();});
+for(const[id,mode]of [['cameraAuto','auto'],['cameraEarth','earth'],['cameraChase','chase']])$(id).addEventListener('click',()=>{cameraMode=mode;renderHUD();});
+function zoom(f,px=sceneSize.w/2,py=sceneSize.h/2){const anchor=unscreen(px,py);cameraMode='manual';camera.scale=C.clamp(camera.scale*f,.15,C.R*1e3);camera.x=anchor.x-(px-sceneSize.w/2)*camera.scale;camera.y=anchor.y+(py-sceneSize.h/2)*camera.scale;renderHUD();}
+$('zoomIn').addEventListener('click',()=>zoom(.7));$('zoomOut').addEventListener('click',()=>zoom(1/.7));
+$('scene').addEventListener('wheel',e=>{e.preventDefault();const r=$('scene').getBoundingClientRect();zoom(Math.exp(C.clamp(e.deltaY,-180,180)*.002),e.clientX-r.left,e.clientY-r.top);},{passive:false});
+let navDrag=false,sceneDrag=false,panDrag=null;
+function navInput(e){const r=$('nav').getBoundingClientRect(),x=e.clientX-r.left-r.width/2,y=e.clientY-r.top-(r.height/2+3);if(Math.hypot(x,y)>4)setPitch(Math.atan2(x,-y)*180/Math.PI);}
+$('nav').addEventListener('pointerdown',e=>{navDrag=true;$('nav').setPointerCapture(e.pointerId);navInput(e);});$('nav').addEventListener('pointermove',e=>{if(navDrag)navInput(e);});$('nav').addEventListener('pointerup',()=>navDrag=false);$('nav').addEventListener('pointercancel',()=>navDrag=false);
+function sceneAim(e){const r=$('scene').getBoundingClientRect(),dx=e.clientX-r.left-sceneRocket.x,dy=e.clientY-r.top-sceneRocket.y;if(Math.hypot(dx,dy)>12)setPitch(C.pitchFromDirection(state,[dx/Math.hypot(dx,dy),-dy/Math.hypot(dx,dy)]));}
+$('scene').addEventListener('pointerdown',e=>{const r=$('scene').getBoundingClientRect(),dx=e.clientX-r.left-sceneRocket.x,dy=e.clientY-r.top-sceneRocket.y;if(e.shiftKey){panDrag={x:e.clientX,y:e.clientY,cx:camera.x,cy:camera.y};cameraMode='manual';}else if(Math.hypot(dx,dy)<80&&ready)sceneDrag=true;else toast('Drag from the rocket to aim. Shift-drag pans; the steering dial also works.');$('scene').setPointerCapture(e.pointerId);});
+$('scene').addEventListener('pointermove',e=>{if(sceneDrag)sceneAim(e);if(panDrag){camera.x=panDrag.cx-(e.clientX-panDrag.x)*camera.scale;camera.y=panDrag.cy+(e.clientY-panDrag.y)*camera.scale;}});
+for(const ev of ['pointerup','pointercancel'])$('scene').addEventListener(ev,()=>{sceneDrag=false;panDrag=null;});
+$$('[data-tab]').forEach(b=>b.addEventListener('click',()=>chooseTab(b.dataset.tab)));$('plotMetric').addEventListener('change',drawPlot);
+$('telemetry').addEventListener('pointermove',e=>{plotHover=e.clientX-$('telemetry').getBoundingClientRect().left;drawPlot();});$('telemetry').addEventListener('pointerleave',()=>{plotHover=null;drawPlot();});
+$('exportCSV').addEventListener('click',exportCSV);$('saveChallenge').addEventListener('click',saveChallenge);$('loadChallenge').addEventListener('click',()=>$('challengeFile').click());$('challengeFile').addEventListener('change',()=>loadChallenge($('challengeFile').files[0]));
+$('exportLog').addEventListener('click',()=>download(JSON.stringify({format:'IGNITION-mission-log',version:1,records},null,2),'IGNITION_mission_log.json'));
+$('clearLog').addEventListener('click',()=>{if(confirm('Clear the mission log stored in this browser? Export it first to keep a copy.')){records=[];persist();refreshMissions();}});
+$('helpOpen').addEventListener('click',showHelp);$('helpClose').addEventListener('click',closeHelp);$('helpPlay').addEventListener('click',closeHelp);$('helpDemo').addEventListener('click',()=>{closeHelp();fillRocket(true);});$('helpModal').addEventListener('click',e=>{if(e.target===$('helpModal'))closeHelp();});
+$('fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{toast('Full screen is blocked here. Open the HTML directly in a browser tab.');}});
+document.addEventListener('keydown',e=>{
+ if(e.key==='Escape'){closeHelp();return;}
+ if(!$('helpModal').classList.contains('hidden')){if(e.key==='Tab'){const f=[...$('helpModal').querySelectorAll('button,a,input,select')];const first=f[0],last=f.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}}return;}
+ if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))return;
+ if(e.code==='Space'){e.preventDefault();runToggle();}else if(e.key==='x'||e.key==='X')setThrottle(0);else if(e.key==='r'||e.key==='R')resetRocket();
+ else if(e.key==='ArrowUp'){e.preventDefault();setThrottle(u.throttle+.025);}else if(e.key==='ArrowDown'){e.preventDefault();setThrottle(u.throttle-.025);}else if(e.key==='ArrowLeft'){e.preventDefault();setPitch(C.pitchFromDirection(state,C.direction(state,u))-2);}else if(e.key==='ArrowRight'){e.preventDefault();setPitch(C.pitchFromDirection(state,C.direction(state,u))+2);}
+});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&running){running=false;simDebt=0;renderHUD();toast('Paused while this tab was hidden. Resume when ready.');}});
+function frame(ms){
+ const wall=ms/1000,dt=lastFrame?C.clamp(wall-lastFrame,0,.08):.016;lastFrame=wall;
+ if(filling){anim+=dt;fillProgress=Math.min(1,fillProgress+dt/1.65);if(fillProgress>=1)finishFill();}
+ if(running){anim+=dt;const burning=state.p>0&&u.throttle>0,aw=burning?Math.min(warp,100):warp;simDebt+=dt*aw;simDebt=advance(simDebt);}
+ drawScene(dt,wall);drawEngine();drawMinimap();drawNav();
+ if(wall-lastHud>.1){renderHUD();lastHud=wall;drawPlot();}
+ requestAnimationFrame(frame);
+}
+// Read-only diagnostics + deterministic harness for the supplied tests (not an alternative game engine).
+window.Ignition={get state(){return {...state};},get config(){return JSON.parse(JSON.stringify(cfg));},get controls(){return {...u};},get samples(){return samples.slice();},get records(){return records.slice();},get running(){return running;},get ready(){return ready;},get filling(){return filling;},get assisted(){return assisted;},get camera(){return {...camera,mode:cameraMode};},get rocketScreen(){return {...sceneRocket};},stepSeconds(n){if(!Number.isFinite(n)||n<0||n>2e5)throw Error('Invalid test duration');let limit=0;while(n>1e-6&&running&&limit++<500){let left=advance(n);if(left===n)break;n=left;}renderHUD();return {...state};},finishFillForTest(){if(filling)finishFill();},setTestState(s){running=false;started=true;ready=true;filling=false;recorded=false;state={...C.initial(cfg),...s};lastPredictTime=-1e9;renderHUD();},chooseTab};
+updateBuild();freshFlight();renderHUD();requestAnimationFrame(frame);
+
+</script>
+</body>
+</html>

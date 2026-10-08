@@ -1,4 +1,16 @@
 # Add another entry here to list a new teaching tool.
+- title: Rocket Launch Game
+  label: Ignition Lab
+  category: Rockets & momentum
+  description: Build a rocket, choose your propellant, and steer your payload into an unpowered orbit. Explore how thrust, mass, and fuel choices shape your flight and its cost.
+  url: /teaching/rocket-launch-game/
+  image: /images/teaching/rocket-launch.svg
+  topics:
+    - Momentum & thrust
+    - Rocket propulsion
+    - Orbital motion
+  activity: Launch your rocket and turn gradually toward the horizon. Cut the engine to test whether your orbit holds, then try reaching orbit with less propellant.
+
 - title: Satellite Orbit Simulator
   label: Orbit Lab
   category: Orbital mechanics
