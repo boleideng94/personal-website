@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Nine interactive examples that bring textbook kinematics problems to life. Exact velocity and acceleration, material-point probes, 3D motion, and offline controls.">
+<title>Kinematics in Motion · Nine interactive examples</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1019;--surface:#111926;--panel:#141e2c;--raised:#1b2838;--ink:#e9eff7;--muted:#98a9bd;--line:#28364a;--accent:#79b0ff;--cyan:#50d8ea;--coral:#ff8b78;--amber:#f0c46a;--violet:#b4a0fa;--green:#8cd4b3;--base:#a9bdd5;--shadow:0 18px 55px #0003;--grid:#8ea6c01a}
+html[data-theme=light]{color-scheme:light;--bg:#edf1f6;--surface:#fff;--panel:#f8fafc;--raised:#e8eef6;--ink:#192739;--muted:#52647a;--line:#d5deea;--accent:#285f9b;--cyan:#00788e;--coral:#c34c38;--amber:#946313;--violet:#7353bc;--green:#327a5d;--base:#5c7089;--shadow:0 16px 50px #35507012;--grid:#6079951a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}button,input,select{font:inherit}button,a,input,select{-webkit-tap-highlight-color:transparent}button{cursor:pointer;color:var(--ink)}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}button{transition:background .15s,border-color .15s,transform .15s}button:active{transform:translateY(1px)}button:disabled{opacity:.45;cursor:default}a{color:var(--accent)}input[type=range]{accent-color:var(--accent);cursor:pointer;min-width:0}input[type=checkbox]{accent-color:var(--accent);width:14px;height:14px;vertical-align:middle;margin:0 5px 0 0}input[type=number],select{background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:7px;padding:7px 9px;min-width:0;max-width:100%}select{cursor:pointer}input[type=number]{font-variant-numeric:tabular-nums}button.quiet,.quiet{background:transparent;border:0;padding:7px 9px;color:var(--muted);white-space:nowrap}.quiet:hover{color:var(--ink);background:var(--raised);border-radius:6px}.button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 13px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:12px;font-weight:600;white-space:nowrap}.button:hover{background:var(--raised);border-color:var(--muted)}.icon-button{width:34px;height:34px;border:1px solid var(--line);background:transparent;border-radius:50%;font-size:21px}.app-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:19px 30px;border-bottom:1px solid var(--line);background:var(--surface)}.brand{display:flex;align-items:center;gap:13px;text-decoration:none;color:var(--ink);font-size:25px;letter-spacing:-.8px;line-height:1.13;white-space:nowrap}.brand strong{font-weight:700}.brand small{display:block;font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:7px}.brand-mark{position:relative;width:42px;height:42px;display:block}.brand-mark i{position:absolute;inset:5px 1px;border:1.5px solid var(--accent);border-radius:50%;transform:rotate(-38deg)}.brand-mark i:nth-child(2){inset:1px 12px;transform:rotate(-38deg);border-color:var(--cyan)}.brand-mark b{position:absolute;left:17px;top:16px;width:8px;height:8px;background:var(--cyan);border-radius:50%;box-shadow:0 0 20px #50d8ea55}.header-middle{font-size:10px;letter-spacing:1.5px;color:var(--muted)}.header-middle b{color:var(--ink);font-weight:500}.separator{padding:0 14px;opacity:.5}.header-actions{display:flex;align-items:center;gap:15px}.offline{font-size:11px;color:var(--muted);white-space:nowrap}.offline i{display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:7px}.app-layout{display:grid;grid-template-columns:226px minmax(0,1fr);max-width:1840px;margin:auto}.sidebar{padding:29px 14px 28px 20px;border-right:1px solid var(--line);background:var(--surface)}.sidebar-title{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);letter-spacing:1.8px;padding:0 8px 16px}.sidebar-title span:last-child{color:var(--accent);letter-spacing:0;font-variant-numeric:tabular-nums}.nav-item{width:100%;display:flex;gap:10px;align-items:flex-start;text-align:left;background:transparent;border:1px solid transparent;border-radius:10px;margin-bottom:5px;padding:12px 9px;color:var(--muted)}.nav-item:hover{background:var(--panel)}.nav-item.active{background:var(--raised);border-color:var(--line);color:var(--ink)}.nav-number{font-size:10px;line-height:20px;font-variant-numeric:tabular-nums;color:var(--muted)}.nav-item.active .nav-number{color:var(--cyan)}.nav-name{display:block;font-size:12px;font-weight:600;line-height:1.45}.nav-meta{display:block;font-size:10px;margin-top:5px;color:var(--muted)}.sidebar-bottom{border-top:1px solid var(--line);padding:22px 8px;margin-top:25px;color:var(--muted)}.tiny-eyebrow{font-size:9px;letter-spacing:1.4px;margin-bottom:13px}.mini-equation{font-family:Georgia,serif;color:var(--ink);font-size:13px;margin:8px 0}.mini-equation span{padding-left:24px}.sidebar-bottom p{font-size:11px;line-height:1.8;margin-top:20px}main{padding:31px 32px 18px;min-width:0}.example-heading{margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:20px}.eyebrow{font-size:9px;font-weight:600;letter-spacing:1.9px;color:var(--accent);margin-bottom:8px}h1{font-size:29px;font-weight:600;letter-spacing:-.9px;line-height:1.2;margin:0 0 8px}h2{font-size:16px;letter-spacing:-.3px;font-weight:600;line-height:1.3;margin:0}h3{font-size:14px;margin:0 0 8px;font-weight:600}.example-heading p{color:var(--muted);margin:0;font-size:13px}.snapshot-button{background:var(--raised);align-self:flex-start;margin-top:17px}.source-chips{display:flex;flex-wrap:wrap;gap:7px;margin:17px 0 22px}.source-chip{border:1px solid var(--line);background:transparent;font-size:10px;border-radius:5px;color:var(--muted);padding:4px 8px}.source-chip:hover{color:var(--ink);background:var(--raised)}.workspace-grid{display:grid;grid-template-columns:minmax(0,1fr) 284px;gap:18px;align-items:start}.scene-panel{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);min-width:0}.scene-toolbar{padding:11px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);gap:10px}.live-label{display:flex;align-items:center;gap:7px;font-size:9px;letter-spacing:1px;white-space:nowrap}.live-label>i{width:5px;height:5px;border-radius:50%;background:var(--muted)}.live-label>i.playing{background:var(--green);box-shadow:0 0 8px var(--green)}.time-chip{font-size:11px;letter-spacing:0;color:var(--muted);border-left:1px solid var(--line);padding-left:9px;margin-left:4px;font-variant-numeric:tabular-nums}.scene-tools{display:flex;gap:3px}.scene-tools button{padding:3px 6px;border:0;background:transparent;color:var(--muted);font-size:10px;border-radius:4px}.scene-tools button:hover{background:var(--raised);color:var(--ink)}.scene-tools #zoom-in,.scene-tools #zoom-out{font-size:16px;line-height:1;width:22px}.scene-wrap{height:435px;position:relative;background:var(--bg);overflow:hidden}#scene{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}.scene-topline{position:absolute;top:14px;left:17px;right:15px;display:flex;justify-content:space-between;align-items:center;gap:8px;pointer-events:none;font-size:10px;color:var(--muted)}#view-preset{pointer-events:auto;font-size:10px;padding:4px 7px}.scene-legend{position:absolute;left:16px;bottom:32px;display:flex;align-items:center;gap:14px;font-size:10px;pointer-events:none}.scene-legend>span{display:inline-flex;align-items:center;gap:5px}.swatch{display:inline-block;width:13px;height:3px;border-radius:3px;vertical-align:middle;flex-shrink:0}.swatch.velocity{background:var(--cyan)}.swatch.acceleration{background:var(--coral)}.swatch.tangent{background:var(--amber)}.swatch.normal{background:var(--violet)}.velocity-text{color:var(--cyan)}.acceleration-text{color:var(--coral)}.tangent-text{color:var(--amber)}.normal-text{color:var(--violet)}.base-text{color:var(--base)}.scale-note{position:absolute;bottom:10px;left:16px;right:15px;font-size:9px;color:var(--muted);font-variant-numeric:tabular-nums;pointer-events:none}.scene-message{position:absolute;bottom:65px;left:18px;right:18px;background:var(--panel);border:1px solid var(--line);padding:10px 12px;border-radius:8px;font-size:11px;color:var(--amber)}.display-options{display:flex;gap:10px 14px;flex-wrap:wrap;align-items:center;padding:11px 14px;font-size:10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);color:var(--muted)}.display-options label{white-space:nowrap;display:inline-flex;align-items:center;cursor:pointer}.display-options .gain{gap:8px;margin-left:auto}.gain input{width:68px}.transport{padding:14px;display:flex;align-items:center;gap:8px}.play-button{display:flex;align-items:center;gap:7px;justify-content:center;background:var(--accent);color:var(--bg);padding:8px 13px;min-width:76px;border:0;border-radius:7px;font-size:12px;font-weight:700}.step-button{border:1px solid var(--line);background:transparent;border-radius:6px;font-size:23px;width:25px;height:31px;line-height:1}.timeline{flex:1;min-width:60px;padding-top:11px}.timeline input{width:100%;height:5px;display:block;margin:0}.timeline span{display:flex;justify-content:space-between;font-size:8px;color:var(--muted);margin-top:5px;font-variant-numeric:tabular-nums}.timeline b{font-weight:400}.time-input{font-size:10px;white-space:nowrap;color:var(--muted)}.time-input input{width:75px;font-size:11px;padding:5px 4px}.transport select{font-size:10px;padding:6px 4px}.transport .quiet{font-size:10px;padding:5px}.loop-label{font-size:9px;white-space:nowrap;color:var(--muted)}.travel-note{font-size:10px;padding:0 14px 13px;color:var(--muted);line-height:1.5}.panel{border:1px solid var(--line);border-radius:12px;background:var(--surface);min-width:0}.inspector{padding:18px}.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:15px}.panel-heading h2{font-size:14px}.pill{font-size:9px;padding:3px 7px;border:1px solid var(--line);border-radius:5px;color:var(--muted);white-space:nowrap}.segmented{display:flex;padding:3px;background:var(--bg);border-radius:7px;gap:2px;margin-bottom:17px}.segmented button{flex:1;padding:6px 5px;background:transparent;border:0;border-radius:5px;font-size:10px;color:var(--muted)}.segmented button.active{color:var(--ink);background:var(--raised)}.control-label{display:block;font-size:9px;letter-spacing:1.3px;color:var(--muted);margin-bottom:6px}.inspector select{width:100%;font-size:12px}.point-summary{display:flex;align-items:center;gap:7px;margin:21px 0 10px}.point-summary h3{margin:0;font-size:15px}.point-summary>span:last-child{margin-left:auto;color:var(--muted);font-size:11px}.selected-point-dot{background:var(--amber);height:7px;width:7px;border-radius:50%}.readout-block{padding:12px 0 13px;border-bottom:1px solid var(--line)}.readout-heading{display:flex;justify-content:space-between;font-size:9px;letter-spacing:1.2px}.readout-heading>span:last-child{letter-spacing:0;color:var(--muted)}.component-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;font-size:10px;font-variant-numeric:tabular-nums;margin-top:9px}.component-row.two{grid-template-columns:repeat(2,minmax(0,1fr))}.component-row span{display:block;min-width:0;white-space:nowrap}.component-row small{color:var(--muted);display:block;font-size:9px;margin-bottom:3px}.component-row b{font-weight:500;font-size:12px;overflow-wrap:anywhere}.magnitude{display:flex;align-items:baseline;gap:9px;margin-top:6px;font-variant-numeric:tabular-nums}.magnitude>span{font-size:29px;letter-spacing:-.6px;line-height:1.2}.magnitude small{font-size:11px;color:var(--muted)}.angular-readout{font-size:10px;color:var(--muted);margin-top:13px}.angular-readout .angular-row{display:flex;justify-content:space-between;gap:5px;margin:5px 0}.angular-row b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}.export-button{width:100%;font-size:10px;margin-top:16px;padding:8px}.point-note{font-size:10px;color:var(--amber);padding:9px 0;line-height:1.6}.probe-control{margin-top:11px}.probe-control>label{font-size:10px;display:flex;justify-content:space-between;color:var(--muted)}.probe-control>div{display:flex;align-items:center;gap:8px;margin-top:5px}.probe-control input[type=range]{width:100%}.probe-control input[type=number]{width:66px;font-size:11px;padding:4px 5px}.inputs-panel{padding:21px 22px;margin-top:21px}.input-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}.input-heading .eyebrow{margin-bottom:4px}.parameter-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px 24px}.parameter label{font-size:11px;display:block;color:var(--ink);margin-bottom:8px}.parameter-value{display:flex;align-items:center;gap:8px}.parameter-value input[type=number]{width:83px;font-size:14px;font-weight:500;padding:7px 8px}.parameter-value span{font-size:11px;color:var(--muted)}.parameter input[type=range]{display:block;width:100%;height:4px;margin:14px 0 4px}.assumption-note{font-size:11px;color:var(--muted);margin-top:18px;padding-top:15px;border-top:1px solid var(--line);line-height:1.75}.history-section{margin-top:28px}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:15px}.section-heading .eyebrow{margin-bottom:5px}.section-heading h2 span{color:var(--muted);font-size:13px;font-weight:400;padding-left:5px}.chart-actions{display:flex;align-items:center;gap:15px}.chart-actions>span{font-size:10px;color:var(--muted)}.chart-actions select{font-size:11px}.chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.chart-panel{background:var(--surface);border:1px solid var(--line);border-radius:11px;overflow:hidden}.chart-title{display:flex;justify-content:space-between;align-items:center;padding:15px 17px 4px;font-size:12px;gap:10px}.chart-title>span{display:flex;align-items:center;gap:7px}.chart-title small{font-size:10px;color:var(--muted);font-weight:400}.chart-title b{font-weight:500;font-size:11px;font-variant-numeric:tabular-nums}.chart-panel canvas{display:block;width:100%;height:206px;touch-action:none;cursor:crosshair}.results-grid{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(245px,1fr);gap:18px;margin-top:21px}.all-results{padding:19px 19px 14px}.muted{color:var(--muted);font-size:11px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:10px;text-align:left;white-space:nowrap}th{font-weight:500;color:var(--muted);font-size:9px;padding:8px 9px 9px 0;border-bottom:1px solid var(--line)}td{padding:10px 9px 10px 0;font-variant-numeric:tabular-nums;border-bottom:1px solid var(--line)}td:first-child{font-weight:600}td button{background:transparent;border:0;font-weight:600;padding:0;color:var(--accent)}tr.active td{color:var(--amber)}.body-results{display:flex;flex-wrap:wrap;gap:8px 20px;padding-top:14px;font-size:10px;color:var(--muted)}.body-results span{display:block}.body-results strong{font-weight:500;color:var(--ink)}.teaching-panel{padding:21px}.teaching-panel p{font-size:12px;color:var(--muted);line-height:1.8;margin:12px 0 16px}.equation-feature{font-size:15px;font-family:Georgia,serif;line-height:2}.term-readout{font-size:10px;margin-top:12px;color:var(--muted)}.term-row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;border-top:1px solid var(--line)}.term-row b{font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums}.method-panel{margin-top:21px}.method-panel summary{padding:18px 21px;cursor:pointer;font-size:13px;font-weight:600}.method-panel summary>span{font-size:10px;font-weight:400;color:var(--muted);float:right}.method-content{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:30px;padding:3px 21px 21px}.method-content p{font-size:12px;line-height:1.85;color:var(--muted)}.model-equations{border-left:2px solid var(--line);padding-left:14px;margin:17px 0;font-size:13px;line-height:1.9}.model-equations>div{margin:7px 0}.method-content .method-note{font-size:10px}.check-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:8px 0;border-bottom:1px solid var(--line);font-size:11px}.check-row .value{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}.check-row .pass{color:var(--green);font-size:9px;padding-left:8px}.check-row .fail{color:var(--coral);font-size:9px;padding-left:8px}footer{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:9px;padding:23px 1px 9px}dialog{padding:0;border:1px solid var(--line);border-radius:13px;background:var(--surface);color:var(--ink);max-height:92vh;max-width:94vw;width:820px;overflow:auto;box-shadow:var(--shadow)}dialog::backdrop{background:#03070cc9;backdrop-filter:blur(4px)}.modal-header{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:17px 20px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--surface);z-index:2}.modal-header h2{font-size:15px}#source-image{display:block;width:100%;height:auto}.help-content{display:grid;grid-template-columns:1fr 1fr;gap:23px 29px;padding:25px}.help-content b{font-size:13px}.help-content p{font-size:12px;line-height:1.8;color:var(--muted)}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%);background:var(--raised);border:1px solid var(--line);box-shadow:var(--shadow);padding:12px 19px;border-radius:10px;z-index:100;font-size:12px;max-width:90vw}.toast[hidden],[hidden]{display:none!important}
+@media(min-width:1550px){.workspace-grid{grid-template-columns:minmax(0,1fr) 320px}.scene-wrap{height:490px}.parameter-grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}.inspector{padding:22px}.magnitude>span{font-size:33px}.component-row b{font-size:14px}.app-layout{grid-template-columns:240px minmax(0,1fr)}main{padding:34px 36px 20px}}
+@media(max-width:1240px){.app-header{padding:17px 20px}.header-middle{display:none}.app-layout{grid-template-columns:190px minmax(0,1fr)}.sidebar{padding-left:10px;padding-right:10px}main{padding:25px 20px 15px}.workspace-grid{grid-template-columns:minmax(0,1fr) 250px;gap:13px}.inspector{padding:14px}.transport{gap:5px;padding:12px 10px}.transport .quiet{display:none}.loop-label{display:none}.scene-wrap{height:420px}.scene-legend{gap:9px}.display-options{gap:9px}.results-grid{grid-template-columns:1fr}.teaching-panel{display:grid;grid-template-columns:1fr 1fr;column-gap:25px}.teaching-panel .eyebrow,.teaching-panel h2{grid-column:1/-1}.teaching-panel p{grid-row:3/5;margin-bottom:0}.teaching-panel .equation-feature{margin-top:12px}.chart-actions>span{display:none}.nav-item{padding:11px 6px;gap:7px}.nav-name{font-size:11px}.magnitude>span{font-size:26px}.source-chips{margin-bottom:17px}}
+@media(max-width:1000px){.app-layout{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line);padding:15px 20px}.sidebar-title,.sidebar-bottom{display:none}#lab-nav{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px}.nav-item{min-width:170px;max-width:205px;flex-shrink:0;margin:0;padding:10px}.nav-meta{margin-top:3px}.workspace-grid{grid-template-columns:minmax(0,1fr) 270px}.scene-wrap{height:432px}.nav-number{display:block}.app-header{padding:15px 20px}.brand{font-size:23px}.transport .quiet{display:block}.loop-label{display:none}.scene-tools #save-png{display:none}.scene-topline{font-size:9px}.parameter-grid{grid-template-columns:repeat(auto-fit,minmax(165px,1fr))}}
+@media(max-width:760px){main{padding:22px 15px 12px}.header-actions{gap:8px}.offline{display:none}.header-actions .quiet{font-size:11px}.brand small{font-size:8px;letter-spacing:1.4px}.brand-mark{width:36px;height:36px}.brand{gap:9px;font-size:21px}.app-header{padding:13px 15px}.sidebar{padding:12px 15px}.example-heading{align-items:flex-start;gap:10px}h1{font-size:25px}.example-heading p{font-size:12px}.snapshot-button{font-size:10px;padding:7px 9px;margin-top:8px}.workspace-grid{grid-template-columns:1fr}.scene-wrap{height:420px}.inspector{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 18px;padding:17px}.inspector .panel-heading,.inspector .segmented,.inspector #named-controls,.inspector #probe-controls,.inspector .point-summary,.inspector .point-note{grid-column:1/-1}.inspector .segmented{max-width:340px;margin-bottom:13px}.inspector #named-controls{display:flex;align-items:center;gap:15px}.inspector #named-controls label{margin:0;white-space:nowrap}.inspector #named-controls select{max-width:330px}.inspector #probe-controls>select{max-width:350px}.inspector #probe-sliders{display:flex;gap:15px;flex-wrap:wrap}.probe-control{flex:1;min-width:150px}.inspector .point-summary{margin-top:17px}.inspector .readout-block{border-top:1px solid var(--line)}.inspector .angular-readout{grid-column:1/3;margin-top:10px}.inspector .export-button{grid-column:3;align-self:end;font-size:9px;white-space:normal;margin-top:10px}.component-row{grid-template-columns:1fr!important;gap:3px}.component-row span{display:flex;gap:8px;align-items:baseline}.component-row b{font-size:11px}.component-row small{margin:0}.magnitude>span{font-size:25px}.inputs-panel{padding:18px}.parameter-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px}.method-content{grid-template-columns:1fr;gap:23px}.chart-grid{gap:12px}.chart-title{padding:13px 13px 3px;font-size:11px}.chart-title small{font-size:9px}.chart-title b{font-size:10px}.chart-panel canvas{height:190px}.help-content{grid-template-columns:1fr}footer{flex-direction:column;gap:5px}.scene-tools #save-png{display:block}}
+@media(max-width:500px){.example-heading{flex-wrap:wrap}.snapshot-button{margin:2px 0 0}.source-chips{margin:12px 0 16px}.scene-wrap{height:370px}.scene-toolbar{padding:10px}.time-chip{font-size:10px;margin-left:1px;padding-left:6px}.scene-tools{gap:0}.scene-tools button{font-size:9px;padding:3px 4px}.display-options{padding:10px;font-size:9px;gap:9px 12px}.display-options .gain{margin-left:0}.transport{flex-wrap:wrap;gap:7px}.transport .timeline{order:8;flex-basis:100%;padding-top:9px}.transport .time-input{margin-left:auto}.transport .quiet{display:block}.loop-label{display:block}.play-button{padding:7px 11px;min-width:74px}.scene-topline{left:12px;right:10px}.scene-legend{left:12px;font-size:9px;gap:9px;flex-wrap:wrap}.scale-note{left:12px;font-size:8px}.inspector{gap:0 12px}.inspector .export-button{grid-column:1/-1}.magnitude>span{font-size:23px}.magnitude{gap:5px}.magnitude small{font-size:9px}.readout-heading{font-size:8px;letter-spacing:.6px}.readout-heading>span:last-child{font-size:8px}.chart-grid{grid-template-columns:1fr}.section-heading{gap:10px}.chart-actions select{max-width:125px;font-size:10px}.section-heading h2{font-size:15px}.section-heading .eyebrow{font-size:8px}.teaching-panel{display:block}.method-panel summary{font-size:12px;padding:16px}.method-panel summary>span{display:none}.method-content{padding:3px 16px 17px}.all-results{padding:16px}.parameter label{font-size:10px}.parameter-value input[type=number]{width:76px;font-size:13px}.inputs-panel{padding:17px}.check-row{font-size:10px}.chart-panel canvas{height:202px}.source-chip{font-size:9px}.brand{font-size:20px}.brand small{font-size:7px}.header-actions .quiet{padding:6px 4px;font-size:10px}.header-actions{gap:6px}.icon-button{width:30px;height:30px}.offline{display:none}.parameter-value span{font-size:10px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}button{transition:none}}
+
+.sidebar{min-width:0}
+.mechanism-metrics{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 18px}
+.mechanism-metrics>div{font-size:10px;display:flex;flex-direction:column;gap:3px;color:var(--muted)}
+.mechanism-metrics b{font-size:12px;color:var(--ink);font-variant-numeric:tabular-nums;font-weight:500}
+.mechanism-metrics small{font-size:10px;color:var(--muted);font-weight:400}
+@media(max-width:1000px){.app-layout{grid-template-columns:minmax(0,1fr)}}
+
+</style>
+</head>
+<body>
+<header class="app-header">
+ <a class="brand" href="#main"><span class="brand-mark" aria-hidden="true"><i></i><i></i><b></b></span><span>Kinematics <strong>in Motion</strong><small>RIGID-BODY KINEMATICS</small></span></a>
+ <div class="header-middle">TEXTBOOK PROBLEMS, <b>BROUGHT TO LIFE</b></div>
+ <div class="header-actions"><span class="offline"><i></i> Works offline</span><button id="theme" class="icon-button" aria-label="Toggle light and dark theme" title="Toggle light and dark theme">◐</button><button id="help" class="quiet">How to explore</button></div>
+</header>
+<div class="app-layout">
+ <aside class="sidebar" aria-label="Example navigation">
+  <div class="sidebar-title"><span>THE EXAMPLES</span><span id="lab-count">09</span></div>
+  <nav id="lab-nav"></nav>
+  <div class="sidebar-bottom"><div class="tiny-eyebrow">THE TWO-POINT FORMULA</div><div class="mini-equation">v<sub>P</sub> = v<sub>O</sub> + ω × r<sub>P/O</sub></div><div class="mini-equation">a<sub>P</sub> = a<sub>O</sub> + α × r<sub>P/O</sub><br><span>+ ω × (ω × r<sub>P/O</sub>)</span></div><p>Pick a point. Follow its motion.<br>See every term come to life.</p></div>
+ </aside>
+ <main id="main">
+  <section class="example-heading"><div><div class="eyebrow" id="example-kicker"></div><h1 id="example-title"></h1><p id="example-subtitle"></p></div><button class="button snapshot-button" id="example-reset">↺ Reset example</button></section>
+  <div class="workspace-grid">
+   <section class="scene-panel" aria-label="Interactive mechanism">
+    <div class="scene-toolbar"><div class="live-label"><i id="motion-dot"></i><span id="motion-status">PAUSED</span><span class="time-chip" id="time-chip">t = 0.000 s</span></div><div class="scene-tools"><button id="zoom-out" aria-label="Zoom out">−</button><button id="zoom-in" aria-label="Zoom in">+</button><button id="fit-view">Fit view</button><button id="save-png" title="Download the current scene as a PNG">PNG ↓</button></div></div>
+    <div id="scene-wrap" class="scene-wrap"><canvas id="scene" aria-label="Animated rigid bodies, points, velocity and acceleration arrows">Your browser needs Canvas support to display this simulation.</canvas><div class="scene-topline"><span id="scene-caption">Click a joint or a body to inspect it</span><select id="view-preset" aria-label="3D camera preset"><option value="iso">Isometric</option><option value="xy">XY plane</option><option value="xz">XZ plane</option><option value="yz">YZ plane</option></select></div><div id="scene-message" class="scene-message" hidden></div><div class="scene-legend"><span><i class="swatch velocity"></i>Velocity v</span><span><i class="swatch acceleration"></i>Acceleration a</span><span id="decomp-legend" hidden><i class="swatch tangent"></i>Tangential <i class="swatch normal"></i>Normal</span></div><div id="scale-note" class="scale-note"></div></div>
+    <div class="display-options"><label><input type="checkbox" id="show-v" checked> v vectors</label><label><input type="checkbox" id="show-a" checked> a vectors</label><label><input type="checkbox" id="all-vectors"> All points</label><label><input type="checkbox" id="show-terms"> a terms</label><label><input type="checkbox" id="show-trail" checked> Trajectory</label><label><input type="checkbox" id="show-field"> Point field</label><label id="ic-label"><input type="checkbox" id="show-ic"> Instant center</label><label id="follow-label"><input type="checkbox" id="follow-center"> Follow wheel</label><label class="gain">Arrow scale <input type="range" id="vector-gain" min="0.2" max="2.5" step="0.05" value="1" aria-label="Arrow scale"></label></div>
+    <div class="transport"><button class="play-button" id="play" aria-label="Play animation">▶ <span>Play</span></button><button class="step-button" id="step-back" aria-label="Step backward">‹</button><button class="step-button" id="step-forward" aria-label="Step forward">›</button><button class="quiet" id="restart" title="Restart this time window, keeping input settings">Start</button><label class="timeline"><input type="range" id="timeline" min="0" max="1" value="0" step="0.00001" aria-label="Simulation time"><span><b id="time-min"></b><b id="time-max"></b></span></label><label class="time-input"><input id="time-number" type="number" step="0.001" aria-label="Exact simulation time"> s</label><select id="playback" aria-label="Playback speed" title="Playback speed only; 1× is real time"><option value="0.005">0.005×</option><option value="0.01">0.01×</option><option value="0.025">0.025×</option><option value="0.05">0.05×</option><option value="0.1">0.1×</option><option value="0.25" selected>0.25×</option><option value="0.5">0.5×</option><option value="1">1×</option><option value="2">2×</option></select><label class="loop-label"><input type="checkbox" id="loop"> Loop</label></div>
+    <div class="travel-note" id="travel-note"></div>
+   </section>
+   <aside class="inspector panel" aria-label="Point inspector">
+    <div class="panel-heading"><h2>Point inspector</h2><span class="pill" id="dimension-badge">2D</span></div>
+    <div class="segmented" id="inspect-mode"><button data-mode="named" class="active">Named points</button><button data-mode="probe">Place a point</button></div>
+    <div id="named-controls"><label class="control-label" for="point-select">FOLLOW A POINT</label><select id="point-select"></select></div>
+    <div id="probe-controls" hidden><label class="control-label" for="body-select">RIGID BODY</label><select id="body-select"></select><div id="probe-sliders"></div></div>
+    <div class="point-summary"><span class="selected-point-dot"></span><h3 id="point-title">Point A</h3><span id="point-unit"></span></div>
+    <div id="point-note" class="point-note" hidden></div>
+    <div class="readout-block"><div class="readout-heading"><span>POSITION</span><span id="position-unit"></span></div><div class="component-row" id="position-readout"></div></div>
+    <div class="readout-block"><div class="readout-heading"><span class="velocity-text">VELOCITY</span><span id="velocity-unit"></span></div><div class="magnitude"><span id="speed-value"></span><small>|v|</small></div><div class="component-row" id="velocity-readout"></div></div>
+    <div class="readout-block"><div class="readout-heading"><span class="acceleration-text">ACCELERATION</span><span id="acceleration-unit"></span></div><div class="magnitude"><span id="accel-value"></span><small>|a|</small></div><div class="component-row" id="acceleration-readout"></div></div>
+    <div id="body-readout" class="angular-readout"></div>
+    <button id="export-csv" class="button export-button">Download point history · CSV ↓</button>
+   </aside>
+  </div>
+  <section class="inputs-panel panel"><div class="input-heading"><div><div class="eyebrow">CHANGE THE EXPERIMENT</div><h2>Motion inputs</h2></div><span id="input-state" class="pill">Default inputs</span></div><div id="parameter-controls" class="parameter-grid"></div><div id="assumption-note" class="assumption-note"></div></section>
+  <section class="history-section"><div class="section-heading"><div><div class="eyebrow">FOLLOW THE NUMBERS</div><h2>Point history <span id="chart-point-name"></span></h2></div><div class="chart-actions"><span>Click or drag a plot to scrub time</span><select id="chart-mode" aria-label="Chart quantity"><option value="magnitude">Magnitude</option><option value="components">Components x / y / z</option></select></div></div><div class="chart-grid"><div class="chart-panel"><div class="chart-title"><span><i class="swatch velocity"></i>Velocity <small id="v-chart-unit"></small></span><b id="v-chart-current"></b></div><canvas id="v-chart" aria-label="Selected point velocity versus time"></canvas></div><div class="chart-panel"><div class="chart-title"><span><i class="swatch acceleration"></i>Acceleration <small id="a-chart-unit"></small></span><b id="a-chart-current"></b></div><canvas id="a-chart" aria-label="Selected point acceleration versus time"></canvas></div></div></section>
+  <section class="results-grid"><div class="panel all-results"><div class="panel-heading"><h2>All labeled points</h2><span class="muted" id="table-units">Current instant</span></div><div class="table-wrap"><table><thead><tr><th>Point</th><th>Velocity components</th><th>|v|</th><th>Acceleration components</th><th>|a|</th></tr></thead><tbody id="all-points-body"></tbody></table></div><div class="body-results" id="all-bodies"></div><div class="mechanism-metrics" id="mechanism-metrics"></div></div><div class="panel teaching-panel"><div class="eyebrow">LOOK CLOSER</div><h2 id="teaching-title">What to notice</h2><p id="teaching-text"></p><div class="equation-feature">a<sub>P</sub> = <span class="base-text">a<sub>O</sub></span> + <span class="tangent-text">α × r</span> + <span class="normal-text">ω × (ω × r)</span></div><div id="term-readout" class="term-readout"></div></div></section>
+  <details class="method-panel panel" open><summary>The problem, equations & reference check <span>Rigid-body model</span></summary><div class="method-content"><div><h3>Problem & motion model</h3><p id="problem-description"></p><div id="model-equations" class="model-equations"></div><p class="method-note">Velocities and accelerations are evaluated from the constrained geometry and rigid-body formulas. Input acceleration defines the drive; animation speed changes only playback. Links are ideal rigid bodies. No force or flexibility model is implied.</p></div><div><h3>At the reference snapshot</h3><p class="muted">These checks use the original inputs, even while you explore other settings.</p><div id="reference-checks"></div><p id="check-footnote" class="muted"></p></div></div></details>
+  <footer>Kinematics in Motion · Nine textbook problems brought to life.<span>Space: play / pause · ← →: step · All calculations run locally</span></footer>
+ </main>
+</div>
+<dialog id="help-modal"><div class="modal-header"><h2>Explore motion, one point at a time.</h2><button id="close-help" class="button">Close ×</button></div><div class="help-content"><div><b>01 · Choose an example</b><p>The sidebar contains nine distinct examples. Choose any example to explore its motion, velocity, and acceleration.</p></div><div><b>02 · Freeze any instant</b><p>Play, pause, step, enter an exact time, or drag the timeline. Click either chart to jump to that moment. “Reset example” restores the original inputs and illustrated configuration.</p></div><div><b>03 · Pick a material point</b><p>Click a labeled point or a rod. Use “Place a point” for a location along any link, inside a wheel, or on the sphere. That point stays attached to its body. For 3D scenes, drag to orbit; the view selector provides coordinate-plane views.</p></div><div><b>04 · Change the drive</b><p>Type a velocity or acceleration or use its slider. Values are signed in the directions shown. Initial values apply at t = 0; the sphere reaches the illustrated state later. A travel limit ends playback before a linkage becomes singular.</p></div><div><b>05 · Read the vectors</b><p>Cyan arrows show velocity; coral arrows show acceleration. Optional amber and violet arrows separate tangential and normal acceleration. Each quantity uses one fixed scale during playback, listed on the canvas. A dashed capped arrow means it exceeds the visible scale.</p></div><div><b>06 · Watch rolling contact carefully</b><p>A tracked point A or B is one material particle. K is the wheel particle currently touching the ground or belt; its identity changes with time. Its velocity can vanish while its upward acceleration remains nonzero. Its contact-location history is labeled accordingly.</p></div></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+<script>
+'use strict';
+const LABS=[];
+const K=(()=>{
+ const j=(x,d=0,dd=0)=>typeof x==='object'?x:{x,d,dd};
+ const add=(a,b)=>{a=j(a);b=j(b);return j(a.x+b.x,a.d+b.d,a.dd+b.dd)};
+ const sub=(a,b)=>{a=j(a);b=j(b);return j(a.x-b.x,a.d-b.d,a.dd-b.dd)};
+ const mul=(a,b)=>{a=j(a);b=j(b);return j(a.x*b.x,a.d*b.x+a.x*b.d,a.dd*b.x+2*a.d*b.d+a.x*b.dd)};
+ const unary=(a,f,df,ddf)=>{a=j(a);return j(f(a.x),df(a.x)*a.d,ddf(a.x)*a.d*a.d+df(a.x)*a.dd)};
+ const div=(a,b)=>mul(a,unary(b,x=>1/x,x=>-1/(x*x),x=>2/(x*x*x)));
+ const neg=a=>mul(a,-1);
+ const sqrt=a=>unary(a,Math.sqrt,x=>.5/Math.sqrt(x),x=>-.25/Math.pow(x,1.5));
+ const sin=a=>unary(a,Math.sin,Math.cos,x=>-Math.sin(x));
+ const cos=a=>unary(a,Math.cos,x=>-Math.sin(x),x=>-Math.cos(x));
+ const sinh=a=>unary(a,Math.sinh,Math.cosh,Math.sinh);
+ const cosh=a=>unary(a,Math.cosh,Math.sinh,Math.cosh);
+ const atan2=(y,x)=>{x=j(x);y=j(y);const r2=x.x*x.x+y.x*y.x,c=x.x*y.d-y.x*x.d;return j(Math.atan2(y.x,x.x),c/r2,(x.x*y.dd-y.x*x.dd)/r2-c*2*(x.x*x.d+y.x*y.d)/(r2*r2))};
+ const drive=(q0,v0,a,t)=>j(q0+v0*t+.5*a*t*t,v0+a*t,a);
+ const plus=(a,b)=>a.map((x,i)=>x+b[i]);
+ const minus=(a,b)=>a.map((x,i)=>x-b[i]);
+ const scale=(a,k)=>a.map(x=>x*k);
+ const dot=(a,b)=>a.reduce((s,x,i)=>s+x*b[i],0);
+ const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+ const norm=a=>Math.hypot(...a);
+ const mv=(R,v)=>[dot(R.slice(0,3),v),dot(R.slice(3,6),v),dot(R.slice(6,9),v)];
+ const Rz=t=>[Math.cos(t),-Math.sin(t),0,Math.sin(t),Math.cos(t),0,0,0,1];
+ const Ry=t=>[Math.cos(t),0,Math.sin(t),0,1,0,-Math.sin(t),0,Math.cos(t)];
+ const Rx=t=>[1,0,0,0,Math.cos(t),-Math.sin(t),0,Math.sin(t),Math.cos(t)];
+ const point=(id,label,x,y,z=0,body)=>{const a=[x,y,z].map(v=>j(v));return {id,label,p:a.map(v=>v.x),v:a.map(v=>v.d),a:a.map(v=>v.dd),body}};
+ const fixed=(id,label,p)=>point(id,label,...p);
+ const frame=(id,label,O,q,colorIndex=0)=>{q=j(q);return {id,label,origin:O.p,v:O.v,a:O.a,omega:[0,0,q.d],alpha:[0,0,q.dd],R:Rz(q.x),kind:'rod',colorIndex}};
+ const link=(id,label,P,Q,colorIndex=0)=>{
+  const r=minus(Q.p,P.p),v=minus(Q.v,P.v),a=minus(Q.a,P.a),l2=dot(r,r),w=cross(r,v)[2]/l2;
+  const al=cross(r,a)[2]/l2-2*dot(r,v)*w/l2;
+  return {...frame(id,label,P,j(Math.atan2(r[1],r[0]),w,al),colorIndex),length:Math.sqrt(l2),path:[[0,0,0],[Math.sqrt(l2),0,0]]};
+ };
+ const onBody=(b,local,id='probe',label='P*')=>{
+  const r=mv(b.R,local),t=cross(b.alpha,r),n=cross(b.omega,cross(b.omega,r));
+  return {id,label,body:b.id,local,p:plus(b.origin,r),v:plus(b.v,cross(b.omega,r)),a:plus(b.a,plus(t,n)),decomposition:{base:b.a,tangential:t,normal:n}};
+ };
+ return {j,add,sub,mul,div,neg,sqrt,sin,cos,atan2,sinh,cosh,drive,point,fixed,frame,link,onBody,Rz,Ry,Rx,mv,cross,dot,norm,plus,minus,scale};
+})();
+
+/* Exact planar rigid-body kinematics, standalone registrations. */
+(function () {
+  'use strict';
+  const SQ = Math.SQRT1_2;
+  const getPoint = (s,id) => s.points.find(x=>x.id===id);
+  const getBody = (s,id) => s.bodies.find(x=>x.id===id);
+  const param = (key,label,unit,value,min,max,step) => ({key,label,unit,value,min,max,step});
+  const jDot = (ax,ay,bx,by) => K.add(K.mul(ax,bx),K.mul(ay,by));
+
+  // Earliest encounter with either endpoint for a quadratic drive. A small
+  // margin ends a displayed stroke before a toggle or physical guide end.
+  function driveWindow(q,v,a,lo,hi,cap,margin) {
+    let first=cap;
+    for (const bound of [lo,hi]) {
+      const d=bound-q;
+      if (Math.abs(a)<1e-12) {
+        if (Math.abs(v)>1e-12) {const r=d/v; if(r>1e-10)first=Math.min(first,r);}
+      } else {
+        const disc=v*v+2*a*d;
+        if(disc>=0) {
+          const r=Math.sqrt(disc);
+          for(const t of [(-v+r)/a,(-v-r)/a])if(t>1e-10)first=Math.min(first,t);
+        }
+      }
+    }
+    return first<cap ? first*(margin===undefined?.985:margin) : cap;
+  }
+
+  function assignMaterial(point,body,local) {point.body=body;point.local=local;return point;}
+  function circleSlider(Ax,Ay,P,d,L) {
+    const ux=K.sub(P[0],Ax),uy=K.sub(P[1],Ay);
+    const ud=K.add(K.mul(ux,d[0]),K.mul(uy,d[1]));
+    const disc=K.sub(K.mul(ud,ud),K.sub(K.add(K.mul(ux,ux),K.mul(uy,uy)),L*L));
+    if(disc.x<=1e-10)return null;
+    const s=K.add(K.neg(ud),K.sqrt(disc));
+    return {x:K.add(P[0],K.mul(d[0],s)),y:K.add(P[1],K.mul(d[1],s)),s,disc:disc.x};
+  }
+
+  // 21 / Example 1 ---------------------------------------------------------
+  const R=.5;
+  function beltTime(p) {
+    return Math.min(4,4/Math.max(1,Math.abs(p.belt-R*p.w),Math.sqrt(2*Math.abs(p.beltA-R*p.alpha))));
+  }
+  function beltBounds(p) {
+    const T=beltTime(p),u=p.belt-R*p.w,a=p.beltA-R*p.alpha;
+    const xs=[0,u*T+.5*a*T*T];
+    if(Math.abs(a)>1e-12) {const tv=-u/a;if(tv>0&&tv<T)xs.push(u*tv+.5*a*tv*tv);}
+    return [Math.min(...xs)-.9,Math.max(...xs)+.9,-.55,1.5];
+  }
+  function beltCompute(t,p) {
+    const theta=K.drive(0,p.w,p.alpha,t),belt=K.drive(0,p.belt,p.beltA,t);
+    const xo=K.sub(belt,K.mul(R,theta));
+    const O=assignMaterial(K.point('O','O',xo,R,0,'wheel'),'wheel',[0,0,0]);
+    const body=Object.assign(K.frame('wheel','Cylinder',O,theta,0),{kind:'disk',radius:R});
+    const A=K.onBody(body,[-R,0,0],'A','A');
+    const B=K.onBody(body,[0,-R,0],'B','B');
+    const T=K.onBody(body,[0,R,0],'T','T');
+    // This is a material velocity/acceleration evaluated at today's contact
+    // location, not the time derivative of the changing geometric contact.
+    const contactLocal=K.mv(K.Rz(-theta.x),[0,-R,0]);
+    const C=K.onBody(body,contactLocal,'K','K');
+    C.dynamicIdentity=true;
+    C.instantaneous=true;
+    C.note='Current contact location: the displayed velocity and acceleration belong to the material point occupying K now. Successive times select different material points.';
+    const bounds=beltBounds(p);
+    return {valid:true,points:[O,A,B,T,C],bodies:[body],
+      guides:[{kind:'belt',a:[bounds[0],0,0],b:[bounds[1],0,0],offset:belt.x,label:'Conveyor'}],
+      metrics:[{label:'Belt speed',value:belt.d,unit:'ft/s'},{label:'ω cylinder',value:theta.d,unit:'rad/s'},
+        {label:'α cylinder',value:theta.dd,unit:'rad/s²'},{label:'Contact slip velocity',value:C.v[0]-belt.d,unit:'ft/s'}],
+      status:'B is the material point that touched the belt at t = 0. K is the current contact location; its material identity changes as the cylinder rolls.'};
+  }
+  LABS.push({id:'belt-cylinder',title:'Cylinder on a conveyor',subtitle:'Rolling contact + rigid-body velocity',
+unit:'ft',dimension:2,
+    description:'A cylinder of radius <b>0.5 ft</b> rolls without slipping on a conveyor moving right at <b>2 ft/s</b>. At the reference snapshot the cylinder rotates clockwise at <b>15 rad/s</b>, and A is the leftmost rim point. Find the velocity of A, then explore the entire disk.',
+    assumptions:'The problem gives instantaneous velocities. The animation continues with the selected constant belt acceleration and constant angular acceleration, both initially zero. Positive angular values mean counterclockwise. B follows a fixed material point; K shows the material velocity and acceleration at the current contact location.',
+    equations:['v<sub>O,x</sub> = u<sub>belt</sub> − Rω','a<sub>O,x</sub> = a<sub>belt</sub> − Rα',
+      'v<sub>P</sub> = v<sub>O</sub> + ω × r<sub>P/O</sub>','a<sub>P</sub> = a<sub>O</sub> + α × r<sub>P/O</sub> − ω²r<sub>P/O</sub>'],
+    teaching:'No slip equates contact velocities, not material accelerations. At the reference pose B has upward acceleration 112.5 ft/s² even though the belt acceleration is zero.',
+    params:[param('w','Initial cylinder angular velocity','rad/s',-15,-30,30,.5),param('alpha','Cylinder angular acceleration','rad/s²',0,-40,40,.5),
+      param('belt','Initial belt velocity →','ft/s',2,-10,10,.1),param('beltA','Belt acceleration →','ft/s²',0,-15,15,.2)],
+    time:{min:0,max:beltTime,initial:0,reference:0},defaultPoint:'A',defaultBody:'wheel',bounds:beltBounds,compute:beltCompute,
+    checks:[{label:'v A · x',get:s=>getPoint(s,'A').v[0],expected:9.5,tolerance:1e-8,unit:'ft/s'},
+      {label:'v A · y',get:s=>getPoint(s,'A').v[1],expected:7.5,tolerance:1e-8,unit:'ft/s'},
+      {label:'|v A|',get:s=>K.norm(getPoint(s,'A').v),expected:Math.sqrt(146.5),tolerance:1e-8,unit:'ft/s'},
+      {label:'v B · x (no slip)',get:s=>getPoint(s,'B').v[0],expected:2,tolerance:1e-8,unit:'ft/s'},
+      {label:'a B · y (continued drive)',get:s=>getPoint(s,'B').a[1],expected:112.5,tolerance:1e-8,unit:'ft/s²'}]});
+
+  // 21 / Example 2 ---------------------------------------------------------
+  const SL=.2,SY=SL*SQ;
+  function slotsTime(p) {return driveWindow(SY,-p.v,-p.acc,0,SL,2,.98);}
+  function slotsCompute(t,p) {
+    const y=K.drive(SY,-p.v,-p.acc,t);
+    if(y.x<0 || y.x>=SL-1e-9)return {valid:false,reason:'The rod has reached the end of a guide or its vertical toggle. Reverse or reset the drive.'};
+    const x=K.sqrt(K.sub(SL*SL,K.mul(y,y)));
+    const A=assignMaterial(K.point('A','A',0,y,0,'ABC'),'ABC',[0,0,0]);
+    const B=assignMaterial(K.point('B','B',x,0,0,'ABC'),'ABC',[.2,0,0]);
+    const C=assignMaterial(K.point('C','C',K.mul(1.5,x),K.mul(-.5,y),0,'ABC'),'ABC',[.3,0,0]);
+    const body=K.link('ABC','Rod ABC',A,C,0);
+    return {valid:true,points:[A,B,C],bodies:[body],
+      guides:[{kind:'line',a:[0,-.025,0],b:[0,.245,0],label:'A · vertical slot'},
+        {kind:'line',a:[-.03,0,0],b:[.34,0,0],label:'B · horizontal slot'}],
+      metrics:[{label:'ω ABC',value:body.omega[2],unit:'rad/s'},{label:'α ABC',value:body.alpha[2],unit:'rad/s²'},
+        {label:'θ from downward vertical',value:Math.atan2(x.x,y.x)*180/Math.PI,unit:'°'},
+        {label:'A speed downward',value:-y.d,unit:'m/s'}],
+      status:'AB = 0.2 m and BC = 0.1 m remain rigid. A moves vertically, B horizontally; the small mechanism needs slow playback.'};
+  }
+  LABS.push({id:'perpendicular-slots',title:'A rod in perpendicular slots',subtitle:'Two constrained velocities determine rotation',
+unit:'m',dimension:2,
+    description:'Rigid rod ABC has <b>AB = 0.2 m</b> and <b>BC = 0.1 m</b>. A slides vertically and B horizontally. At the reference pose θ = <b>45°</b>, and A moves down at <b>2 m/s</b>. Find B’s velocity and inspect C or any material point on the rod.',
+    assumptions:'The problem specifies A’s instantaneous speed. Continue A with the selected constant acceleration, initially zero. A positive input speed or acceleration points downward. The stroke stops before a slot end or toggle; it does not repeat through an impossible geometry.',
+    equations:['x<sub>B</sub>² + y<sub>A</sub>² = (0.2 m)²','v<sub>B</sub> = v<sub>A</sub> + ω × r<sub>B/A</sub>',
+      'a<sub>B</sub> = a<sub>A</sub> + α × r<sub>B/A</sub> − ω²r<sub>B/A</sub>',
+      'r<sub>C</sub> = r<sub>A</sub> + 1.5(r<sub>B</sub> − r<sub>A</sub>)'],
+    teaching:'A constant speed at A does not give constant angular speed. At the snapshot ω = 14.142 rad/s while α = −200 rad/s² for the zero input-acceleration continuation.',
+    params:[param('v','Initial A velocity ↓','m/s',2,-4,4,.1),param('acc','A acceleration ↓','m/s²',0,-30,30,.5)],
+    time:{min:0,max:slotsTime,initial:0,reference:0},defaultPoint:'B',defaultBody:'ABC',bounds:[-.06,.36,-.15,.265],compute:slotsCompute,
+    checks:[{label:'v B · x',get:s=>getPoint(s,'B').v[0],expected:2,tolerance:1e-8,unit:'m/s'},
+      {label:'ω ABC',get:s=>getBody(s,'ABC').omega[2],expected:10*Math.SQRT2,tolerance:1e-8,unit:'rad/s'},
+      {label:'v C · y',get:s=>getPoint(s,'C').v[1],expected:1,tolerance:1e-8,unit:'m/s'},
+      {label:'α ABC (continued drive)',get:s=>getBody(s,'ABC').alpha[2],expected:-200,tolerance:1e-7,unit:'rad/s²'},
+      {label:'a B · x (continued drive)',get:s=>getPoint(s,'B').a[0],expected:-40*Math.SQRT2,tolerance:1e-7,unit:'m/s²'}]});
+
+  // 21 / Example 3; 22 p1; 24 p3 ------------------------------------------
+  function fourTime(p) {return Math.min(4,2*Math.PI/Math.max(1,Math.abs(p.w),Math.sqrt(Math.abs(p.alpha)*2)));}
+  function fourCompute(t,p) {
+    const theta=K.drive(Math.PI/2,p.w,p.alpha,t);
+    const ax=K.cos(theta),ay=K.sin(theta);
+    const ux=K.sub(4,ax),uy=K.neg(ay);
+    const d=K.sqrt(K.add(K.mul(ux,ux),K.mul(uy,uy)));
+    const ex=K.div(ux,d),ey=K.div(uy,d);
+    const c=K.div(K.add(9,K.mul(d,d)),K.mul(2,d));
+    const h2=K.sub(25,K.mul(c,c));
+    if(h2.x<=1e-10)return {valid:false,reason:'The four-bar has reached a circle-intersection toggle.'};
+    const h=K.sqrt(h2);
+    const bx=K.sub(K.add(ax,K.mul(c,ex)),K.mul(h,ey));
+    const by=K.add(K.add(ay,K.mul(c,ey)),K.mul(h,ex));
+    const C=K.fixed('C','C',[0,0,0]),D=K.fixed('D','D',[4,0,0]);
+    const A=K.point('A','A',ax,ay),B=K.point('B','B',bx,by);
+    const ca=K.link('CA','Input crank CA',C,A,0),ab=K.link('AB','Connecting rod AB',A,B,1),db=K.link('DB','Output rocker DB',D,B,2);
+    return {valid:true,points:[C,A,B,D],bodies:[ca,ab,db],
+      guides:[{kind:'ground',a:[-1.4,-.08,0],b:[6.8,-.08,0]},
+        {kind:'pivot',p:[0,0,0]},{kind:'pivot',p:[4,0,0]},
+        {kind:'circle',c:[0,0,0],r:1}],
+      metrics:[{label:'ω CA',value:ca.omega[2],unit:'rad/s'},{label:'ω AB',value:ab.omega[2],unit:'rad/s'},
+        {label:'ω DB',value:db.omega[2],unit:'rad/s'},{label:'α AB',value:ab.alpha[2],unit:'rad/s²'},
+        {label:'α DB',value:db.alpha[2],unit:'rad/s²'}],
+      status:Math.abs(ab.omega[2])<1e-7?'At this instant AB translates with ωAB = 0. It can still have nonzero angular acceleration.':'Each pin has one shared velocity and acceleration, while its connected bars have different angular rates.'};
+  }
+  LABS.push({id:'four-bar',title:'Four-bar linkage',subtitle:'Three rigid bodies, shared pin motion',
+unit:'m',dimension:2,
+    description:'Fixed pivots C and D are <b>4 m</b> apart. The input crank CA is <b>1 m</b>, AB is <b>5 m</b>, and DB is <b>4 m</b>. Initially CA and DB point straight up, and CA rotates clockwise at <b>6 rad/s</b>. Determine B’s motion and the two unknown bar rotations.',
+    assumptions:'The selected input angular acceleration is held constant; its default is zero. Positive angular quantities mean counterclockwise. The circle-intersection branch remains the same throughout the animation.',
+    equations:['|r<sub>A</sub> − r<sub>C</sub>| = 1 m; |r<sub>B</sub> − r<sub>A</sub>| = 5 m; |r<sub>B</sub> − r<sub>D</sub>| = 4 m',
+      'v<sub>B</sub> = v<sub>A</sub> + ω<sub>AB</sub> × r<sub>B/A</sub> = ω<sub>DB</sub> × r<sub>B/D</sub>',
+      'a<sub>B</sub> = a<sub>A</sub> + α<sub>AB</sub> × r<sub>B/A</sub> − ω<sub>AB</sub>²r<sub>B/A</sub>',
+      'a<sub>B</sub> = α<sub>DB</sub> × r<sub>B/D</sub> − ω<sub>DB</sub>²r<sub>B/D</sub>'],
+    teaching:'At the reference pose A and B both move right at 6 m/s, so AB has zero instantaneous angular velocity. Its angular acceleration is nevertheless +6.75 rad/s² when the crank speed is constant.',
+    params:[param('w','Initial CA angular velocity','rad/s',-6,-12,12,.2),param('alpha','CA angular acceleration','rad/s²',0,-20,20,.5)],
+    time:{min:0,max:fourTime,initial:0,reference:0},defaultPoint:'B',defaultBody:'AB',bounds:[-1.5,8.5,-1.6,5.1],compute:fourCompute,
+    checks:[{label:'v A · x',get:s=>getPoint(s,'A').v[0],expected:6,tolerance:1e-8,unit:'m/s'},
+      {label:'v B · x',get:s=>getPoint(s,'B').v[0],expected:6,tolerance:1e-8,unit:'m/s'},
+      {label:'ω AB',get:s=>getBody(s,'AB').omega[2],expected:0,tolerance:1e-8,unit:'rad/s'},
+      {label:'ω DB',get:s=>getBody(s,'DB').omega[2],expected:-1.5,tolerance:1e-8,unit:'rad/s'},
+      {label:'a B · x (continued drive)',get:s=>getPoint(s,'B').a[0],expected:-20.25,tolerance:1e-7,unit:'m/s²'},
+      {label:'a B · y (continued drive)',get:s=>getPoint(s,'B').a[1],expected:-9,tolerance:1e-7,unit:'m/s²'},
+      {label:'α AB (continued drive)',get:s=>getBody(s,'AB').alpha[2],expected:6.75,tolerance:1e-7,unit:'rad/s²'},
+      {label:'α DB (continued drive)',get:s=>getBody(s,'DB').alpha[2],expected:5.0625,tolerance:1e-7,unit:'rad/s²'}]});
+
+  // 21 / Example 4; 22 p2 --------------------------------------------------
+  const beta=Math.asin((5-2*Math.SQRT2)/3);
+  const sliderLo=-3*Math.PI/4-beta,sliderHi=Math.PI/4+beta;
+  function inclineTime(p) {return driveWindow(Math.PI/2,p.w,p.alpha,sliderLo,sliderHi,1.6,.985);}
+  function inclineCompute(t,p) {
+    const theta=K.drive(Math.PI/2,p.w,p.alpha,t);
+    // Retain the connected physical assembly interval; a later re-entry
+    // after passing an impossible angle must not be accepted as continuation.
+    if(theta.x<=sliderLo+1e-8 || theta.x>=sliderHi-1e-8)return {valid:false,reason:'The connecting rod reaches a toggle and cannot close on this slider guide beyond this angle.'};
+    const ax=K.mul(3,K.cos(theta)),ay=K.mul(3,K.sin(theta));
+    const solution=circleSlider(ax,ay,[4,0],[SQ,SQ],5);
+    if(!solution)return {valid:false,reason:'The crank and inclined slider have reached their geometric closure limit.'};
+    const O=K.fixed('O','O',[0,0,0]),A=K.point('A','A',ax,ay),B=K.point('B','B',solution.x,solution.y);
+    const oa=K.link('OA','Input crank OA',O,A,0),ab=K.link('AB','Connecting rod AB',A,B,1);
+    return {valid:true,points:[O,A,B],bodies:[oa,ab],
+      guides:[{kind:'pivot',p:[0,0,0]},{kind:'ground',a:[-1,-.15,0],b:[1,-.15,0]},
+        {kind:'line',a:[-.5,-4.5,0],b:[8.5,4.5,0],label:'B · 45° guide'}],
+      metrics:[{label:'ω OA',value:oa.omega[2],unit:'rad/s'},{label:'ω AB',value:ab.omega[2],unit:'rad/s'},
+        {label:'α AB',value:ab.alpha[2],unit:'rad/s²'},{label:'B velocity up the guide',value:solution.s.d,unit:'m/s'},
+        {label:'Rod angle',value:Math.atan2(B.p[1]-A.p[1],B.p[0]-A.p[0])*180/Math.PI,unit:'°'}],
+      status:solution.disc<1?'Near a toggle: the source geometry produces large slider accelerations. This is a kinematic effect.':'The rigid 5 m rod closes exactly on the 45° guide; the assembly branch is preserved.'};
+  }
+  LABS.push({id:'inclined-slider',title:'Crank and inclined slider',subtitle:'A fast slider near a toggle',
+unit:'m',dimension:2,
+    description:'OA is <b>3 m</b>; initially A = (0, 3) m and B = (4, 0) m. B slides along a <b>45° guide</b>, and OA rotates clockwise at <b>2 rad/s</b>. The worked solution gives v<sub>B</sub> = (24, 24) m/s and ω<sub>AB</sub> = 6 rad/s.',
+    assumptions:'The animation follows the handwritten 3–4–5 geometry. <b>Source discrepancy:</b> the printed figure labels the rod 30°, but the dimensions and worked vector (4, −3) imply 36.87°. The selected input angular acceleration is constant, initially zero because the source only gives velocity. The mechanism stops before a toggle.',
+    equations:['A = 3(cos θ, sin θ); B = (4, 0) + s(1, 1)/√2','|r<sub>B</sub> − r<sub>A</sub>| = 5 m',
+      'v<sub>B</sub> = v<sub>A</sub> + ω<sub>AB</sub> × r<sub>B/A</sub>',
+      'a<sub>B</sub> = a<sub>A</sub> + α<sub>AB</sub> × r<sub>B/A</sub> − ω<sub>AB</sub>²r<sub>B/A</sub>'],
+    teaching:'With constant crank speed, the reference geometry gives aB = (−864, −864) m/s² at t = 0. Its very large magnitude comes from the near-toggle configuration; it is an added acceleration result, not a value specified in the source.',
+    params:[param('w','Initial OA angular velocity','rad/s',-2,-6,6,.1),param('alpha','OA angular acceleration','rad/s²',0,-8,8,.2)],
+    time:{min:0,max:inclineTime,initial:0,reference:0},defaultPoint:'B',defaultBody:'AB',bounds:[-3.8,8.7,-4.9,5.1],compute:inclineCompute,
+    checks:[{label:'v B · x',get:s=>getPoint(s,'B').v[0],expected:24,tolerance:1e-7,unit:'m/s'},
+      {label:'v B · y',get:s=>getPoint(s,'B').v[1],expected:24,tolerance:1e-7,unit:'m/s'},
+      {label:'ω AB',get:s=>getBody(s,'AB').omega[2],expected:6,tolerance:1e-7,unit:'rad/s'},
+      {label:'a B · x (continued drive)',get:s=>getPoint(s,'B').a[0],expected:-864,tolerance:1e-5,unit:'m/s²'},
+      {label:'α AB (continued drive)',get:s=>getBody(s,'AB').alpha[2],expected:-240,tolerance:1e-5,unit:'rad/s²'}]});
+
+  // 22 / Example 1 ---------------------------------------------------------
+  const sMin=5*Math.SQRT2-10,sMax=5*Math.SQRT2;
+  function rampsTime(p) {return driveWindow(0,p.v,p.acc,sMin,sMax,4,.985);}
+  function rampsCompute(t,p) {
+    const s=K.drive(0,p.v,p.acc,t);
+    if(s.x<=sMin+1e-8 || s.x>sMax)return {valid:false,reason:'The rod reaches a ramp intersection or a geometric toggle. Reset or reverse the input to continue on the physical ramps.'};
+    const ax=K.add(-5,K.mul(SQ,s)),ay=K.sub(5,K.mul(SQ,s));
+    const solution=circleSlider(ax,ay,[5,5],[SQ,SQ],10);
+    if(!solution)return {valid:false,reason:'The rigid rod cannot close between these ramp positions.'};
+    const A=assignMaterial(K.point('A','A',ax,ay,0,'AB'),'AB',[0,0,0]);
+    const B=assignMaterial(K.point('B','B',solution.x,solution.y,0,'AB'),'AB',[10,0,0]);
+    const rod=K.link('AB','Rod AB',A,B,0);
+    return {valid:true,points:[A,B],bodies:[rod],
+      guides:[{kind:'line',a:[-8.2,8.2,0],b:[0,0,0],label:'A · 45° ramp'},
+        {kind:'line',a:[0,0,0],b:[8.5,8.5,0],label:'B · 45° ramp'}],
+      metrics:[{label:'ω AB',value:rod.omega[2],unit:'rad/s'},{label:'α AB',value:rod.alpha[2],unit:'rad/s²'},
+        {label:'A velocity down its ramp',value:s.d,unit:'m/s'},{label:'B velocity up its ramp',value:solution.s.d,unit:'m/s'},
+        {label:'B acceleration up its ramp',value:solution.s.dd,unit:'m/s²'}],
+      status:'The source specifies both input velocity and acceleration. B’s acceleration must remain parallel to its own ramp.'};
+  }
+  LABS.push({id:'opposed-ramps',title:'A rod between two ramps',subtitle:'Tangential + centripetal acceleration',
+unit:'m',dimension:2,
+    description:'A rigid <b>10 m</b> rod connects two <b>45° ramps</b>. The rod is initially horizontal. A moves down its ramp at <b>2 m/s</b> with acceleration <b>3 m/s²</b> in the same direction. Determine the rod’s angular acceleration and B’s velocity and acceleration.',
+    assumptions:'The source supplies A’s initial velocity and acceleration. The selected acceleration stays constant through the displayed stroke. Positive input values point down A’s left ramp; positive rotation is counterclockwise. The animation stops before a ramp endpoint or a geometric toggle.',
+    equations:['v<sub>A</sub> = v<sub>in</sub>(1, −1)/√2; a<sub>A</sub> = a<sub>in</sub>(1, −1)/√2',
+      'v<sub>B</sub> = v<sub>B,guide</sub>(1, 1)/√2','v<sub>B</sub> = v<sub>A</sub> + ω × r<sub>B/A</sub>',
+      'a<sub>B</sub> = a<sub>A</sub> + α × r<sub>B/A</sub> − ω²r<sub>B/A</sub>'],
+    teaching:'The two endpoints have equal speed at the horizontal pose, but different acceleration magnitudes. The centripetal term changes B’s acceleration from 3 to 1.869 m/s².',
+    params:[param('v','Initial A velocity down ramp','m/s',2,-5,5,.1),param('acc','A acceleration down ramp','m/s²',3,-8,8,.2)],
+    time:{min:0,max:rampsTime,initial:0,reference:0},defaultPoint:'B',defaultBody:'AB',bounds:[-8.6,9,-.8,10],compute:rampsCompute,
+    checks:[{label:'|v B|',get:s=>K.norm(getPoint(s,'B').v),expected:2,tolerance:1e-8,unit:'m/s'},
+      {label:'ω AB',get:s=>getBody(s,'AB').omega[2],expected:Math.SQRT2/5,tolerance:1e-8,unit:'rad/s'},
+      {label:'|a B|',get:s=>K.norm(getPoint(s,'B').a),expected:3-.8*Math.SQRT2,tolerance:1e-8,unit:'m/s²'},
+      {label:'α AB',get:s=>getBody(s,'AB').alpha[2],expected:(3*Math.SQRT2-.8)/10,tolerance:1e-8,unit:'rad/s²'}]});
+})();
+
+(function () {
+  'use strict';
+
+  const collarD = 0.2;
+  const collarL = 0.2;
+  const collarR = Math.sqrt(0.08);
+  const collarLimit = Math.sqrt((collarL + collarR) ** 2 - collarD ** 2);
+  function collarWindow(p) {
+    // Keep the entire scrub interval on the source assembly branch, a little
+    // short of the toggle. This bound also accommodates drive reversals.
+    const v = Math.abs(p.v), a = Math.abs(p.a), travel = 0.42;
+    if (v + a < 1e-12) return 0.8;
+    const denominator = v + Math.sqrt(v * v + 2 * a * travel);
+    return Math.min(0.8, 2 * travel / denominator);
+  }
+
+  LABS.push({
+    id: 'collar-two-links',
+    title: 'Collar and two rigid links',
+    subtitle: 'One slider controls two angular accelerations',
+
+    unit: 'm',
+    dimension: 2,
+    description: 'Collar C slides on a vertical rail and drives links CB and AB. At the reference instant, AB is vertical, AB = 0.20 m, and the rail is 0.20 m to the left of fixed pin A. C moves downward at 2 m/s with a downward acceleration of 1 m/s². Inspect either link to see why their equal angular velocities do not imply equal angular accelerations.',
+    assumptions: 'The source supplies an instantaneous state. For playback, the collar continues with constant signed vertical acceleration: yC = v₀t + ½a₀t². Positive y is upward, and positive planar rotation is counterclockwise. Both link lengths remain exact, and the source assembly branch is preserved. The slider stops before a geometric toggle; it cannot pass through the singular position under an arbitrary imposed speed.',
+    equations: [
+      'v<sub>B</sub> = v<sub>C</sub> + ω<sub>CB</sub> × r<sub>B/C</sub> = ω<sub>AB</sub> × r<sub>B/A</sub>',
+      'a<sub>B</sub> = a<sub>C</sub> + α<sub>CB</sub> × r<sub>B/C</sub> − ω<sub>CB</sub><sup>2</sup>r<sub>B/C</sub>',
+      'a<sub>B</sub> = α<sub>AB</sub> × r<sub>B/A</sub> − ω<sub>AB</sub><sup>2</sup>r<sub>B/A</sub>',
+      'At t = 0: ω<sub>AB</sub> = ω<sub>CB</sub> = +10 rad/s; α<sub>AB</sub> = −95 rad/s²; α<sub>CB</sub> = +5 rad/s².'
+    ],
+    teaching: 'At the reference instant, both links turn counterclockwise at 10 rad/s, yet AB is slowing down and CB is speeding up. Set the collar acceleration to zero: the links still have angular accelerations because their geometry changes.',
+    params: [
+      { key: 'v', label: 'Initial collar velocity (up +)', unit: 'm/s', value: -2, min: -4, max: 4, step: 0.1 },
+      { key: 'a', label: 'Collar acceleration (up +)', unit: 'm/s²', value: -1, min: -10, max: 10, step: 0.1 }
+    ],
+    time: { min: p => -collarWindow(p), max: collarWindow, initial: 0, reference: 0 },
+    defaultPoint: 'B',
+    defaultBody: 'AB',
+    bounds: [-0.14, 0.51, -0.53, 0.50],
+    compute(t, p) {
+      const y = K.drive(0, p.v, p.a, t);
+      const distance = Math.hypot(collarD, y.x);
+      if (!Number.isFinite(distance) || distance >= collarL + collarR - 1e-7 || distance <= Math.abs(collarR - collarL) + 1e-7) {
+        return { valid: false, reason: 'The collar has reached the linkage travel limit (|yC| = ' + collarLimit.toFixed(4) + ' m). The links align at a toggle, where a prescribed nonzero collar speed would require unbounded angular rates.' };
+      }
+      // Exact second-order jets propagate the circle-intersection closure.
+      // No finite differences or independently prescribed link rotations.
+      const D = K.sqrt(K.add(collarD * collarD, K.mul(y, y)));
+      const u = K.div(K.add(collarL * collarL - collarR * collarR, K.mul(D, D)), K.mul(2, D));
+      const h2 = K.sub(collarL * collarL, K.mul(u, u));
+      if (h2.x <= 1e-12) {
+        return { valid: false, reason: 'The two-link mechanism is at a toggle. Reset to the reference instant or reduce the collar travel.' };
+      }
+      const h = K.sqrt(h2);
+      const ex = K.div(-collarD, D), ey = K.div(y, D);
+      const bx = K.add(collarD, K.sub(K.mul(u, ex), K.mul(h, ey)));
+      const by = K.add(K.mul(u, ey), K.mul(h, ex));
+      const A = K.fixed('A', 'A · fixed pin', [collarD, 0, 0]);
+      const C = K.point('C', 'C · collar', 0, y, 0, 'CB');
+      const B = K.point('B', 'B · common joint', bx, by, 0, 'AB');
+      const AB = K.link('AB', 'Link AB', A, B, 1);
+      const CB = K.link('CB', 'Link CB', C, B, 0);
+      const collar = K.frame('collar', 'Sliding collar', C, K.j(0), 2);
+      collar.kind = 'polyline';
+      collar.path = [[-0.019, -0.032, 0], [0.019, -0.032, 0], [0.019, 0.032, 0], [-0.019, 0.032, 0], [-0.019, -0.032, 0]];
+      return {
+        valid: true,
+        points: [A, B, C],
+        bodies: [collar, CB, AB],
+        guides: [
+          { kind: 'line', a: [0, -0.49, 0], b: [0, 0.46, 0], label: 'Vertical rail' },
+          { kind: 'ground', a: [-0.055, -0.49, 0], b: [0.055, -0.49, 0] },
+          { kind: 'ground', a: [-0.055, 0.46, 0], b: [0.055, 0.46, 0] },
+          { kind: 'pivot', p: A.p }
+        ],
+        metrics: [
+          { label: 'ω_AB', value: AB.omega[2], unit: 'rad/s' },
+          { label: 'α_AB', value: AB.alpha[2], unit: 'rad/s²' },
+          { label: 'ω_CB', value: CB.omega[2], unit: 'rad/s' },
+          { label: 'α_CB', value: CB.alpha[2], unit: 'rad/s²' },
+          { label: 'v_C,y', value: C.v[1], unit: 'm/s' },
+          { label: 'a_C,y', value: C.a[1], unit: 'm/s²' }
+        ],
+        status: Math.abs(y.x) > 0.39 ? 'Near the travel limit: angular rates grow rapidly as the two links approach alignment.' : 'The same joint B must have identical velocity and acceleration when calculated through either rigid link.'
+      };
+    },
+    checks: [
+      { label: 'ωAB at reference instant', get: s => s.bodies.find(b => b.id === 'AB').omega[2], expected: 10, tolerance: 1e-7, unit: 'rad/s' },
+      { label: 'ωCB at reference instant', get: s => s.bodies.find(b => b.id === 'CB').omega[2], expected: 10, tolerance: 1e-7, unit: 'rad/s' },
+      { label: 'αAB at reference instant', get: s => s.bodies.find(b => b.id === 'AB').alpha[2], expected: -95, tolerance: 1e-6, unit: 'rad/s²' },
+      { label: 'αCB at reference instant', get: s => s.bodies.find(b => b.id === 'CB').alpha[2], expected: 5, tolerance: 1e-6, unit: 'rad/s²' },
+      { label: 'vB,x at reference instant', get: s => s.points.find(p => p.id === 'B').v[0], expected: 2, tolerance: 1e-7, unit: 'm/s' },
+      { label: 'aB,x at reference instant', get: s => s.points.find(p => p.id === 'B').a[0], expected: -19, tolerance: 1e-6, unit: 'm/s²' },
+      { label: 'aB,y at reference instant', get: s => s.points.find(p => p.id === 'B').a[1], expected: 20, tolerance: 1e-6, unit: 'm/s²' }
+    ]
+  });
+
+  LABS.push({
+    id: 'rod-assembly-3d',
+    title: 'Rod assembly in three dimensions',
+    subtitle: 'Cartesian vectors around a fixed y axis',
+
+    unit: 'm',
+    dimension: 3,
+    description: 'A single rigid rod assembly rotates about the fixed y axis through bearings A and B. Initially, C is at (−0.40, 0, +0.30) m relative to A, ω = +5 j rad/s, and α = +8 j rad/s². The shaft span AB is 0.40 m. D labels the previously unnamed elbow so students can inspect it as well.',
+    assumptions: 'The problem gives one instant. Playback continues with constant angular acceleration, θ = ω₀t + ½α₀t², about the fixed +y axis. Positive angular values follow the right-hand rule about +y. The entire three-branch rod remains one rigid body; A and B lie on its fixed axis.',
+    equations: [
+      'v<sub>P</sub> = ω × r<sub>P/A</sub>',
+      'a<sub>P</sub> = α × r<sub>P/A</sub> + ω × (ω × r<sub>P/A</sub>)',
+      'For ω = ω j: v = (ωz, 0, −ωx); a = (αz − ω²x, 0, −αx − ω²z).',
+      'At t = 0: v<sub>C</sub> = (1.5, 0, 2.0) m/s; a<sub>C</sub> = (12.4, 0, −4.3) m/s².'
+    ],
+    teaching: 'Set angular acceleration to zero and watch C: its speed becomes constant, but its inward normal acceleration remains. Compare with the two fixed bearings, where both velocity and acceleration are zero. Rotate the view to separate apparent 2D motion from the actual x/y/z components.',
+    params: [
+      { key: 'w', label: 'Initial angular velocity about +y', unit: 'rad/s', value: 5, min: -10, max: 10, step: 0.1 },
+      { key: 'alpha', label: 'Angular acceleration about +y', unit: 'rad/s²', value: 8, min: -16, max: 16, step: 0.2 }
+    ],
+    time: { min: -0.25, max: 1.0, initial: 0, reference: 0 },
+    defaultPoint: 'C',
+    defaultBody: 'assembly',
+    bounds: [-0.62, 0.62, -0.16, 0.63, -0.62, 0.62],
+    compute(t, p) {
+      const theta = K.drive(0, p.w, p.alpha, t);
+      const body = {
+        id: 'assembly', label: 'Rigid rod assembly',
+        origin: [0, 0, 0], v: [0, 0, 0], a: [0, 0, 0],
+        omega: [0, theta.d, 0], alpha: [0, theta.dd, 0], R: K.Ry(theta.x),
+        kind: 'polyline', colorIndex: 0,
+        // Revisit D to draw the physical three-branch assembly as a single
+        // connected polyline. All coordinates are body-fixed material points.
+        path: [[0, 0, 0], [-0.4, 0, 0], [-0.4, 0, 0.3], [-0.4, 0, 0], [0, 0.4, 0]]
+      };
+      const A = K.onBody(body, [0, 0, 0], 'A', 'A · fixed bearing');
+      const B = K.onBody(body, [0, 0.4, 0], 'B', 'B · fixed bearing');
+      const D = K.onBody(body, [-0.4, 0, 0], 'D', 'D · elbow');
+      const C = K.onBody(body, [-0.4, 0, 0.3], 'C', 'C · rod tip');
+      return {
+        valid: true,
+        points: [A, B, C, D], bodies: [body],
+        guides: [
+          { kind: 'line', a: [0, -0.13, 0], b: [0, 0.60, 0], label: 'Fixed y axis' },
+          { kind: 'pivot', p: A.p }, { kind: 'pivot', p: B.p }
+        ],
+        metrics: [
+          { label: 'ω_y', value: theta.d, unit: 'rad/s' },
+          { label: 'α_y', value: theta.dd, unit: 'rad/s²' },
+          { label: 'Speed of C', value: K.norm(C.v), unit: 'm/s' },
+          { label: '|a_C|', value: K.norm(C.a), unit: 'm/s²' },
+          { label: '|a_C,t|', value: Math.abs(theta.dd) * 0.5, unit: 'm/s²' },
+          { label: '|a_C,n|', value: theta.d * theta.d * 0.5, unit: 'm/s²' }
+        ],
+        status: 'The distance of C from the y axis stays 0.50 m. All reported vectors are in the fixed Cartesian frame, independent of the camera view.'
+      };
+    },
+    checks: [
+      { label: 'vC,x at reference instant', get: s => s.points.find(p => p.id === 'C').v[0], expected: 1.5, tolerance: 1e-8, unit: 'm/s' },
+      { label: 'vC,z at reference instant', get: s => s.points.find(p => p.id === 'C').v[2], expected: 2, tolerance: 1e-8, unit: 'm/s' },
+      { label: 'Speed of C at reference instant', get: s => K.norm(s.points.find(p => p.id === 'C').v), expected: 2.5, tolerance: 1e-8, unit: 'm/s' },
+      { label: 'aC,x at reference instant', get: s => s.points.find(p => p.id === 'C').a[0], expected: 12.4, tolerance: 1e-8, unit: 'm/s²' },
+      { label: 'aC,z at reference instant', get: s => s.points.find(p => p.id === 'C').a[2], expected: -4.3, tolerance: 1e-8, unit: 'm/s²' },
+      { label: '|aC| at reference instant', get: s => K.norm(s.points.find(p => p.id === 'C').a), expected: Math.sqrt(172.25), tolerance: 1e-8, unit: 'm/s²' },
+      { label: 'Fixed bearing B speed', get: s => K.norm(s.points.find(p => p.id === 'B').v), expected: 0, tolerance: 1e-10, unit: 'm/s' }
+    ]
+  });
+}());
+
+(() => {
+  'use strict';
+
+  // The source's theta is an unwrapped rotation from rest.  Its drawing places
+  // P on the negative x side at theta = 6 rad; a separate body phase preserves
+  // that pictured configuration without confusing azimuth with displacement.
+  function sphereMotion(t, p) {
+    const c = p.k, b = p.b, w0 = p.w0;
+    if (Math.abs(c) < 1e-10) {
+      return {theta: w0 * t + 0.5 * b * t * t,
+        omega: w0 + b * t, alpha: b};
+    }
+    const l = Math.sqrt(c), u = l * t;
+    const theta = (2 * b / c) * Math.sinh(u / 2) ** 2 +
+      (w0 / l) * Math.sinh(u);
+    return {theta, omega: w0 * Math.cosh(u) + b / l * Math.sinh(u),
+      alpha: c * theta + b};
+  }
+  function sphereReference(p) {
+    const target = 6, c = p.k, b = p.b, w0 = p.w0;
+    if (Math.abs(c) < 1e-10) {
+      return 2 * target / (w0 + Math.sqrt(w0 * w0 + 2 * b * target));
+    }
+    const l = Math.sqrt(c);
+    const w = Math.sqrt(w0 * w0 + c * target * target + 2 * b * target);
+    return Math.log((c * target + b + l * w) / (b + l * w0)) / l;
+  }
+  const sphereModel = {
+    id: 'accelerating-sphere', title: 'Accelerating sphere',
+    subtitle: 'A spin that depends on angular position',
+
+    unit: 'in', dimension: 3,
+    description: 'A sphere of radius <b>8 in</b> starts from rest at θ = 0 and rotates about its fixed vertical <b>z axis</b> with α = 4θ + 1 rad/s². Point P lies at latitude 30°. The problem asks for its speed and acceleration magnitude at <b>θ = 6 rad</b>. The smaller ring is P’s path; its radius is R cos(latitude).',
+    assumptions: 'The stated α(θ) law determines the full motion; the initial angular speed is editable for exploration. Positive spin follows the right-hand rule about +z. The body’s azimuth is θ − 6 so that P occupies the position drawn in the reference at θ = 6. θ remains unwrapped. Exact arithmetic gives 86.533 in/s and 1094.590 in/s²; the handwritten solution rounds ω to 12.5 early, causing its small numerical difference.',
+    equations: [
+      'α = kθ + b, &nbsp; dθ/dt = ω',
+      'ω² = ω₀² + kθ² + 2bθ &nbsp; (θ₀ = 0)',
+      'ρ = R cos λ, &nbsp; z<sub>P</sub> = R sin λ',
+      'v<sub>P</sub> = ω × r<sub>P/O</sub>',
+      'a<sub>P</sub> = α × r<sub>P/O</sub> + ω × (ω × r<sub>P/O</sub>)',
+      '|v| = |ω|ρ, &nbsp; |a| = ρ√(α² + ω⁴)'
+    ],
+    teaching: 'Move the probe toward the spin axis. Its speed and acceleration shrink with the distance to that axis, even though every point shares the same angular velocity and angular acceleration.',
+    params: [
+      {key: 'w0', label: 'Initial angular velocity ω₀', unit: 'rad/s', value: 0, min: 0, max: 15, step: 0.1},
+      {key: 'k', label: 'Slope k in α = kθ + b', unit: 's⁻²', value: 4, min: 0, max: 8, step: 0.1},
+      {key: 'b', label: 'Acceleration intercept b', unit: 'rad/s²', value: 1, min: 0.1, max: 10, step: 0.1},
+      {key: 'radius', label: 'Sphere radius R', unit: 'in', value: 8, min: 3, max: 12, step: 0.1},
+      {key: 'latitude', label: 'P latitude λ', unit: '°', value: 30, min: -90, max: 90, step: 1}
+    ],
+    time: {min: 0, max: p => 1.15 * sphereReference(p),
+      initial: p => sphereReference(p), reference: p => sphereReference(p)},
+    defaultPoint: 'P', defaultBody: 'sphere',
+    bounds: p => [-1.5 * p.radius, 1.5 * p.radius, -1.5 * p.radius,
+      1.5 * p.radius, -1.35 * p.radius, 1.5 * p.radius],
+    compute(t, p) {
+      const m = sphereMotion(t, p), R = p.radius;
+      const lat = p.latitude * Math.PI / 180;
+      const rho = R * Math.cos(lat), z = R * Math.sin(lat);
+      const body = {id: 'sphere', label: 'Rotating sphere',
+        origin: [0, 0, 0], v: [0, 0, 0], a: [0, 0, 0],
+        omega: [0, 0, m.omega], alpha: [0, 0, m.alpha],
+        R: K.Rz(m.theta - 6), kind: 'sphere', radius: R, colorIndex: 0};
+      const P = K.onBody(body, [-rho, 0, z], 'P', 'P');
+      const N = K.onBody(body, [0, 0, R], 'N', 'N');
+      const E = K.onBody(body, [R, 0, 0], 'E', 'E');
+      const O = K.fixed('O', 'O', [0, 0, 0]);
+      return {valid: true, points: [P, O, N, E], bodies: [body],
+        guides: [
+          {kind: 'line', a: [0, 0, -1.25 * R], b: [0, 0, 1.35 * R], label: 'z · spin axis'},
+          {kind: 'circle', c: [0, 0, z], r: Math.max(0, rho), label: 'P latitude'},
+          {kind: 'line', a: [0, 0, z], b: P.p, label: 'ρ'},
+          {kind: 'pivot', p: [0, 0, -1.22 * R]},
+          {kind: 'pivot', p: [0, 0, 1.22 * R]}
+        ],
+        metrics: [
+          {label: 'θ (unwrapped)', value: m.theta, unit: 'rad'},
+          {label: 'ω', value: m.omega, unit: 'rad/s'},
+          {label: 'α', value: m.alpha, unit: 'rad/s²'},
+          {label: 'Distance to axis ρ', value: rho, unit: 'in'},
+          {label: '|v_P|', value: K.norm(P.v), unit: 'in/s'},
+          {label: '|a_P|', value: K.norm(P.a), unit: 'in/s²'},
+          {label: '|a_t,P|', value: Math.abs(m.alpha * rho), unit: 'in/s²'},
+          {label: '|a_n,P|', value: m.omega * m.omega * rho, unit: 'in/s²'}
+        ],
+        status: Math.abs(m.theta - 6) < 1e-7 ?
+          'Reference snapshot: θ = 6 rad. P lies in the x–z plane; its velocity points along −y.' :
+          'P, E and N are material points. N stays on the fixed axis; P and E circle it.'};
+    },
+    checks: [
+      {label: 'θ at reference', get: s => s.metrics.find(m => m.label === 'θ (unwrapped)').value, expected: 6, tolerance: 1e-9, unit: 'rad'},
+      {label: 'ω at θ = 6', get: s => s.bodies[0].omega[2], expected: Math.sqrt(156), tolerance: 1e-9, unit: 'rad/s'},
+      {label: 'α at θ = 6', get: s => s.bodies[0].alpha[2], expected: 25, tolerance: 1e-9, unit: 'rad/s²'},
+      {label: 'v_P,y', get: s => s.points.find(p => p.id === 'P').v[1], expected: -Math.sqrt(156) * 4 * Math.sqrt(3), tolerance: 1e-8, unit: 'in/s'},
+      {label: '|a_P|', get: s => K.norm(s.points.find(p => p.id === 'P').a), expected: 1094.5903343260436, tolerance: 1e-7, unit: 'in/s²'},
+      {label: 'Pole speed', get: s => K.norm(s.points.find(p => p.id === 'N').v), expected: 0, tolerance: 1e-10, unit: 'in/s'}
+    ]
+  };
+  LABS.push(sphereModel);
+
+  // Keep the available motion window approximately one full revolution for
+  // legibility, including zero/reversed drive cases.  This is a playback range,
+  // not a modification of the physical constant-alpha solution.
+  function rollEnd(p) {
+    const w = Math.abs(p.w), a = Math.abs(p.alpha), q = 2 * Math.PI;
+    if (w + a < 1e-10) return 2;
+    return Math.min(5, 2 * q / (w + Math.sqrt(w * w + 2 * a * q)));
+  }
+  function rollBounds(p) {
+    const end = rollEnd(p), times = [0, end];
+    if (Math.abs(p.alpha) > 1e-12) {
+      const turn = -p.w / p.alpha;
+      if (turn > 0 && turn < end) times.push(turn);
+    }
+    const xs = times.map(t => -p.radius * (p.w * t + 0.5 * p.alpha * t * t));
+    const R = p.radius;
+    return [Math.min(...xs) - 1.6 * R, Math.max(...xs) + 1.6 * R, -0.45 * R, 2.9 * R];
+  }
+  LABS.push({
+    id: 'rolling-disk', title: 'Rolling without slipping',
+    subtitle: 'Zero contact speed does not mean zero acceleration',
+
+    unit: 'ft', dimension: 2,
+    description: 'The disk has radius <b>0.5 ft</b> and initially rotates with <b>ω = 6 rad/s</b> and <b>α = 4 rad/s²</b>, both counterclockwise. The fixed ground enforces no slip, so its center moves left. <b>A</b> is the marked material point initially touching the ground; <b>K</b> identifies whichever wheel particle is touching the ground now.',
+    assumptions: 'The problem specifies instantaneous ω and α. The animation extends that state with constant angular acceleration, which you can edit. Positive angular values are counterclockwise; x is positive to the right. Every vector is a world-frame velocity or acceleration. K follows successive particles and is not one material trajectory: its readout is the velocity and acceleration of the wheel particle currently at contact.',
+    equations: [
+      'θ = ω₀t + ½αt², &nbsp; ω = ω₀ + αt',
+      'x<sub>G</sub> = −Rθ, &nbsp; v<sub>G</sub> = −Rω i, &nbsp; a<sub>G</sub> = −Rα i',
+      'v<sub>P</sub> = v<sub>G</sub> + ω × r<sub>P/G</sub>',
+      'a<sub>P</sub> = a<sub>G</sub> + α × r<sub>P/G</sub> + ω × (ω × r<sub>P/G</sub>)',
+      'At current contact: v<sub>K</sub> = 0, &nbsp; a<sub>K</sub> = Rω² j'
+    ],
+    teaching: 'Pause at the initial instant: A has zero velocity and upward acceleration. Move forward and A leaves the ground along a cycloid. The next particle takes its place at K. No slip equates contact velocities; it does not equate the complete acceleration vectors.',
+    params: [
+      {key: 'w', label: 'Initial angular velocity ω₀', unit: 'rad/s', value: 6, min: -14, max: 14, step: 0.1},
+      {key: 'alpha', label: 'Angular acceleration α', unit: 'rad/s²', value: 4, min: -12, max: 12, step: 0.1},
+      {key: 'radius', label: 'Disk radius R', unit: 'ft', value: 0.5, min: 0.2, max: 1.2, step: 0.05}
+    ],
+    time: {min: 0, max: p => rollEnd(p), initial: 0, reference: 0},
+    defaultPoint: 'A', defaultBody: 'disk', bounds: p => rollBounds(p),
+    compute(t, p) {
+      const q = K.drive(0, p.w, p.alpha, t), R = p.radius;
+      const G = K.point('G', 'G', K.mul(-R, q), R, 0);
+      const body = {id: 'disk', label: 'Rolling disk', origin: G.p,
+        v: G.v, a: G.a, omega: [0, 0, q.d], alpha: [0, 0, q.dd],
+        R: K.Rz(q.x), kind: 'disk', radius: R, colorIndex: 2};
+      const A = K.onBody(body, [0, -R, 0], 'A', 'A');
+      const T = K.onBody(body, [0, R, 0], 'T', 'T');
+      const currentLocal = K.mv(K.Rz(-q.x), [0, -R, 0]);
+      const contact = K.onBody(body, currentLocal, 'K', 'K');
+      // Successive material particles: this geometric locus must not be
+      // finite-differenced or trailed as a persistent material point.
+      contact.instantaneous = true;
+      contact.note = 'K is the wheel particle currently in contact. It changes identity as the wheel rolls: v_K = 0, a_K = Rω² upward. The geometric contact locus moves, but is not a material trajectory.';
+      const bounds = rollBounds(p);
+      return {valid: true, points: [A, G, T, contact], bodies: [body],
+        guides: [
+          {kind: 'ground', a: [bounds[0], 0, 0], b: [bounds[1], 0, 0], label: 'Fixed ground'},
+          {kind: 'line', a: G.p, b: A.p},
+          {kind: 'line', a: G.p, b: T.p}
+        ],
+        metrics: [
+          {label: 'θ', value: q.x, unit: 'rad'},
+          {label: 'ω', value: q.d, unit: 'rad/s'},
+          {label: 'α', value: q.dd, unit: 'rad/s²'},
+          {label: 'Center x_G', value: G.p[0], unit: 'ft'},
+          {label: 'Center v_G,x', value: G.v[0], unit: 'ft/s'},
+          {label: '|v_A|', value: K.norm(A.v), unit: 'ft/s'},
+          {label: 'Current contact |v_K|', value: K.norm(contact.v), unit: 'ft/s'},
+          {label: 'Current contact a_K,y', value: contact.a[1], unit: 'ft/s²'}
+        ],
+        status: Math.abs(q.x) < 1e-7 ?
+          'A and K coincide now. Their speed is zero; their upward acceleration is Rω².' :
+          'A and T remain fixed to the disk. K marks successive contacting wheel particles, each with zero speed.'};
+    },
+    checks: [
+      {label: 'Center velocity v_G,x', get: s => s.points.find(p => p.id === 'G').v[0], expected: -3, tolerance: 1e-10, unit: 'ft/s'},
+      {label: 'Center acceleration a_G,x', get: s => s.points.find(p => p.id === 'G').a[0], expected: -2, tolerance: 1e-10, unit: 'ft/s²'},
+      {label: 'Initial contact speed |v_A|', get: s => K.norm(s.points.find(p => p.id === 'A').v), expected: 0, tolerance: 1e-10, unit: 'ft/s'},
+      {label: 'Initial contact acceleration a_A,y', get: s => s.points.find(p => p.id === 'A').a[1], expected: 18, tolerance: 1e-10, unit: 'ft/s²'},
+      {label: 'Initial top velocity v_T,x', get: s => s.points.find(p => p.id === 'T').v[0], expected: -6, tolerance: 1e-10, unit: 'ft/s'},
+      {label: 'No-slip residual |v_K|', get: s => K.norm(s.points.find(p => p.id === 'K').v), expected: 0, tolerance: 1e-10, unit: 'ft/s'}
+    ]
+  });
+})();
+
+(() => {
+ 'use strict';
+ const $=id=>document.getElementById(id), $$=s=>Array.from(document.querySelectorAll(s));
+ const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+ const val=(x,p)=>typeof x==='function'?x(p):x;
+ const fmt=(x,n=4)=>{if(!Number.isFinite(x))return '—';if(Math.abs(x)<1e-10)x=0;const a=Math.abs(x);if(a!==0&&(a<.0001||a>=100000))return x.toExponential(2);return Number(x.toPrecision(n)).toLocaleString('en-US',{maximumFractionDigits:7,useGrouping:false})};
+ const vec=(v,n=4)=>'('+v.slice(0,lab.dimension===3?3:2).map(x=>fmt(x,n)).join(', ')+')';
+ const clean=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const norm=K.norm;
+ let lab=LABS[0],params={},state,now=0,tMin=0,tMax=1,playing=false,dirty=true,history=[],historyStates=[];
+ let mode='named',pointId='',bodyId='',probe={u:.5,rho:1,angle:180,latitude:30};
+ let camera={zoom:1,pan:[0,0],yaw:2.2,elev:.46},projection=null,hitPoints=[],hitBodies=[];
+ let refMaxV=1,refMaxA=1,lastFrame=0,lastDOM=0,toastTimer=null,rangeWasTrimmed=false;
+ let canvasSize={w:0,h:0},chartRanges={},report=[];
+ const sc=$('scene'),ctx=sc.getContext('2d');
+ const theme=()=>{const s=getComputedStyle(document.documentElement);return Object.fromEntries(['bg','surface','panel','raised','ink','muted','line','accent','cyan','coral','amber','violet','green','base','grid'].map(k=>[k,s.getPropertyValue('--'+k).trim()]))};
+ let colors=theme();
+ function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3300)}
+ function defaults(l){return Object.fromEntries(l.params.map(p=>[p.key,p.value]))}
+ function safeState(t,p=params,l=lab){try{const s=l.compute(t,p);if(!s||s.valid===false)return s||{valid:false,reason:'No valid geometry.'};for(const pt of s.points||[])for(const a of [pt.p,pt.v,pt.a])if(!a.every(Number.isFinite))return{valid:false,reason:'This configuration is singular. Return to an earlier instant.'};for(const b of s.bodies||[])for(const a of [b.origin,b.v,b.a,b.omega,b.alpha,b.R])if(!a.every(Number.isFinite))return{valid:false,reason:'The drive has reached a kinematic singularity.'};return s}catch(e){return{valid:false,reason:'The current inputs do not admit a regular configuration.'}}}
+ function safeRange(){
+  let lo=val(lab.time.min,params),hi=val(lab.time.max,params);if(!Number.isFinite(lo)||!Number.isFinite(hi)||hi<=lo){lo=0;hi=1}
+  const anchor=clamp(val(lab.time.reference,params)||0,lo,hi);rangeWasTrimmed=false;
+  function boundary(a,b){let good=a,bad=b;for(let i=0;i<40;i++){const m=(good+bad)/2;if(safeState(m).valid!==false)good=m;else bad=m}return good+(a-good)*1e-4}
+  let previous=anchor;
+  for(let i=1;i<=160;i++){const t=anchor+(hi-anchor)*i/160;if(safeState(t).valid===false){hi=boundary(previous,t);rangeWasTrimmed=true;break}previous=t}
+  previous=anchor;
+  for(let i=1;i<=160;i++){const t=anchor+(lo-anchor)*i/160;if(safeState(t).valid===false){lo=boundary(previous,t);rangeWasTrimmed=true;break}previous=t}
+  tMin=lo;tMax=hi;
+ }
+ function resolveBody(s,pt){return s.bodies.find(b=>b.id===pt.body)||s.bodies.find(b=>norm(K.minus(b.origin,pt.p))<1e-8)||s.bodies.find(b=>b.id===bodyId)}
+ function localOf(b,p){const r=K.minus(p,b.origin),R=b.R;return [R[0]*r[0]+R[3]*r[1]+R[6]*r[2],R[1]*r[0]+R[4]*r[1]+R[7]*r[2],R[2]*r[0]+R[5]*r[1]+R[8]*r[2]]}
+ function pathFor(b){return b.path||[[0,0,0],[b.length||1,0,0]]}
+ function along(b,u){const path=pathFor(b),ls=path.slice(1).map((p,i)=>norm(K.minus(p,path[i]))),total=ls.reduce((a,b)=>a+b,0);let target=clamp(u,0,1)*total;for(let i=0;i<ls.length;i++){if(target<=ls[i]||i===ls.length-1)return K.plus(path[i],K.scale(K.minus(path[i+1],path[i]),ls[i]?target/ls[i]:0));target-=ls[i]}return path[0]}
+ function probeLocal(b){if(b.kind==='disk'){const a=probe.angle*Math.PI/180;return[b.radius*probe.rho*Math.cos(a),b.radius*probe.rho*Math.sin(a),0]}if(b.kind==='sphere'){const a=probe.angle*Math.PI/180,lat=probe.latitude*Math.PI/180;return[b.radius*Math.cos(lat)*Math.cos(a),b.radius*Math.cos(lat)*Math.sin(a),b.radius*Math.sin(lat)]}return along(b,probe.u)}
+ function selected(s=state){
+  if(mode==='probe'){const b=s.bodies.find(b=>b.id===bodyId)||s.bodies[0];return K.onBody(b,probeLocal(b),'probe','P* · '+b.label)}
+  const q=s.points.find(p=>p.id===pointId)||s.points[0],pt={...q};
+  const b=resolveBody(s,pt);if(b&&!pt.decomposition){const bp=K.onBody(b,localOf(b,pt.p));if(norm(K.minus(bp.v,pt.v))<1e-5*(1+norm(pt.v))&&norm(K.minus(bp.a,pt.a))<1e-5*(1+norm(pt.a))){pt.decomposition=bp.decomposition;pt.body=b.id;pt.local=bp.local}}
+  return pt;
+ }
+ function rebuildHistory(){history=[];historyStates=[];for(let i=0;i<=360;i++){const t=tMin+(tMax-tMin)*i/360,s=safeState(t);if(s.valid!==false){historyStates.push({t,s});const p=selected(s);history.push({t,p:p.p,v:p.v,a:p.a,instantaneous:p.instantaneous===true})}}dirty=true}
+ function calibrate(){const ref=clamp(val(lab.time.reference,params)||0,tMin,tMax),s=safeState(ref);if(s.valid===false)return;refMaxV=Math.max(...s.points.map(p=>norm(p.v)),0);refMaxA=Math.max(...s.points.map(p=>norm(p.a)),0);if(refMaxV<1e-8)refMaxV=Math.max(...history.map(p=>norm(p.v)),1);if(refMaxA<1e-8)refMaxA=Math.max(...history.map(p=>norm(p.a)),1)}
+ function makeNav(){
+  $('lab-nav').innerHTML=LABS.map((l,i)=>{return '<button class="nav-item '+(l===lab?'active':'')+'" data-id="'+l.id+'" aria-current="'+(l===lab?'page':'false')+'"><span class="nav-number">'+String(i+1)+'</span><span><span class="nav-name">'+l.title+'</span><span class="nav-meta">'+l.dimension+'D</span></span></button>'}).join('');
+  $$('#lab-nav button').forEach(b=>b.onclick=()=>selectLab(b.dataset.id));
+ }
+ function makeParams(){
+  $('parameter-controls').innerHTML=lab.params.map(p=>'<div class="parameter"><label for="param-'+p.key+'">'+p.label+'</label><div class="parameter-value"><input type="number" id="param-'+p.key+'" data-key="'+p.key+'" value="'+params[p.key]+'" min="'+p.min+'" max="'+p.max+'" step="'+p.step+'"><span>'+p.unit+'</span></div><input type="range" aria-label="'+clean(p.label)+' slider" data-param="'+p.key+'" min="'+p.min+'" max="'+p.max+'" step="'+p.step+'" value="'+params[p.key]+'"></div>').join('');
+  lab.params.forEach(p=>{const num=$('param-'+p.key),slider=document.querySelector('[data-param="'+p.key+'"]');slider.oninput=()=>{num.value=slider.value;setParam(p.key,+slider.value)};num.onchange=()=>{if(num.value.trim()===''||!Number.isFinite(+num.value)){num.value=params[p.key];return}const raw=+num.value,v=clamp(raw,p.min,p.max);num.value=v;slider.value=v;setParam(p.key,v);if(v!==raw)toast('Input kept within the displayed exploration range.')}});
+ }
+ function syncSelects(){
+  $('point-select').innerHTML=state.points.map(p=>'<option value="'+p.id+'">'+clean(p.label||p.id)+(p.instantaneous?' · current contact':'')+'</option>').join('');$('point-select').value=pointId;
+  $('body-select').innerHTML=state.bodies.map(b=>'<option value="'+b.id+'">'+b.label+'</option>').join('');$('body-select').value=bodyId;
+ }
+ function probeControls(){
+  const b=state.bodies.find(b=>b.id===bodyId)||state.bodies[0];bodyId=b.id;$('body-select').value=bodyId;
+  const sliders=b.kind==='disk'?[['rho','Radius / R',0,1,.01],['angle','Material angle (°)',-180,180,1]]:b.kind==='sphere'?[['latitude','Latitude (°)',-90,90,1],['angle','Material longitude (°)',-180,180,1]]:[['u','Position along body',0,1,.001]];
+  $('probe-sliders').innerHTML=sliders.map(([k,label,min,max,step])=>'<div class="probe-control"><label for="probe-'+k+'">'+label+'<span>'+(k==='u'?'0 → 1':'')+'</span></label><div><input type="range" id="probe-'+k+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+probe[k]+'"><input type="number" aria-label="'+label+' exact value" id="probe-number-'+k+'" min="'+min+'" max="'+max+'" step="'+step+'" value="'+probe[k]+'"></div></div>').join('');
+  sliders.forEach(([k,label,min,max])=>{const r=$('probe-'+k),n=$('probe-number-'+k);r.oninput=()=>{probe[k]=+r.value;n.value=r.value;probeChanged()};n.onchange=()=>{probe[k]=clamp(Number(n.value)||0,min,max);n.value=probe[k];r.value=probe[k];probeChanged()}})
+ }
+ function probeChanged(){rebuildHistory();updateDOM();dirty=true}
+ function setMode(m){mode=m;$$('#inspect-mode button').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));$('named-controls').hidden=m!=='named';$('probe-controls').hidden=m!=='probe';if(m==='probe')probeControls();probeChanged()}
+ function selectPoint(id){pointId=id;mode='named';$('point-select').value=id;setMode('named')}
+ function referenceChecks(){
+  const p=defaults(lab),s=safeState(val(lab.time.reference,p)||0,p),checks=(lab.checks||[]).map(c=>{const actual=c.get(s);return{label:c.label,actual,expected:c.expected,unit:c.unit,pass:Number.isFinite(actual)&&Math.abs(actual-c.expected)<=c.tolerance}});
+  $('reference-checks').innerHTML=checks.map(c=>'<div class="check-row"><span>'+c.label+'</span><span class="value">'+fmt(c.actual,6)+' <small>'+c.unit+'</small><span class="'+(c.pass?'pass':'fail')+'">'+(c.pass?'✓':'CHECK')+'</span></span></div>').join('');
+  $('check-footnote').textContent='Reference time: '+fmt(val(lab.time.reference,p)||0,7)+' s. Acceleration checks in velocity-only examples use the stated continuation assumption. Values use unrounded arithmetic.';
+  return checks;
+ }
+ function selectLab(id){
+  lab=LABS.find(l=>l.id===id)||LABS[0];params=defaults(lab);playing=false;mode='named';pointId=lab.defaultPoint;bodyId=lab.defaultBody;probe={u:.5,rho:1,angle:180,latitude:params.latitude??30};camera={zoom:1,pan:[0,0],yaw:2.2,elev:.46};
+  safeRange();now=clamp(val(lab.time.initial,params)||0,tMin,tMax);state=safeState(now);
+  const desired=(tMax-tMin)/8,rates=[.005,.01,.025,.05,.1,.25,.5,1,2];$('playback').value=String(rates.reduce((a,b)=>Math.abs(Math.log(b/desired))<Math.abs(Math.log(a/desired))?b:a));
+  $('example-kicker').textContent='EXAMPLE '+String(LABS.indexOf(lab)+1)+' / '+String(LABS.length)+' · '+(lab.dimension===3?'SPATIAL KINEMATICS':'PLANAR KINEMATICS');
+  $('example-title').textContent=lab.title;$('example-subtitle').textContent=lab.subtitle;$('dimension-badge').textContent=lab.dimension+'D';
+  $('assumption-note').innerHTML='<b>Motion beyond the snapshot.</b> '+lab.assumptions;
+  $('problem-description').innerHTML=lab.description;$('model-equations').innerHTML=lab.equations.map(s=>'<div>'+s+'</div>').join('');$('teaching-text').textContent=lab.teaching;
+  $('view-preset').hidden=lab.dimension!==3;$('view-preset').value='iso';$('ic-label').hidden=lab.dimension===3;
+  $('follow-label').hidden=!/disk|cylinder/.test(lab.id);$('follow-center').checked=/disk|cylinder/.test(lab.id);
+  $('scene-caption').textContent=lab.dimension===3?'Drag to orbit · click a point or a rod':'Click a joint or a body to inspect it';
+  $('show-ic').checked=false;$('scene-message').hidden=true;
+  makeNav();makeParams();syncSelects();setMode('named');referenceChecks();rebuildHistory();calibrate();updateDOM();dirty=true;
+  const loc=new URL(location.href);loc.hash=lab.id;try{historyReplace(loc)}catch(e){}
+ }
+ function historyReplace(loc){window.history.replaceState(null,'',loc)}
+ function setParam(key,value){params[key]=value;playing=false;safeRange();now=clamp(now,tMin,tMax);state=safeState(now);if(state.valid===false){now=clamp(val(lab.time.reference,params)||0,tMin,tMax);state=safeState(now)}rebuildHistory();calibrate();syncSelects();updateDOM();dirty=true}
+ function setTime(t,pause=false){if(pause)playing=false;const target=clamp(Number(t),tMin,tMax),s=safeState(target);if(s.valid===false){playing=false;showMessage(s.reason);return false}now=target;state=s;$('scene-message').hidden=true;updateDOM();dirty=true;return true}
+ function showMessage(msg){$('scene-message').textContent=msg;$('scene-message').hidden=false;dirty=true}
+ function togglePlay(){if(now>=tMax-1e-8&&!playing)setTime(tMin);playing=!playing;lastFrame=performance.now();updateDOM();dirty=true}
+ function step(dir){const dt=(tMax-tMin)/160;setTime(now+dir*dt,true)}
+ function updateDOM(){
+  if(!state||state.valid===false)return;
+  const pt=selected(),b=resolveBody(state,pt),unit=lab.unit,dim=lab.dimension===3?3:2;
+  $('play').innerHTML=playing?'❚❚ <span>Pause</span>':'▶ <span>Play</span>';$('play').setAttribute('aria-label',playing?'Pause animation':'Play animation');$('motion-status').textContent=playing?'PLAYING':'PAUSED';$('motion-dot').classList.toggle('playing',playing);$('time-chip').textContent='t = '+now.toFixed(3)+' s';
+  $('timeline').min=tMin;$('timeline').max=tMax;$('timeline').step=Math.max((tMax-tMin)/100000,1e-8);$('timeline').value=now;$('time-min').textContent=fmt(tMin,4)+' s';$('time-max').textContent=fmt(tMax,4)+' s';if(document.activeElement!==$('time-number'))$('time-number').value=Number(now.toFixed(6));$('time-number').min=tMin;$('time-number').max=tMax;
+  $('travel-note').textContent=(rangeWasTrimmed?'The time window ends before a geometric limit. ':'')+(state.status||'');
+  $('point-title').textContent=mode==='probe'?'Material point P*':'Point '+pt.id;$('point-unit').textContent=mode==='probe'?b?.label||'':pt.instantaneous?'contact sample':'';
+  $('point-note').textContent=pt.note||'';$('point-note').hidden=!pt.note;
+  $('position-unit').textContent=unit;$('velocity-unit').textContent=unit+'/s';$('acceleration-unit').textContent=unit+'/s²';
+  const comp=v=>v.slice(0,dim).map((x,i)=>'<span><small>'+['x','y','z'][i]+'</small><b>'+fmt(x,5)+'</b></span>').join('');
+  for(const [id,v] of [['position-readout',pt.p],['velocity-readout',pt.v],['acceleration-readout',pt.a]]){$(id).innerHTML=comp(v);$(id).classList.toggle('two',dim===2)}
+  $('speed-value').textContent=fmt(norm(pt.v),5);$('accel-value').textContent=fmt(norm(pt.a),5);
+  $('body-readout').innerHTML=b?'<div>'+b.label+'</div><div class="angular-row"><span>ω '+(dim===2?'(CCW +)':'(x, y, z)')+'</span><b>'+(dim===2?fmt(b.omega[2],5):vec(b.omega,4))+' rad/s</b></div><div class="angular-row"><span>α</span><b>'+(dim===2?fmt(b.alpha[2],5):vec(b.alpha,4))+' rad/s²</b></div>':'';
+  $('chart-point-name').textContent=pt.instantaneous?'· K, successive contact particles':'· '+(mode==='probe'?'P*':pt.id);$('v-chart-unit').textContent='['+unit+'/s]';$('a-chart-unit').textContent='['+unit+'/s²]';
+  $('v-chart-current').textContent=($('chart-mode').value==='magnitude'?fmt(norm(pt.v),5):vec(pt.v));$('a-chart-current').textContent=($('chart-mode').value==='magnitude'?fmt(norm(pt.a),5):vec(pt.a));
+  $('all-points-body').innerHTML=state.points.map(p=>'<tr class="'+(mode==='named'&&p.id===pointId?'active':'')+'"><td><button data-point="'+p.id+'">'+p.id+(p.instantaneous?'*':'')+'</button></td><td>'+vec(p.v)+'</td><td>'+fmt(norm(p.v))+'</td><td>'+vec(p.a)+'</td><td>'+fmt(norm(p.a))+'</td></tr>').join('');$$('#all-points-body button').forEach(el=>el.onclick=()=>selectPoint(el.dataset.point));
+  $('table-units').textContent=unit+'/s · '+unit+'/s²';
+  $('all-bodies').innerHTML=state.bodies.map(b=>'<span><strong>'+b.label+'</strong> &nbsp; ω '+(dim===2?fmt(b.omega[2]):vec(b.omega))+' rad/s &nbsp; α '+(dim===2?fmt(b.alpha[2]):vec(b.alpha))+' rad/s²</span>').join('');
+  $('mechanism-metrics').innerHTML=(state.metrics||[]).map(m=>'<div><span>'+m.label+'</span><b>'+fmt(m.value,5)+' <small>'+m.unit+'</small></b></div>').join('');
+  const d=pt.decomposition;$('term-readout').innerHTML=d?[['Origin acceleration','base'],['Tangential α × r','tangential'],['Normal ω × (ω × r)','normal']].map(([label,key])=>'<div class="term-row"><span>'+label+'</span><b>'+vec(d[key])+'</b></div>').join('')+'<div class="muted">Components in '+unit+'/s², relative to the selected body’s origin.</div>':'Select a point attached to a rigid body to inspect the three acceleration terms.';
+  const changed=lab.params.some(p=>Math.abs(params[p.key]-p.value)>1e-10);$('input-state').textContent=changed?'Custom inputs':'Default inputs';
+  $('decomp-legend').hidden=!$('show-terms').checked;
+ }
+
+  function resizeCanvas(c){const box=c.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2),w=Math.max(1,box.width),h=Math.max(1,box.height);if(c.width!==Math.round(w*dpr)||c.height!==Math.round(h*dpr)){c.width=Math.round(w*dpr);c.height=Math.round(h*dpr)}const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);return{c:x,w,h}}
+ function worldBounds(){let b=val(lab.bounds,params).slice();if($('follow-center').checked&&!$('follow-label').hidden){const wheel=state.bodies.find(b=>b.kind==='disk');if(wheel){const R=wheel.radius;b=[wheel.origin[0]-2.8*R,wheel.origin[0]+2.8*R,-.6*R,2.8*R]}}return b}
+ function getProjection(w,h){
+  const bounds=worldBounds(),is3=lab.dimension===3;
+  let right=is3?[Math.cos(camera.yaw),Math.sin(camera.yaw),0]:[1,0,0];
+  let up=is3?[-Math.sin(camera.yaw)*Math.sin(camera.elev),Math.cos(camera.yaw)*Math.sin(camera.elev),Math.cos(camera.elev)]:[0,1,0];
+  const depth=K.cross(right,up),corners=[];
+  for(const x of [bounds[0],bounds[1]])for(const y of[bounds[2],bounds[3]])for(const z of(is3?[bounds[4],bounds[5]]:[0]))corners.push([x,y,z]);
+  let xs=corners.map(p=>K.dot(p,right)),ys=corners.map(p=>K.dot(p,up));
+  if(is3){const sphere=state.bodies.find(b=>b.kind==='sphere');if(sphere){const x=K.dot(sphere.origin,right),y=K.dot(sphere.origin,up),r=sphere.radius*1.42;xs=[x-r,x+r];ys=[y-r,y+r]}else if(historyStates.length){const points=historyStates.filter((q,i)=>i%6===0).flatMap(q=>q.s.points.map(p=>p.p));xs=points.map(p=>K.dot(p,right));ys=points.map(p=>K.dot(p,up));const x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys),pad=Math.max(x1-x0,y1-y0)*.18;xs=[x0-pad,x1+pad];ys=[y0-pad,y1+pad]}}
+  const xmin=Math.min(...xs),xmax=Math.max(...xs),ymin=Math.min(...ys),ymax=Math.max(...ys);
+  const scale=Math.min((w-80)/(xmax-xmin||1),(h-112)/(ymax-ymin||1))*camera.zoom;
+  const cx=(xmin+xmax)/2,cy=(ymin+ymax)/2,sx=w/2+camera.pan[0],sy=h/2-4+camera.pan[1];
+  return {bounds,right,up,depth,scale,w,h,project(p){return[sx+(K.dot(p,right)-cx)*scale,sy-(K.dot(p,up)-cy)*scale]},unproject(p){return[(p[0]-sx)/scale+cx,(sy-p[1])/scale+cy,0]},projectVector(v,k){return[K.dot(v,right)*k,-K.dot(v,up)*k]}};
+ }
+ function niceStep(x){if(x<=0)return 1;const e=Math.pow(10,Math.floor(Math.log10(x))),f=x/e;return(f>5?10:f>2?5:f>1?2:1)*e}
+ function roundedBox(x,y,w,h,r=6){ctx.beginPath();ctx.roundRect(x,y,w,h,r)}
+ function line2(a,b,color,width=1,dash=[]){ctx.beginPath();ctx.setLineDash(dash);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.setLineDash([])}
+ function path2(points,color,width=1,closed=false,fill=null,alpha=1,dash=[]){if(points.length<2)return;ctx.save();ctx.globalAlpha=alpha;ctx.beginPath();ctx.moveTo(...points[0]);for(const p of points.slice(1))ctx.lineTo(...p);if(closed)ctx.closePath();if(fill){ctx.fillStyle=fill;ctx.fill()}ctx.strokeStyle=color;ctx.lineWidth=width;ctx.lineJoin='round';ctx.lineCap='round';ctx.setLineDash(dash);ctx.stroke();ctx.restore()}
+ let labelBoxes=[];
+ function textLabel(text,x,y,color=colors.ink,size=11,align='left',avoid=false){
+  ctx.font='500 '+size+'px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif';ctx.textAlign=align;ctx.textBaseline='middle';const tw=ctx.measureText(text).width;
+  x=clamp(x,align==='center'?tw/2+8:align==='right'?tw+8:8,align==='left'?canvasSize.w-tw-8:align==='center'?canvasSize.w-tw/2-8:canvasSize.w-8);y=clamp(y,49,canvasSize.h-62);
+  let bx=x-(align==='center'?tw/2:align==='right'?tw:0)-3,by=y-size/2-2;
+  if(avoid){for(let tries=0;tries<6&&labelBoxes.some(b=>bx<b.x+b.w&&bx+tw+6>b.x&&by<b.y+b.h&&by+size+4>b.y);tries++){y+=14;by=y-size/2-2}labelBoxes.push({x:bx,y:by,w:tw+6,h:size+4})}
+  ctx.fillStyle=colors.bg;ctx.globalAlpha=.82;roundedBox(bx,by,tw+6,size+4,3);ctx.fill();ctx.globalAlpha=1;ctx.fillStyle=color;ctx.fillText(text,x,y);
+ }
+ function drawGrid(P){
+  const {w,h}=P;ctx.fillStyle=colors.bg;ctx.fillRect(0,0,w,h);
+  if(lab.dimension===2){const tl=P.unproject([0,h]),br=P.unproject([w,0]),st=niceStep((br[0]-tl[0])/12);ctx.strokeStyle=colors.grid;ctx.lineWidth=1;ctx.beginPath();for(let x=Math.floor(tl[0]/st)*st;x<=br[0]+st;x+=st){const q=P.project([x,0,0]);ctx.moveTo(q[0],0);ctx.lineTo(q[0],h)}for(let y=Math.floor(tl[1]/st)*st;y<=br[1]+st;y+=st){const q=P.project([0,y,0]);ctx.moveTo(0,q[1]);ctx.lineTo(w,q[1])}ctx.stroke();
+   ctx.font='9px -apple-system, sans-serif';ctx.fillStyle=colors.muted;ctx.textAlign='left';ctx.fillText('Grid '+fmt(st)+' '+lab.unit,17,h-64);
+  }else{ctx.fillStyle=colors.grid;for(let x=20;x<w;x+=27)for(let y=24;y<h;y+=27){ctx.beginPath();ctx.arc(x,y,.8,0,Math.PI*2);ctx.fill()}}
+ }
+ function drawGuides(P){
+  for(const g of state.guides||[]){
+   if(g.kind==='pivot'){const p=P.project(g.p);ctx.fillStyle=colors.raised;ctx.strokeStyle=colors.base;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]-10,p[1]+16);ctx.lineTo(p[0]+10,p[1]+16);ctx.closePath();ctx.fill();ctx.stroke();line2([p[0]-15,p[1]+18],[p[0]+15,p[1]+18],colors.muted,1.3);continue}
+   if(g.kind==='circle'){const pts=[];for(let i=0;i<=100;i++)pts.push(P.project([g.c[0]+g.r*Math.cos(i*Math.PI/50),g.c[1]+g.r*Math.sin(i*Math.PI/50),g.c[2]||0]));path2(pts,colors.muted,1,false,null,.4,[3,5]);continue}
+   const a=P.project(g.a),b=P.project(g.b);
+   if(g.kind==='ground'||g.kind==='belt'){
+    line2(a,b,colors.base,2.1);const dx=b[0]-a[0],dy=b[1]-a[1],L=Math.hypot(dx,dy),nx=-dy/(L||1),ny=dx/(L||1),tx=dx/(L||1),ty=dy/(L||1);ctx.strokeStyle=colors.line;ctx.lineWidth=1;
+    for(let s=0;s<L;s+=14){const p=[a[0]+tx*s,a[1]+ty*s];if(p[0]<-30||p[0]>P.w+30)continue;line2([p[0]+nx*3,p[1]+ny*3],[p[0]+nx*11-tx*7,p[1]+ny*11-ty*7],colors.line,1)}
+    if(g.kind==='belt'){const offset=(g.offset||0)*P.scale%28;for(let x=-28+offset;x<P.w+28;x+=28){line2([x,a[1]+8],[x+10,a[1]+8],colors.muted,2)}for(let x=0;x<P.w;x+=42){ctx.beginPath();ctx.arc(x,a[1]+22,9,0,Math.PI*2);ctx.strokeStyle=colors.line;ctx.stroke()}textLabel('moving conveyor',P.w-22,a[1]+41,colors.muted,10,'right')}
+   }else{line2(a,b,colors.line,6);line2(a,b,colors.base,1.3,[6,5]);if(g.label){const pos=K.plus(a,K.scale(K.minus(b,a),.13));textLabel(g.label,pos[0]+10,pos[1]-11,colors.muted,10,'left',true)}}
+  }
+ }
+ function bodyColor(b){return[colors.accent,colors.violet,colors.green][(b.colorIndex||0)%3]}
+ function worldPoint(b,local){return K.plus(b.origin,K.mv(b.R,local))}
+ function diskPoints(b,P,n=100){const a=[];for(let i=0;i<=n;i++){const t=i/n*2*Math.PI;a.push(P.project(worldPoint(b,[b.radius*Math.cos(t),b.radius*Math.sin(t),0])))}return a}
+ function drawBody(b,P){
+  const c=bodyColor(b),origin=P.project(b.origin);
+  if(b.kind==='disk'){
+   const pts=diskPoints(b,P),r=b.radius*P.scale;const fill=ctx.createRadialGradient(origin[0]-.3*r,origin[1]-.35*r,0,origin[0],origin[1],r);fill.addColorStop(0,colors.raised);fill.addColorStop(1,colors.panel);path2(pts,c,2,true,fill);
+   const inner={...b,radius:b.radius*.84};path2(diskPoints(inner,P),c,.8,true,null,.35);
+   for(let i=0;i<12;i++){const a=i*Math.PI/6,outer=P.project(worldPoint(b,[b.radius*.84*Math.cos(a),b.radius*.84*Math.sin(a),0])),inner=P.project(worldPoint(b,[b.radius*.23*Math.cos(a),b.radius*.23*Math.sin(a),0]));ctx.globalAlpha=.45;line2(inner,outer,c,i%3===0?2:1);ctx.globalAlpha=1}
+   ctx.beginPath();ctx.arc(...origin,Math.max(7,r*.13),0,Math.PI*2);ctx.fillStyle=colors.surface;ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=1.5;ctx.stroke();
+   hitBodies.push({body:b,type:'disk',center:origin,r});
+  }else if(b.kind==='sphere'){
+   const r=b.radius*P.scale,fill=ctx.createRadialGradient(origin[0]-.34*r,origin[1]-.38*r,r*.05,origin[0],origin[1],r);fill.addColorStop(0,colors.raised);fill.addColorStop(.68,colors.panel);fill.addColorStop(1,colors.bg);ctx.beginPath();ctx.arc(...origin,r,0,Math.PI*2);ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=1.3;ctx.globalAlpha=.8;ctx.stroke();ctx.globalAlpha=1;
+   function surfaceCurve(localPoints){for(let i=1;i<localPoints.length;i++){const r1=K.mv(b.R,localPoints[i-1]),r2=K.mv(b.R,localPoints[i]),front=K.dot(K.plus(r1,r2),P.depth)>0;ctx.globalAlpha=front?.47:.12;line2(P.project(K.plus(b.origin,r1)),P.project(K.plus(b.origin,r2)),c,front?1:.7)}ctx.globalAlpha=1}
+   for(let lat=-60;lat<=60;lat+=30){const la=lat*Math.PI/180,a=[];for(let i=0;i<=100;i++){const t=i*Math.PI/50;a.push([b.radius*Math.cos(la)*Math.cos(t),b.radius*Math.cos(la)*Math.sin(t),b.radius*Math.sin(la)])}surfaceCurve(a)}
+   for(let lon=0;lon<360;lon+=30){const lo=lon*Math.PI/180,a=[];for(let i=0;i<=60;i++){const la=-Math.PI/2+i*Math.PI/60;a.push([b.radius*Math.cos(la)*Math.cos(lo),b.radius*Math.cos(la)*Math.sin(lo),b.radius*Math.sin(la)])}surfaceCurve(a)}
+   for(const g of state.guides||[])if(g.kind==='circle'&&g.r>0){const pts=[];for(let i=0;i<=100;i++)pts.push(P.project([g.c[0]+g.r*Math.cos(i*Math.PI/50),g.c[1]+g.r*Math.sin(i*Math.PI/50),g.c[2]]));path2(pts,colors.amber,1.2,false,null,.65,[4,3])}
+   hitBodies.push({body:b,type:'sphere',center:origin,r});
+  }else{
+   const path=pathFor(b),pts=path.map(p=>P.project(worldPoint(b,p))),segments=[];for(let i=1;i<pts.length;i++)segments.push({i,a:pts[i-1],b:pts[i],depth:K.dot(K.plus(worldPoint(b,path[i-1]),worldPoint(b,path[i])),P.depth)});segments.sort((a,b)=>a.depth-b.depth);
+   const width=b.id==='collar'?4:Math.min(14,Math.max(8,canvasSize.w/70));
+   for(const seg of segments){line2(seg.a,seg.b,colors.bg,width+5);ctx.lineCap='round';line2(seg.a,seg.b,c,width);ctx.globalAlpha=.26;line2(seg.a,seg.b,colors.ink,1);ctx.globalAlpha=1;hitBodies.push({body:b,type:'segment',index:seg.i-1,a:seg.a,b:seg.b,path});}ctx.lineCap='butt';
+   if(b.id!=='collar'){const mid=P.project(worldPoint(b,along(b,.5)));textLabel(b.label.replace(/^Link |^Rod /,''),mid[0]+10,mid[1]-14,c,10,'left',true)}
+  }
+ }
+ function drawTrace(P){if(!$('show-trail').checked||!history.length||selected().instantaneous)return;const all=history.map(q=>P.project(q.p));path2(all,colors.amber,1,false,null,.23,[3,4]);const past=history.filter(q=>q.t<=now).map(q=>P.project(q.p));past.push(P.project(selected().p));path2(past,colors.amber,1.5,false,null,.6)}
+ function arrow(world,v,color,scale,label='',width=2.2,alpha=1){
+  const P=projection,p=P.project(world),d=P.projectVector(v,scale),len=Math.hypot(...d);if(norm(v)<1e-9||len<.4)return;
+  const maxLen=Math.min(P.w*.45,P.h*.55),capped=len>maxLen,fac=capped?maxLen/len:1,dd=d.map(x=>x*fac),end=[p[0]+dd[0],p[1]+dd[1]],u=[dd[0]/(len*fac),dd[1]/(len*fac)],head=Math.min(9,Math.max(5,len*.13));
+  ctx.save();ctx.globalAlpha=alpha;line2(p,end,color,width,capped?[6,4]:[]);ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(...end);ctx.lineTo(end[0]-head*u[0]+head*.43*u[1],end[1]-head*u[1]-head*.43*u[0]);ctx.lineTo(end[0]-head*u[0]-head*.43*u[1],end[1]-head*u[1]+head*.43*u[0]);ctx.closePath();ctx.fill();ctx.restore();
+  if(label)textLabel(label+(capped?' (capped)':''),end[0]+(u[0]>=0?7:-7),end[1]-8,color,11,u[0]>=0?'left':'right',true);
+ }
+ function drawPoint(p,P,selectedFlag=false){const s=P.project(p.p),color=selectedFlag?colors.amber:colors.ink;ctx.save();if(p.instantaneous){ctx.strokeStyle=colors.amber;ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(...s,9,0,Math.PI*2);ctx.setLineDash([2,3]);ctx.stroke();ctx.setLineDash([])}else{if(selectedFlag){ctx.beginPath();ctx.arc(...s,11,0,Math.PI*2);ctx.fillStyle=colors.amber;ctx.globalAlpha=.14;ctx.fill();ctx.globalAlpha=1}ctx.beginPath();ctx.arc(...s,selectedFlag?5.5:4.5,0,Math.PI*2);ctx.fillStyle=colors.bg;ctx.fill();ctx.strokeStyle=color;ctx.lineWidth=2;ctx.stroke()}
+  ctx.restore();const off=p.instantaneous?[-12,18]:[10,-14];textLabel(p.id==='probe'?'P*':p.id,s[0]+off[0],s[1]+off[1],color,12,off[0]>0?'left':'right',true);hitPoints.push({id:p.id,p:s});}
+ function drawField(P,vScale,aScale){
+  if(!$('show-field').checked)return;
+  for(const b of state.bodies){let locals=[];if(b.kind==='disk'){for(let i=0;i<12;i++){const a=i*Math.PI/6;locals.push([b.radius*Math.cos(a),b.radius*Math.sin(a),0])}for(let i=0;i<6;i++){const a=i*Math.PI/3;locals.push([.5*b.radius*Math.cos(a),.5*b.radius*Math.sin(a),0])}}else if(b.kind==='sphere'){for(let lat of[-45,0,45])for(let lon=0;lon<360;lon+=60){const la=lat*Math.PI/180,lo=lon*Math.PI/180;locals.push([b.radius*Math.cos(la)*Math.cos(lo),b.radius*Math.cos(la)*Math.sin(lo),b.radius*Math.sin(la)])}}else{for(let i=1;i<7;i++)locals.push(along(b,i/7))}
+   for(const q of locals){const pt=K.onBody(b,q);if($('show-v').checked)arrow(pt.p,pt.v,colors.cyan,vScale,'',1,.28);if($('show-a').checked)arrow(pt.p,pt.a,colors.coral,aScale,'',1,.22)}
+  }
+ }
+ function drawAxes(P){const origin=[P.w-54,P.h-80];const axes=lab.dimension===3?[[1,0,0],[0,1,0],[0,0,1]]:[[1,0,0],[0,1,0]];ctx.save();for(let i=0;i<axes.length;i++){const d=P.projectVector(axes[i],29),end=[origin[0]+d[0],origin[1]+d[1]];line2(origin,end,colors.muted,1.1);ctx.fillStyle=colors.muted;ctx.font='10px -apple-system, sans-serif';ctx.textAlign='center';ctx.fillText(['x','y','z'][i],end[0]+d[0]*.25,end[1]+d[1]*.25)}ctx.beginPath();ctx.arc(...origin,2,0,Math.PI*2);ctx.fillStyle=colors.muted;ctx.fill();ctx.restore()}
+ function drawInstantCenter(P){if(!$('show-ic').checked||lab.dimension===3)return;const b=resolveBody(state,selected());if(!b)return;const w=b.omega[2];if(Math.abs(w)<1e-8){textLabel(norm(b.v)>1e-8?'IC at infinity · instantaneous translation':'Body instantaneously at rest',18,67,colors.violet,10);return}const ic=K.plus(b.origin,[-b.v[1]/w,b.v[0]/w,0]),p=P.project(ic);if(p[0]<15||p[0]>P.w-15||p[1]<65||p[1]>P.h-65){textLabel('Instant center outside current view',18,67,colors.violet,10);return}line2([p[0]-6,p[1]],[p[0]+6,p[1]],colors.violet,1.5);line2([p[0],p[1]-6],[p[0],p[1]+6],colors.violet,1.5);textLabel('IC · velocity only',p[0]+11,p[1]-12,colors.violet,10,'left',true)}
+ function drawScene(){if(!state||state.valid===false)return;const s=resizeCanvas(sc);canvasSize={w:s.w,h:s.h};projection=getProjection(s.w,s.h);const P=projection;labelBoxes=[];hitPoints=[];hitBodies=[];ctx.lineCap='round';drawGrid(P);drawGuides(P);drawTrace(P);state.bodies.forEach(b=>drawBody(b,P));
+  const gain=+$('vector-gain').value,vScale=P.h*.22/refMaxV*gain,aScale=P.h*.22/refMaxA*gain;drawField(P,vScale,aScale);
+  const pt=selected(),pts=$('all-vectors').checked?state.points.filter(p=>!p.instantaneous):[];if(!pts.some(p=>p.id===pt.id))pts.push(pt);
+  for(const p of pts){const isP=p.id===pt.id;if($('show-v').checked)arrow(p.p,p.v,colors.cyan,vScale,isP?'v':'',isP?2.6:1.5,isP?1:.52);if($('show-a').checked)arrow(p.p,p.a,colors.coral,aScale,isP?'a':'',isP?2.6:1.5,isP?1:.52)}
+  if($('show-terms').checked&&pt.decomposition){arrow(pt.p,pt.decomposition.base,colors.base,aScale,'a₀',1.5,.8);arrow(pt.p,pt.decomposition.tangential,colors.amber,aScale,'aₜ',2);arrow(pt.p,pt.decomposition.normal,colors.violet,aScale,'aₙ',2)}
+  drawInstantCenter(P);for(const p of state.points)drawPoint(p,P,mode==='named'&&p.id===pointId);if(mode==='probe')drawPoint(pt,P,true);drawAxes(P);
+  $('scale-note').textContent='Fixed arrow scales: 1 '+lab.unit+'/s = '+fmt(vScale,3)+' px · 1 '+lab.unit+'/s² = '+fmt(aScale,3)+' px'+(lab.dimension===3?' · 3D vectors are projected onto this view':'');
+ }
+ function drawChart(id,key){
+  const canvas=$(id),{c,w,h}=resizeCanvas(canvas),left=w<340?55:62,right=17,top=15,bottom=35,pw=w-left-right,ph=h-top-bottom;const components=$('chart-mode').value==='components',nd=lab.dimension===3?3:2;
+  c.fillStyle=colors.surface;c.fillRect(0,0,w,h);const arrays=components?Array.from({length:nd},(_,i)=>history.map(q=>q[key][i])):[history.map(q=>norm(q[key]))];const all=arrays.flat();let ymin=Math.min(0,...all),ymax=Math.max(0,...all);if(ymax-ymin<1e-9){ymin=0;ymax=1}else{const pad=(ymax-ymin)*.08;if(ymin<0)ymin-=pad;ymax+=pad}const x=t=>left+(t-tMin)/(tMax-tMin)*pw,y=v=>top+ph-(v-ymin)/(ymax-ymin)*ph;
+  chartRanges[id]={left,right,top,bottom,w,h,pw};c.font='9px -apple-system, sans-serif';c.fillStyle=colors.muted;c.strokeStyle=colors.line;c.lineWidth=.7;
+  for(let i=0;i<=4;i++){const v=ymin+(ymax-ymin)*i/4,Y=y(v);c.beginPath();c.moveTo(left,Y);c.lineTo(w-right,Y);c.stroke();c.textAlign='right';c.textBaseline='middle';c.fillText(fmt(v,3),left-7,Y)}
+  for(let i=0;i<=4;i++){const t=tMin+(tMax-tMin)*i/4,X=x(t);c.textAlign=i===0?'left':i===4?'right':'center';c.textBaseline='top';c.fillText(fmt(t,3),X,h-bottom+8)}
+  c.textAlign='center';c.fillText('time (s)',left+pw/2,h-12);c.save();c.translate(12,top+ph/2);c.rotate(-Math.PI/2);c.textBaseline='middle';c.fillText((components?key:'|'+key+'|')+' ('+lab.unit+(key==='v'?'/s':'/s²')+')',0,0);c.restore();
+  const palette=components?[colors.cyan,colors.amber,colors.violet]:[key==='v'?colors.cyan:colors.coral];c.save();c.beginPath();c.rect(left,top,pw,ph);c.clip();
+  arrays.forEach((arr,j)=>{c.beginPath();history.forEach((q,i)=>{const p=[x(q.t),y(arr[i])];if(i===0)c.moveTo(...p);else c.lineTo(...p)});c.strokeStyle=palette[j];c.lineWidth=1.7;c.stroke()});
+  const X=x(now);c.setLineDash([3,4]);c.strokeStyle=colors.muted;c.lineWidth=1;c.beginPath();c.moveTo(X,top);c.lineTo(X,top+ph);c.stroke();c.setLineDash([]);const pt=selected();
+  arrays.forEach((arr,j)=>{const v=components?pt[key][j]:norm(pt[key]),Y=y(v);c.beginPath();c.arc(X,Y,4,0,Math.PI*2);c.fillStyle=palette[j];c.fill();c.strokeStyle=colors.surface;c.lineWidth=1.5;c.stroke()});c.restore();
+  if(components){c.font='9px -apple-system, sans-serif';c.textAlign='right';c.textBaseline='top';for(let j=0;j<nd;j++){c.fillStyle=palette[j];c.fillText(['x','y','z'][j],w-right-(nd-1-j)*25,top+3)}}
+ }
+ function render(){drawScene();drawChart('v-chart','v');drawChart('a-chart','a');dirty=false}
+
+  $('example-reset').onclick=()=>{selectLab(lab.id);toast('Default inputs and reference snapshot restored.')};
+ $('point-select').onchange=()=>selectPoint($('point-select').value);
+ $('body-select').onchange=()=>{bodyId=$('body-select').value;probeControls();probeChanged()};
+ $$('#inspect-mode button').forEach(b=>b.onclick=()=>setMode(b.dataset.mode));
+ $('play').onclick=togglePlay;$('step-back').onclick=()=>step(-1);$('step-forward').onclick=()=>step(1);$('restart').onclick=()=>setTime(tMin,true);
+ $('timeline').oninput=()=>setTime(+$('timeline').value,true);$('time-number').onchange=()=>{if($('time-number').value!==''&&Number.isFinite(+$('time-number').value))setTime(+$('time-number').value,true);else updateDOM()};
+ ['show-v','show-a','all-vectors','show-terms','show-trail','show-field','show-ic','follow-center','vector-gain','chart-mode'].forEach(id=>$(id).addEventListener('input',()=>{updateDOM();dirty=true}));
+ function fitView(){camera.zoom=1;camera.pan=[0,0];dirty=true}
+ $('zoom-in').onclick=()=>{camera.zoom=Math.min(8,camera.zoom*1.25);dirty=true};$('zoom-out').onclick=()=>{camera.zoom=Math.max(.025,camera.zoom/1.25);dirty=true};$('fit-view').onclick=fitView;
+ $('view-preset').onchange=()=>{const v=$('view-preset').value;if(v==='iso'){camera.yaw=2.2;camera.elev=.46}else if(v==='xy'){camera.yaw=0;camera.elev=Math.PI/2}else if(v==='xz'){camera.yaw=0;camera.elev=0}else{camera.yaw=Math.PI/2;camera.elev=0}fitView()};
+ let pointerDown=null;
+ const mouseOn=(e,c)=>{const r=c.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
+ sc.addEventListener('pointerdown',e=>{pointerDown={p:mouseOn(e,sc),last:mouseOn(e,sc),dragged:false};sc.setPointerCapture(e.pointerId)});
+ sc.addEventListener('pointermove',e=>{if(!pointerDown)return;const p=mouseOn(e,sc),dx=p[0]-pointerDown.last[0],dy=p[1]-pointerDown.last[1];if(Math.hypot(p[0]-pointerDown.p[0],p[1]-pointerDown.p[1])>5)pointerDown.dragged=true;if(pointerDown.dragged){if(lab.dimension===3){camera.yaw+=dx*.008;camera.elev=clamp(camera.elev+dy*.008,-Math.PI/2,Math.PI/2);$('view-preset').value='iso'}else{camera.pan[0]+=dx;camera.pan[1]+=dy}dirty=true}pointerDown.last=p});
+ function closestSegment(p,a,b){const d=[b[0]-a[0],b[1]-a[1]],l=d[0]*d[0]+d[1]*d[1],u=l?clamp(((p[0]-a[0])*d[0]+(p[1]-a[1])*d[1])/l,0,1):0,q=[a[0]+u*d[0],a[1]+u*d[1]];return{u,d:Math.hypot(p[0]-q[0],p[1]-q[1])}}
+ function pickAt(p){
+  const named=hitPoints.filter(q=>q.id!=='probe').map(q=>({...q,d:Math.hypot(q.p[0]-p[0],q.p[1]-p[1])})).sort((a,b)=>a.d-b.d);
+  if(named[0]&&named[0].d<18){selectPoint(named[0].id);return}
+  const segments=hitBodies.filter(b=>b.type==='segment').map(b=>({...b,hit:closestSegment(p,b.a,b.b)})).sort((a,b)=>a.hit.d-b.hit.d);
+  if(segments[0]&&segments[0].hit.d<18){const s=segments[0],ls=s.path.slice(1).map((q,i)=>norm(K.minus(q,s.path[i]))),total=ls.reduce((a,b)=>a+b,0);bodyId=s.body.id;probe.u=(ls.slice(0,s.index).reduce((a,b)=>a+b,0)+ls[s.index]*s.hit.u)/(total||1);setMode('probe');return}
+  const body=hitBodies.find(b=>b.type==='disk'&&Math.hypot(p[0]-b.center[0],p[1]-b.center[1])<=b.r);
+  if(body){const local=localOf(body.body,projection.unproject(p));bodyId=body.body.id;probe.rho=clamp(Math.hypot(local[0],local[1])/body.body.radius,0,1);probe.angle=Math.atan2(local[1],local[0])*180/Math.PI;setMode('probe');return}
+  const sphere=hitBodies.find(b=>b.type==='sphere'&&Math.hypot(p[0]-b.center[0],p[1]-b.center[1])<=b.r);
+  if(sphere){const x=(p[0]-sphere.center[0])/projection.scale,y=-(p[1]-sphere.center[1])/projection.scale,z=Math.sqrt(Math.max(0,sphere.body.radius*sphere.body.radius-x*x-y*y)),offset=K.plus(K.plus(K.scale(projection.right,x),K.scale(projection.up,y)),K.scale(projection.depth,z)),local=localOf(sphere.body,K.plus(sphere.body.origin,offset));bodyId=sphere.body.id;probe.latitude=Math.asin(clamp(local[2]/sphere.body.radius,-1,1))*180/Math.PI;probe.angle=Math.atan2(local[1],local[0])*180/Math.PI;setMode('probe')}
+ }
+ sc.addEventListener('pointerup',e=>{if(pointerDown&&!pointerDown.dragged)pickAt(mouseOn(e,sc));pointerDown=null});sc.addEventListener('pointercancel',()=>pointerDown=null);
+ sc.addEventListener('wheel',e=>{e.preventDefault();camera.zoom=clamp(camera.zoom*Math.exp(-e.deltaY*.0012),.025,8);dirty=true},{passive:false});
+ for(const id of ['v-chart','a-chart']){const c=$(id);let down=false;const scrub=e=>{const p=mouseOn(e,c),r=chartRanges[id];if(r)setTime(tMin+clamp((p[0]-r.left)/r.pw,0,1)*(tMax-tMin),true)};c.addEventListener('pointerdown',e=>{down=true;c.setPointerCapture(e.pointerId);scrub(e)});c.addEventListener('pointermove',e=>{if(down)scrub(e)});c.addEventListener('pointerup',()=>down=false);c.addEventListener('pointercancel',()=>down=false)}
+ document.addEventListener('keydown',e=>{if(/INPUT|SELECT|TEXTAREA/.test(e.target.tagName)||document.querySelector('dialog[open]'))return;if(e.code==='Space'){e.preventDefault();togglePlay()}else if(e.code==='ArrowLeft'){e.preventDefault();step(-1)}else if(e.code==='ArrowRight'){e.preventDefault();step(1)}});
+ $('help').onclick=()=>$('help-modal').showModal();$('close-help').onclick=()=>$('help-modal').close();for(const d of[$('help-modal')])d.onclick=e=>{if(e.target===d)d.close()};
+ $('theme').onclick=()=>{const v=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=v;try{localStorage.setItem('motion-lab-theme',v)}catch(e){}colors=theme();dirty=true};
+ function download(data,filename,mime){const blob=data instanceof Blob?data:new Blob([data],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+ $('export-csv').onclick=()=>{
+  const pt=selected(),unit=lab.unit,label=mode==='probe'?'Pstar':pt.id,kind=pt.instantaneous?'successive_contact_particles':'fixed_material_point',headers=['time_s','point','identity','x_'+unit,'y_'+unit,'z_'+unit,'vx_'+unit+'_per_s','vy_'+unit+'_per_s','vz_'+unit+'_per_s','speed_'+unit+'_per_s','ax_'+unit+'_per_s2','ay_'+unit+'_per_s2','az_'+unit+'_per_s2','accel_'+unit+'_per_s2',...lab.params.map(p=>'input_'+p.key),...(mode==='probe'?['body','probe_fraction','probe_radius_fraction','probe_angle_deg','probe_latitude_deg']:[])];
+  const rows=history.map(q=>[q.t,label,kind,...q.p,...q.v,norm(q.v),...q.a,norm(q.a),...lab.params.map(p=>params[p.key]),...(mode==='probe'?[bodyId,probe.u,probe.rho,probe.angle,probe.latitude]:[])]);download([headers.join(','),...rows.map(r=>r.map(v=>typeof v==='number'?v.toPrecision(11):v).join(','))].join('\n'),lab.id+'_'+label+'_history.csv','text/csv;charset=utf-8');toast('Point history downloaded with units and input settings.');
+ };
+ $('save-png').onclick=()=>{render();const dpr=Math.min(devicePixelRatio||1,2),c=document.createElement('canvas');c.width=sc.width;c.height=sc.height+120*dpr;const g=c.getContext('2d');g.fillStyle=colors.bg;g.fillRect(0,0,c.width,c.height);g.drawImage(sc,0,58*dpr);g.scale(dpr,dpr);g.fillStyle=colors.ink;g.font='600 17px -apple-system, sans-serif';g.fillText(lab.title,20,28);g.font='11px -apple-system, sans-serif';g.fillStyle=colors.muted;g.fillText('t = '+now.toFixed(6)+' s · '+(mode==='probe'?'Material point P*':'Point '+pointId)+' · '+('Example '+(LABS.indexOf(lab)+1)),20,47);g.fillText('Velocity: cyan · Acceleration: coral · Components in '+lab.unit+'/s and '+lab.unit+'/s²',20,c.height/dpr-38);g.fillText($('scale-note').textContent,20,c.height/dpr-19);c.toBlob(blob=>{if(blob)download(blob,lab.id+'_t'+now.toFixed(3)+'.png','image/png')});};
+ const observer=new ResizeObserver(()=>dirty=true);[sc,$('v-chart'),$('a-chart')].forEach(c=>observer.observe(c));
+ function animate(ts){
+  if(playing&&lastFrame){const delta=Math.min((ts-lastFrame)/1000,.08)*Number($('playback').value),target=now+delta;if(target>=tMax){now=tMax;state=safeState(now);if($('loop').checked){now=tMin;state=safeState(now)}else{playing=false;showMessage(rangeWasTrimmed?'End of the safe travel window. Reset time to explore again.':'End of this demonstration window. Use Start or enable Loop.')}}else{const candidate=safeState(target);if(candidate.valid===false){playing=false;showMessage(candidate.reason)}else{now=target;state=candidate}}
+   if(ts-lastDOM>80||!playing){updateDOM();lastDOM=ts}dirty=true;
+  }
+  lastFrame=ts;if(dirty)render();requestAnimationFrame(animate);
+ }
+ try{const saved=localStorage.getItem('motion-lab-theme');if(saved==='light'||saved==='dark'){document.documentElement.dataset.theme=saved;colors=theme()}}catch(e){}
+ $('lab-count').textContent=String(LABS.length).padStart(2,'0');
+ const requested=location.hash.slice(1);selectLab(LABS.some(l=>l.id===requested)?requested:LABS[0].id);
+ window.MotionLab={labs:LABS,K,selectLab,selectPoint,setTime,setParam,setMode,fitView,render,
+  get state(){return state},get current(){return{lab:lab.id,params:{...params},now,tMin,tMax,playing,pointId,bodyId,mode,probe:{...probe}}},get selected(){return selected()},get history(){return history},get camera(){return camera},get geometry(){return{hitPoints,hitBodies}},
+  setProbe(body,values={}){bodyId=body;Object.assign(probe,values);setMode('probe')},
+  validateReferences(){return LABS.map(l=>{const p=defaults(l),s=safeState(val(l.time.reference,p)||0,p,l);return{id:l.id,checks:l.checks.map(c=>{const actual=c.get(s);return{label:c.label,actual,expected:c.expected,pass:Number.isFinite(actual)&&Math.abs(actual-c.expected)<=c.tolerance}})}})}
+ };
+ render();requestAnimationFrame(animate);
+
+})();
+
+</script>
+</body></html>

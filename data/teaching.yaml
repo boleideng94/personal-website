@@ -1,4 +1,16 @@
 # Add another entry here to list a new teaching tool.
+- title: Kinematics in Motion
+  label: Kinematics in Motion
+  category: Rigid-body kinematics
+  description: Bring textbook problems to life with nine interactive examples. Explore moving linkages, rolling wheels, and rotating bodies, and see how velocity and acceleration change at every point.
+  url: /teaching/kinematics-in-motion/
+  image: /images/teaching/kinematics-in-motion.svg
+  topics:
+    - Velocity & acceleration
+    - Linkages & rolling motion
+    - 2D & 3D kinematics
+  activity: Choose an example, press Play, and follow a point on the moving body. Pause at any instant to inspect its velocity and acceleration, then change the inputs to see what happens.
+
 - title: Rocket Launch Game
   label: Ignition Lab
   category: Rockets & momentum
