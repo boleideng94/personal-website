@@ -1,4 +1,10 @@
 # Add another entry here to list a new teaching tool.
+- title: "Final Project: Build Your Roadster"
+  feature: roadster
+  category: Georgia Tech · AE 2220 · Dynamics
+  description: Start on the road. Take flight. Build from wheel forces to thrusters, flips, and full three-dimensional dynamics.
+  url: /teaching/build-your-own-roadster/
+
 - title: Kinematics in Motion
   label: Kinematics in Motion
   category: Rigid-body kinematics

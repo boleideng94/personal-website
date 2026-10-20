@@ -7,6 +7,9 @@
   </header>
   <section class="teaching-tools" aria-label="Interactive teaching tools">
     {{ range site.Data.teaching }}
+    {{ if eq .feature "roadster" }}
+      {{ partial "teaching/roadster.html" . }}
+    {{ else }}
     <article class="teaching-tool">
       <a class="teaching-art" href="{{ .url | relURL }}" aria-label="Launch {{ .title }}">
         <img src="{{ .image | relURL }}" alt="" width="720" height="560">
@@ -27,6 +30,7 @@
         <p>{{ .activity }}</p>
       </div>
     </article>
+    {{ end }}
     {{ end }}
   </section>
   <p class="teaching-closing">A growing collection of tools for the classroom and your own curiosity.</p>

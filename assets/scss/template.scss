@@ -167,3 +167,50 @@
   .teaching-tool-body { padding: 1.4rem; }
   .teaching-activity { grid-template-columns: 1fr; gap: .5rem; padding: 1.4rem; }
 }
+
+// Roadster final project: a cinematic stage within the teaching collection.
+.roadster-feature {
+  position: relative; overflow: hidden; border-radius: 16px;
+  background: radial-gradient(ellipse at 50% 50%, #292c33 0%, #111216 48%, #08090b 85%);
+  border: 1px solid #303138; color: #f5f5f7;
+}
+.roadster-heading { position: relative; z-index: 1; text-align: center; padding: 2.2rem 2rem 0; }
+.roadster-course { color: #b8bbc3; font-size: .65rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; margin: 0 0 1.3rem; }
+.roadster-kicker { color: #f3727e; font-size: .65rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; margin: 0 0 .45rem; }
+.roadster-feature h2 { color: #fff; font-size: clamp(1.7rem, 4.6vw, 2.7rem); line-height: 1.12; font-weight: 600; letter-spacing: -.045em; margin: 0 0 .7rem; }
+.roadster-feature h2 span { color: #ee3b4c; }
+.roadster-description { max-width: 580px; margin: 0 auto; color: #c2c3ca; font-size: .76rem; line-height: 1.6; }
+.roadster-stage { position: relative; height: 310px; }
+.roadster-visual { position: absolute; inset: 0; display: block; }
+.roadster-poster, #roadster-preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; margin: 0; }
+#roadster-preview { opacity: 0; transition: opacity .2s; }
+.roadster-ready #roadster-preview { opacity: 1; }
+.roadster-ready .roadster-poster { visibility: hidden; }
+.roadster-flight-label { position: absolute; left: 2rem; bottom: 16px; color: #9d9fa9; font-size: .5rem; letter-spacing: .15em; text-transform: uppercase; pointer-events: none; }
+.roadster-flight-label > span { display: inline-block; width: 5px; height: 5px; margin-right: 7px; border-radius: 50%; background: #ef6170; box-shadow: 0 0 10px #ef6170; }
+.roadster-motion { position: absolute; bottom: 8px; right: 2rem; border: 1px solid #5d606b; border-radius: 4px; background: #15161b; color: #c9cbd2; padding: 8px 12px; font: inherit; font-size: .55rem; cursor: pointer; }
+.roadster-motion[hidden] { display: none; }
+.roadster-motion:hover { color: white; border-color: #c9cbd2; }
+.roadster-motion:focus-visible { outline: 3px solid #b3a369; outline-offset: 4px; }
+.roadster-bottom { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; margin: .5rem 2rem 0; padding: 1.1rem 0; border-top: 1px solid #ffffff24; }
+.roadster-milestones { display: flex; gap: 2rem; }
+.roadster-milestones strong { display: block; color: #fff; font-size: .9rem; font-weight: 500; }
+.roadster-milestones span { display: block; color: #a8abb5; font-size: .55rem; margin-top: .25rem; }
+.teaching-page .roadster-launch { display: inline-flex; justify-content: space-between; gap: 1.7rem; align-items: center; background: #f4f4f6; color: #111216; padding: .65rem 1.1rem; border-radius: 4px; font-size: .7rem; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.teaching-page .roadster-launch:hover { background: #fff; box-shadow: 0 0 24px #ffffff28; }
+.roadster-credits { color: #a8abb5; font-size: .52rem; text-align: center; margin: 0; padding: .3rem 1.2rem 1rem; }
+.roadster-credits > span { margin: 0 .6rem; }
+@media (max-width: 767px) {
+  .roadster-heading { padding: 1.6rem 1.2rem 0; }
+  .roadster-course { font-size: .5rem; letter-spacing: .1em; }
+  .roadster-stage { height: 240px; }
+  .roadster-flight-label { left: 1.2rem; font-size: .43rem; }
+  .roadster-motion { right: 1.2rem; }
+  .roadster-bottom { flex-direction: column; margin: .4rem 1.2rem 0; gap: 1.1rem; }
+  .roadster-milestones { justify-content: space-between; width: 100%; gap: .7rem; }
+  .roadster-milestones strong { font-size: .85rem; }
+  .roadster-milestones span { font-size: .48rem; }
+  .teaching-page .roadster-launch { width: 100%; }
+  .roadster-credits { font-size: .47rem; line-height: 1.7; }
+}
+@media (prefers-reduced-motion: reduce) { #roadster-preview { transition: none; } }

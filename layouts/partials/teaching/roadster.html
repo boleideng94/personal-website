@@ -1,0 +1,26 @@
+<article class="roadster-feature" aria-labelledby="roadster-title">
+  <div class="roadster-heading">
+    <p class="roadster-course">{{ .category }}</p>
+    <p class="roadster-kicker">Final Project</p>
+    <h2 id="roadster-title">Build Your Roadster<span>.</span></h2>
+    <p class="roadster-description">{{ .description }}</p>
+  </div>
+  <div class="roadster-stage">
+    <a class="roadster-visual" href="{{ .url | relURL }}" aria-label="Open Final Project: Build Your Roadster">
+      <img class="roadster-poster" src="{{ "images/teaching/roadster.svg" | relURL }}" width="1000" height="420" alt="A red sports car hovering above the ground">
+      <canvas id="roadster-preview" data-mesh="{{ "teaching/build-your-own-roadster/car-mesh.json" | relURL }}" aria-hidden="true"></canvas>
+    </a>
+    <span class="roadster-flight-label" aria-hidden="true"><span></span> Beyond the road</span>
+    <button class="roadster-motion" type="button" aria-label="Pause roadster animation" hidden>Pause motion</button>
+  </div>
+  <div class="roadster-bottom">
+    <div class="roadster-milestones" aria-label="Project stages">
+      <div><strong>Drive</strong><span>Forces &amp; contact</span></div>
+      <div><strong>Fly</strong><span>Thrust &amp; rotation</span></div>
+      <div><strong>Build</strong><span>Your own simulation</span></div>
+    </div>
+    <a class="roadster-launch" href="{{ .url | relURL }}">Explore the project <span aria-hidden="true">↗</span></a>
+  </div>
+  <p class="roadster-credits">Developer: Bolei Deng <span>·</span> Proof reading: Victor Riera Naranjo</p>
+</article>
+<script src="{{ "js/roadster-preview.js" | relURL }}" defer></script>
